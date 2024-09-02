@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"search.exclude": {
+			"rbfx.wasm.apps.server/node_modules": true,
+			"rbfx.wasm.apps.site/node_modules": true
+		},
+		"files.exclude": {
+			"rbfx.wasm.apps.server/node_modules": true,
+			"rbfx.wasm.apps.site/node_modules": true
+		},
+	}
+}

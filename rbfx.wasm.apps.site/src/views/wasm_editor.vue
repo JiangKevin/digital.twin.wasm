@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { useStoreForHome } from "@/stores/globle.js";
-const mainStore = useStoreForHome();
+import { useStoreForMenu } from "@/stores/globle.js";
+const mainStore = useStoreForMenu();
 //
 </script>
 

@@ -6,7 +6,7 @@ const mainStore = useStoreForLogin();
 </script>
 
 <template>
-<p>adsfasdf</p>
+  <p>adsfasdf</p>
 </template>
 
 <style scoped>

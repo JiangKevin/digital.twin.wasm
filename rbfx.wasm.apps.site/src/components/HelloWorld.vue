@@ -1,18 +1,14 @@
 <script setup>
-import { ref } from 'vue'
-
-defineProps({
-  msg: String,
-})
-
-const count = ref(0)
+import { ref } from "vue";
+import { useStore } from "@/stores/globle.js";
+const mainStore = useStore();
+//
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="mainStore.increment()">count is {{ mainStore.count }}</button>
   </div>
 </template>
 

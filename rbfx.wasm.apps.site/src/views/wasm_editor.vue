@@ -7,9 +7,13 @@ const mainStore = useStoreForHome();
 
 <template>
   <div class="main_container">
-    <button type="button" @click="mainStore.increment()">
-      count is {{ mainStore.count }}
-    </button>
+    <div class="main_container_toolbar">ADFADS</div>
+    <div class="main_container_content">
+      <button type="button" @click="mainStore.increment()">
+        count is {{ mainStore.count }}
+      </button>
+    </div>
+    <div class="main_container_status"><span>asdfasdf</span></div>
   </div>
 </template>
 

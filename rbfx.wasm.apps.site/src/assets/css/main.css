@@ -8,8 +8,8 @@ body {
 
 .main_container {
   width: 100%;
-  background-color: rgb(0, 0, 0);
   padding: 0px;
+  font-size: 12px;
   /*  */
   /* height: 100vh;
   margin: 0px; */
@@ -19,4 +19,35 @@ body {
   margin-right: 0px;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.main_container_toolbar {
+  padding-left: 4px;
+  height: 24px;
+  position: fixed;
+  top: 20px;
+  background-color: brown;
+  width: 100%;
+  line-height: 24px;
+}
+.main_container_status {
+  height: 24px;
+  position: fixed;
+  bottom: 20px;
+  background-color: brown;
+  width: 100%;
+  line-height: 24px;
+  padding-left: 4px;
+}
+.main_container_status > span {
+  font-size: 12px;
+  background-color: brown;
+  text-align: center;
+}
+.main_container_content {
+  height: 100vh;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background-color: rgb(0, 0, 0);
 }

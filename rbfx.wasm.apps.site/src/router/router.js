@@ -15,7 +15,7 @@ const router = createRouter({
         {
           path: "",
           name: "Home",
-          component: () => import("@/views/HelloWorld"),
+          component: () => import("@/views/wasm_editor"),
         },
       ],
     },

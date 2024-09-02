@@ -11,14 +11,15 @@ export const useStoreForMenu = defineStore("menu", () => {
     { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/login" },
   ];
   //
-  var user_info = { username: "admin", password: "", token: "", image: "../assets/img/85.jpg", email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
+  var user_info = { username: "admin", password: "", token: "", image: "src/assets/img/85.jpg", email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
   //
   function logout() {
     is_logined = false;
     //
-    user_info.email = "kevin.jiang@hotmail.com";
+    // user_info.email = "kevin.jiang@hotmail.com";
     user_info.token = "";
     user_info.password = "";
+    console.log(user_info.email);
   }
 
   //

@@ -68,12 +68,11 @@ const mainStore = useStoreForMenu();
 import router from "@/router/router";
 function route(item) {
   router.push({ path: item.route, replace: true });
-  console.log(item.route);
 }
 //
 function view_manu() {
   mainStore.rail = !mainStore.rail;
-  console.log(mainStore.rail);
+  mainStore.user_info.email = "kevin.jiang@hotmail.com";
 }
 </script>
 

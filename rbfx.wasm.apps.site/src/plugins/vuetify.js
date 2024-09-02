@@ -8,9 +8,9 @@ import * as directives from 'vuetify/directives'
 
 export default createVuetify({
   theme: {
-    defaultTheme: 'light',
+    defaultTheme: 'dark',
     themes: {
-      light: {
+      dark: {
         colors: {
           primary: '#1867C0',
           secondary: '#5CBBF6',

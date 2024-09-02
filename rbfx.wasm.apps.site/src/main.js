@@ -3,9 +3,12 @@ import { createPinia } from "pinia";
 import vuetify from "@/plugins/vuetify";
 import { loadFonts } from "@/plugins/webfontloader";
 // 
-import "./css/style.css";
+
 import App from "./App.vue";
 import router from './router/router'
+
+// 
+import "@/assets/css/main.css";
 //
 loadFonts();
 const app = createApp(App);

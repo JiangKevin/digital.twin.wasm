@@ -1,19 +1,21 @@
 <script setup>
 import { ref } from "vue";
-import { useStore } from "@/stores/globle.js";
-const mainStore = useStore();
+import { useStoreForHome } from "@/stores/globle.js";
+const mainStore = useStoreForHome();
 //
 </script>
 
 <template>
-
-  <div class="card">
-    <button type="button" @click="mainStore.increment()">count is {{ mainStore.count }}</button>
+  <div class="main_container">
+    <button type="button" @click="mainStore.increment()">
+      count is {{ mainStore.count }}
+    </button>
   </div>
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
-}
+/* .card {
+  width: 100%;
+  background-color: rgb(25, 204, 109);
+} */
 </style>

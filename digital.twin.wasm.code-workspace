@@ -13,5 +13,6 @@
 			"rbfx.wasm.apps.server/node_modules": true,
 			"rbfx.wasm.apps.site/node_modules": true
 		},
+		"vetur.validation.template": false,
 	}
 }

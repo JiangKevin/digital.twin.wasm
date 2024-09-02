@@ -13,5 +13,5 @@ cd ..
 cp -rf ./rbfx.wasm.apps.site/dist/* ./rbfx.wasm.apps.server/web
 #
 cd ./rbfx.wasm.apps.server
-npm install
-# 
+node server.js
+#

@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import avatarImgUrl from "@/assets/img/85.jpg";
 //
 export const useStoreForMenu = defineStore("menu", () => {
   var drawer = ref(true);
@@ -16,7 +17,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/cascad_editor" },
   ];
   //
-  var user_info = { username: "admin", password: "", token: "", image: "src/assets/img/85.jpg", email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
+  var user_info = { username: "admin", password: "", token: "", image: avatarImgUrl, email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
   //
   function logout() {
     is_logined = false;

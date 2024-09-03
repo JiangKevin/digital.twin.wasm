@@ -65,6 +65,18 @@
         </v-list-item>
       </v-list>
       <!--  -->
+      <div class="fm_main_log_contain">
+        <v-divider></v-divider
+        ><v-img
+          :width="180"
+          aspect-ratio="1/1"
+          cover
+          :src="logoImgUrl"
+          class="animate__animated animate__rubberBand"
+          :class="logo_class_Select(mainStore_menu.rail)"
+        ></v-img>
+      </div>
+      <!--  -->
     </v-navigation-drawer>
     <!--  -->
     <v-main>
@@ -80,6 +92,8 @@ import { RouterView } from "vue-router";
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
+import logoImgUrl from "@/assets/img/logo_outlined.png";
+import "@/assets/css/animate/animate.min.css";
 //
 import router from "@/router/router";
 function route_ck(item) {
@@ -99,6 +113,14 @@ function logout_ck() {
   router.push({ path: "login", replace: true });
 }
 //
+function logo_class_Select(is_view) {
+  if (!is_view) {
+    return "fm_main_log ";
+  } else {
+    ("fm_main_log_min ");
+  }
+}
+//
 onMounted(() => {
   if (mainStore_menu.is_logined != true) {
     router.push({ path: "login", replace: true });
@@ -107,4 +129,22 @@ onMounted(() => {
 </script>
 <!--  -->
 <style scoped>
+.fm_main_log_contain {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  background-image: url("../assets/img/solar-1.gif");
+}
+.fm_main_log {
+  animation-iteration-count: infinite;
+  margin-top: 20px;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+.fm_main_log_min {
+  animation-iteration-count: infinite;
+  margin: 0px;
+  padding: 0px;
+}
 </style>

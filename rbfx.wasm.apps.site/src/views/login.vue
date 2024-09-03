@@ -3,7 +3,7 @@ import { ref } from "vue";
 //
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
-import imgUrl from "@/assets/img/logo_outlined.png";
+import logoImgUrl from "@/assets/img/logo_outlined.png";
 import "@/assets/css/animate/animate.min.css";
 //
 import "@/assets/js/sha256/sha256.min.js";
@@ -35,36 +35,38 @@ function login() {
 <template>
   <div id="login_div">
     <div class="fm_main_login_div">
-      <div class="fm_main_login_form fm_glossy">
-        <div class="fm_main_login_form_left">
-          <v-img
-            :width="200"
-            aspect-ratio="1/1"
-            cover
-            :src="imgUrl"
-            class="logo_img animate__animated animate__rubberBand"
-          ></v-img>
-        </div>
-        <div class="fm_main_login_form_right">
-          <div class="fm_main_login_form_right_contain">
-            <v-text-field
-              label="Admin User"
-              variant="outlined"
-              v-model="mainStore_menu.user_info.username"
-            ></v-text-field>
-            <v-text-field
-              label="Password"
-              variant="outlined"
-              v-model="mainStore_menu.user_info.password"
-              type="password"
-            ></v-text-field>
-            <div>
-              <v-btn @click="login"> Sign in </v-btn>
-              <span>{{ mainStore_menu.login_log }}</span>
+      <form>
+        <div class="fm_main_login_form">
+          <div class="fm_main_login_form_left">
+            <v-img
+              :width="200"
+              aspect-ratio="1/1"
+              cover
+              :src="logoImgUrl"
+              class="logo_img animate__animated animate__rubberBand"
+            ></v-img>
+          </div>
+          <div class="fm_main_login_form_right">
+            <div class="fm_main_login_form_right_contain">
+              <v-text-field
+                label="Admin User"
+                variant="outlined"
+                v-model="mainStore_menu.user_info.username"
+              ></v-text-field>
+              <v-text-field
+                label="Password"
+                variant="outlined"
+                v-model="mainStore_menu.user_info.password"
+                type="password"
+              ></v-text-field>
+              <div>
+                <v-btn @click="login"> Sign in </v-btn>
+                <span>{{ mainStore_menu.login_log }}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>

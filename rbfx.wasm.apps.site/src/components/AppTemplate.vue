@@ -97,6 +97,9 @@ import "@/assets/css/animate/animate.min.css";
 //
 import router from "@/router/router";
 function route_ck(item) {
+  mainStore_menu.reset_menu_status();
+  item.active = true;
+  //
   if (mainStore_menu.is_logined) {
     router.push({ path: item.route, replace: true });
   } else {

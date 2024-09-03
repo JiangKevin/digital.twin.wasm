@@ -10,6 +10,10 @@ export const useStoreForMenu = defineStore("menu", () => {
     { text: "All Proejcts", icon: "mdi-folder", active: true, disabled: false, route: "/home" },
     { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/login" },
   ];
+  var menu_editor_items = [
+    { text: "CAD Editor", icon: "mdi-ruler-square-compass", active: false, disabled: false, route: "/wsdt" },
+    { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/csdt" },
+  ];
   //
   var user_info = { username: "admin", password: "", token: "", image: "src/assets/img/85.jpg", email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
   //
@@ -23,7 +27,7 @@ export const useStoreForMenu = defineStore("menu", () => {
   }
 
   //
-  return { menu_items, drawer, rail, user_info, logout };
+  return { menu_items, menu_editor_items, drawer, rail, user_info, logout };
 });
 //
 export const useStoreForHome = defineStore("home", () => {

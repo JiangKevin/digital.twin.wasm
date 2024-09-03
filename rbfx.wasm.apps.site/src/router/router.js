@@ -6,16 +6,27 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      redirect: "home",
+      redirect: "wsdt",
     },
     {
-      path: "/home/",
+      path: "/wsdt/",
       component: AppTemplate,
       children: [
         {
           path: "",
-          name: "Home",
+          name: "wsdt",
           component: () => import("@/views/wasm_editor"),
+        },
+      ],
+    },
+    {
+      path: "/csdt/",
+      component: AppTemplate,
+      children: [
+        {
+          path: "",
+          name: "csdt",
+          component: () => import("@/views/cascad_editor"),
         },
       ],
     },

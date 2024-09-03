@@ -3,11 +3,36 @@ import { ref } from "vue";
 //
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
-import imgUrl from '@/assets/img/logo_outlined.png'
+import imgUrl from "@/assets/img/logo_outlined.png";
 import "@/assets/css/animate/animate.min.css";
 //
+import "@/assets/js/sha256/sha256.min.js";
+import "@/assets/js/other/axios.min.js";
+import router from "@/router/router";
+function login() {
+  mainStore_menu.user_info.password = sha256(mainStore_menu.user_info.password);
+  axios
+    .post("/login", mainStore_menu.user_info)
+    .then((response) => {
+      // console.log(response);
+      if (response.status == 200) {
+        mainStore_menu.login_log = "";
+        mainStore_menu.user_info = response.data.user_info;
+        mainStore_menu.is_logined = true;
+        //
+        router.push({ path: "/", replace: true });
+      } else {
+        mainStore_menu.login_log = response.data.message;
+        //
+      }
+    })
+    .catch((error) => {
+      mainStore_menu.login_log = error.response.data.message;
+    });
+}
+//
 </script>
-
+<!--  -->
 <template>
   <div id="login_div">
     <div class="fm_main_login_div">
@@ -35,7 +60,7 @@ import "@/assets/css/animate/animate.min.css";
               type="password"
             ></v-text-field>
             <div>
-              <v-btn> Sign in </v-btn>
+              <v-btn @click="login"> Sign in </v-btn>
               <span>{{ mainStore_menu.login_log }}</span>
             </div>
           </div>
@@ -107,9 +132,9 @@ import "@/assets/css/animate/animate.min.css";
   color: #b800dd;
 }
 .logo_img {
-    /* animation: 2s infinite; */
-    animation-iteration-count: infinite;
-    margin-left: 300px;
-    margin-right: 300px;
+  /* animation: 2s infinite; */
+  animation-iteration-count: infinite;
+  margin-left: 300px;
+  margin-right: 300px;
 }
 </style>

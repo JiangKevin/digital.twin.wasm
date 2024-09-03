@@ -1,20 +1,20 @@
 <template>
   <v-layout full-height>
     <v-navigation-drawer
-      v-model="mainStore.drawer"
-      :rail="mainStore.rail"
+      v-model="mainStore_menu.drawer"
+      :rail="mainStore_menu.rail"
       permanent
     >
       <v-list>
         <v-list-item
-          :subtitle="mainStore.user_info.email"
-          :title="mainStore.user_info.fullname"
+          :subtitle="mainStore_menu.user_info.email"
+          :title="mainStore_menu.user_info.fullname"
         >
           <template v-slot:prepend>
             <v-avatar>
               <v-img
                 cover
-                :src="mainStore.user_info.image"
+                :src="mainStore_menu.user_info.image"
                 @click="view_manu_ck"
               ></v-img>
             </v-avatar>
@@ -34,12 +34,12 @@
       <v-list density="compact" nav>
         <v-list-subheader>Project Resource</v-list-subheader>
         <v-list-item
-          v-for="(item, i) in mainStore.menu_items"
+          v-for="(item, i) in mainStore_menu.menu_items"
           :key="i"
           :value="item"
           :active="item.active"
           :disabled="item.disabled"
-          @click="route(item)"
+          @click="route_ck(item)"
         >
           <template v-slot:prepend>
             <v-icon :icon="item.icon"></v-icon>
@@ -51,12 +51,12 @@
       <v-list density="compact" nav>
         <v-list-subheader>Editor Resource</v-list-subheader>
         <v-list-item
-          v-for="(item, i) in mainStore.menu_editor_items"
+          v-for="(item, i) in mainStore_menu.menu_editor_items"
           :key="i"
           :value="item"
           :active="item.active"
           :disabled="item.disabled"
-          @click="route(item)"
+          @click="route_ck(item)"
         >
           <template v-slot:prepend>
             <v-icon :icon="item.icon"></v-icon>
@@ -79,20 +79,23 @@ import { RouterView } from "vue-router";
 //
 import { ref } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
-const mainStore = useStoreForMenu();
+const mainStore_menu = useStoreForMenu();
 //
 import router from "@/router/router";
-function route(item) {
-  router.push({ path: item.route, replace: true });
+function route_ck(item) {
+  if (mainStore_menu.is_logined) {
+    router.push({ path: item.route, replace: true });
+  } else {
+    router.push({ path: "login", replace: true });
+  }
 }
 //
 function view_manu_ck() {
-  mainStore.rail = !mainStore.rail;
-  mainStore.user_info.email = "kevin.jiang@hotmail.com";
+  mainStore_menu.rail = !mainStore_menu.rail;
 }
 //
 function logout_ck() {
-  mainStore.logout();
+  mainStore_menu.logout();
   router.push({ path: "login", replace: true });
 }
 </script>

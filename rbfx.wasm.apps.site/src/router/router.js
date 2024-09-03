@@ -13,7 +13,7 @@ const router = createRouter({
       component: AppTemplate,
       children: [
         {
-          path: "/",
+          path: "",
           name: "digital_twin_editor",
           component: () => import("@/views/wasm_editor"),
         },

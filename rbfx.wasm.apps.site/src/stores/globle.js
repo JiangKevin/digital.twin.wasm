@@ -5,14 +5,15 @@ export const useStoreForMenu = defineStore("menu", () => {
   var drawer = ref(true);
   var rail = ref(false);
   var is_logined = ref(true);
+  var login_log = ref("");
   //
   var menu_items = [
-    { text: "All Proejcts", icon: "mdi-folder", active: true, disabled: false, route: "/home" },
-    { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/login" },
+    { text: "All Proejcts", icon: "mdi-folder", active: true, disabled: false, route: "/all_project" },
+    { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/files_browse" },
   ];
   var menu_editor_items = [
-    { text: "CAD Editor", icon: "mdi-ruler-square-compass", active: false, disabled: false, route: "/wsdt" },
-    { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/csdt" },
+    { text: "CAD Editor", icon: "mdi-ruler-square-compass", active: false, disabled: false, route: "/digital_twin_editor" },
+    { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/cascad_editor" },
   ];
   //
   var user_info = { username: "admin", password: "", token: "", image: "src/assets/img/85.jpg", email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
@@ -20,10 +21,12 @@ export const useStoreForMenu = defineStore("menu", () => {
   function logout() {
     is_logined = false;
     //
-    // user_info.email = "kevin.jiang@hotmail.com";
-    user_info.token = "";
+    user_info.username = "";
     user_info.password = "";
-    console.log(user_info.email);
+    user_info.token = "";
+    user_info.image = "";
+    user_info.email = "";
+    user_info.fullname = "";
   }
 
   //

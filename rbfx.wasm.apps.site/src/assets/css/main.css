@@ -1,5 +1,6 @@
 body {
   background-image: url("../img/background.jpg");
+  /* background-color: aliceblue; */
 }
 #app {
   backdrop-filter: blur(14px);

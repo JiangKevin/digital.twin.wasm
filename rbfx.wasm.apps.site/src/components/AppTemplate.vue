@@ -15,7 +15,7 @@
               <v-img
                 cover
                 :src="mainStore.user_info.image"
-                @click="view_manu"
+                @click="view_manu_ck"
               ></v-img>
             </v-avatar>
           </template>
@@ -24,7 +24,7 @@
               icon="mdi-exit-to-app"
               size="small"
               variant="text"
-              @click="mainStore.logout"
+              @click="logout_ck"
             ></v-btn>
           </template>
         </v-list-item>
@@ -73,7 +73,7 @@
     <!--  -->
   </v-layout>
 </template>
-
+<!--  js  -->
 <script setup>
 import { RouterView } from "vue-router";
 //
@@ -86,17 +86,16 @@ function route(item) {
   router.push({ path: item.route, replace: true });
 }
 //
-function view_manu() {
+function view_manu_ck() {
   mainStore.rail = !mainStore.rail;
   mainStore.user_info.email = "kevin.jiang@hotmail.com";
 }
-// const getAssetsFile = (url) => {
-//   const urlArr = String(url).split('/') // 通过'/'分割成数组
-//   const prefix = urlArr.slice(-2)[0] // 获取倒数第二个值
-//   const fileName = urlArr.slice(-1)[0] // 获取最后一个值
-//   return new URL(import.meta.url).href // 使用vite推荐的方法渲染
-// }
+//
+function logout_ck() {
+  mainStore.logout();
+  router.push({ path: "login", replace: true });
+}
 </script>
-
+<!--  -->
 <style scoped>
 </style>

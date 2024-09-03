@@ -1,42 +1,59 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory,createWebHashHistory } from "vue-router";
 import AppTemplate from "@/components/AppTemplate";
-
+//
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      redirect: "wsdt",
+      redirect: "/digital_twin_editor",
     },
     {
-      path: "/wsdt/",
+      path: "/digital_twin_editor",
       component: AppTemplate,
       children: [
         {
-          path: "",
-          name: "wsdt",
+          path: "/",
+          name: "digital_twin_editor",
           component: () => import("@/views/wasm_editor"),
         },
       ],
     },
     {
-      path: "/csdt/",
+      path: "/cascad_editor",
       component: AppTemplate,
       children: [
         {
           path: "",
-          name: "csdt",
+          name: "cascad_editor",
           component: () => import("@/views/cascad_editor"),
         },
       ],
     },
     {
-      path: "/login/",
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/login"),
+    },
+    {
+      path: "/all_project",
+      component: AppTemplate,
       children: [
         {
           path: "",
-          name: "Login",
-          component: () => import("@/views/login"),
+          name: "all_project",
+          component: () => import("@/views/wasm_editor"),
+        },
+      ],
+    },
+    {
+      path: "/files_browse",
+      component: AppTemplate,
+      children: [
+        {
+          path: "",
+          name: "files_browse",
+          component: () => import("@/views/wasm_editor"),
         },
       ],
     },

@@ -77,7 +77,7 @@
 <script setup>
 import { RouterView } from "vue-router";
 //
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
@@ -98,6 +98,12 @@ function logout_ck() {
   mainStore_menu.logout();
   router.push({ path: "login", replace: true });
 }
+//
+onMounted(() => {
+  if (mainStore_menu.is_logined != true) {
+    router.push({ path: "login", replace: true });
+  }
+});
 </script>
 <!--  -->
 <style scoped>

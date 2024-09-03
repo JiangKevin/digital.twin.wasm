@@ -14,7 +14,6 @@ function login() {
   axios
     .post("/login", mainStore_menu.user_info)
     .then((response) => {
-      // console.log(response);
       if (response.status == 200) {
         mainStore_menu.login_log = "";
         mainStore_menu.user_info = response.data.user_info;

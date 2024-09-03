@@ -51,12 +51,12 @@ function login() {
               <v-text-field
                 label="Admin User"
                 variant="outlined"
-                v-model="mainStore_menu.user_info.username"
+                v-model="mainStore_menu.user_info.username" autocomplete="off"
               ></v-text-field>
               <v-text-field
                 label="Password"
                 variant="outlined"
-                v-model="mainStore_menu.user_info.password"
+                v-model="mainStore_menu.user_info.password" autocomplete="off"
                 type="password"
               ></v-text-field>
               <div>

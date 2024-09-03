@@ -2,6 +2,14 @@ body {
   background-image: url("../img/background.jpg");
   /* background-color: aliceblue; */
 }
+@font-face {
+  font-family: ExampleFont;
+  src: url("../font/ARIALN.TTF") format('ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
 #app {
   backdrop-filter: blur(14px);
   opacity: 80%;
@@ -26,7 +34,7 @@ body {
   height: 24px;
   position: fixed;
   top: 20px;
-  background-color: brown;
+  background-color: #1b1a1e;
   width: 100%;
   line-height: 24px;
 }
@@ -34,14 +42,14 @@ body {
   height: 24px;
   position: fixed;
   bottom: 20px;
-  background-color: brown;
+  background-color:#1b1a1e;
   width: 100%;
   line-height: 24px;
   padding-left: 4px;
 }
 .main_container_status > span {
   font-size: 12px;
-  background-color: brown;
+  background-color: #1b1a1e;
   text-align: center;
 }
 .main_container_content {

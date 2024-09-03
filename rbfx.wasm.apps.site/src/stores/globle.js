@@ -13,8 +13,8 @@ export const useStoreForMenu = defineStore("menu", () => {
     { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/files_browse" },
   ];
   var menu_editor_items = [
-    { text: "CAD Editor", icon: "mdi-ruler-square-compass", active: false, disabled: false, route: "/digital_twin_editor" },
-    { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/cascad_editor" },
+    { text: "CAD Editor", icon: "mdi-ruler-square-compass", active: false, disabled: false, route: "/cascad_editor" },
+    { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/digital_twin_editor" },
   ];
   var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help" }];
   //

@@ -32,7 +32,6 @@
       <v-divider></v-divider>
       <!--  -->
       <v-list density="compact" nav>
-        <v-list-subheader>Project Resource</v-list-subheader>
         <v-list-item
           v-for="(item, i) in mainStore_menu.menu_items"
           :key="i"
@@ -48,10 +47,27 @@
         </v-list-item>
       </v-list>
       <!--  -->
+      <v-divider></v-divider>
       <v-list density="compact" nav>
-        <v-list-subheader>Editor Resource</v-list-subheader>
         <v-list-item
           v-for="(item, i) in mainStore_menu.menu_editor_items"
+          :key="i"
+          :value="item"
+          :active="item.active"
+          :disabled="item.disabled"
+          @click="route_ck(item)"
+        >
+          <template v-slot:prepend>
+            <v-icon :icon="item.icon"></v-icon>
+          </template>
+          <v-list-item-title v-text="item.text"></v-list-item-title>
+        </v-list-item>
+      </v-list>
+      <!--  -->
+      <v-divider></v-divider>
+      <v-list density="compact" nav>
+        <v-list-item
+          v-for="(item, i) in mainStore_menu.menu_help_items"
           :key="i"
           :value="item"
           :active="item.active"

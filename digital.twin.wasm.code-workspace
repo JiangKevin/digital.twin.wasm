@@ -14,5 +14,11 @@
 			"rbfx.wasm.apps.site/node_modules": true
 		},
 		"vetur.validation.template": false,
+		"prettier.bracketSameLine": false,
+		"prettier.printWidth": 400,
+		"prettier.tabWidth": 4,
+		"prettier.useTabs": false,
+		"prettier.singleAttributePerLine": false,
+		"prettier.requirePragma": false,
 	}
 }

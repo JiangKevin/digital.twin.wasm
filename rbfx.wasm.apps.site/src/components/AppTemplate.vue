@@ -149,7 +149,7 @@ onMounted(() => {
 <!--  -->
 <style scoped>
 .fm_main_log_contain {
-  position: fixed;
+  position: absolute;
   left: 0px;
   bottom: 0px;
   width: 100%;

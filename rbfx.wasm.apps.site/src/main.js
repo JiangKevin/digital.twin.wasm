@@ -8,7 +8,6 @@ import router from "./router/router";
 
 //
 import "@/assets/css/main.css";
-
 //
 loadFonts();
 const app = createApp(App);

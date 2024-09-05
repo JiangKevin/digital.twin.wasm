@@ -34,23 +34,12 @@ onMounted(() => {
             })(),
             printErr: (function () {
                 return function (text) {
-                    console.log("[ERROR]+- From c++: " + text);
+                    console.log("[ERROR] +- From c++: " + text);
                 };
             })(),
             canvas: document.getElementById("canvas"),
         };
         //
-        Module["preRun"].push(function () {
-            Module["addRunDependency"]("IndexedDB");
-            FS.mkdir("/IndexedDB");
-            // FS.mount(IDBFS, {}, "/IndexedDB");
-            FS.syncfs(true, function (err) {
-                if (err) {
-                    console.error(err);
-                }
-                Module["removeRunDependency"]("IndexedDB");
-            });
-        });
         fm_addScript("./data.js", true, false);
         fm_addScript("./common.js", true, false);
         //

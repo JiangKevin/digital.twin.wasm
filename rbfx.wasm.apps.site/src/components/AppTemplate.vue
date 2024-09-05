@@ -87,13 +87,9 @@ function view_manu_ck() {
 //
 function logout_ck() {
     mainStore_menu.logout();
-    is_load_rbfx_wasm = false;
     Module._Stop();
-    Module = {};
-    console.log(Module)
-    fm_delScript("./data.js")
-    fm_delScript("./common.js")
-    //
+    fm_delScript("./data.js");
+    fm_delScript("./common.js");
     router.push({ path: "login", replace: true });
 }
 //

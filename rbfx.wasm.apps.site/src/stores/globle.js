@@ -8,7 +8,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     var is_logined = ref(true);
     var login_log = ref("");
     //
-    var menu_navigation_item = ref("menu_navigation_item");
+    var menu_navigation_item = ref("All Proejcts");
     //
     var menu_items = [
         { text: "All Proejcts", icon: "mdi-folder", active: false, disabled: false, route: "/all_project" },

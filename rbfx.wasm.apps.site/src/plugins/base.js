@@ -1,11 +1,12 @@
 export var Module = {};
-//
-export function fm_download(url) {
+//0-arraybuffer 1text
+export function fm_download(url, resposeType) {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
-        xhr.responseType = "arraybuffer";
+        xhr.responseType = resposeType;
         xhr.onload = function () {
+            console.log(xhr.response);
             resolve(xhr.response);
         };
         xhr.onerror = function (e) {

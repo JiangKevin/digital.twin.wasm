@@ -30,3 +30,4 @@ rbfx.wasm.apps.server/web/common.wasm
 rbfx.wasm.apps.server/web/common.worker.js
 rbfx.wasm.apps.server/web/data.js
 rbfx.wasm.apps.server/web/index.html
+rbfx.wasm.apps.server/web/common/**

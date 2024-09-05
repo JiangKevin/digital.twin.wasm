@@ -5,8 +5,6 @@ import { loadFonts } from "@/plugins/webfontloader";
 //
 import App from "./App.vue";
 import router from "./router/router";
-// import { fm_addScript } from "@/plugins/base.js";
-
 //
 import "@/assets/css/main.css";
 //

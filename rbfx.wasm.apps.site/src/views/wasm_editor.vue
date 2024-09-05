@@ -1,6 +1,6 @@
 <!-- template -->
 <template>
-    <div class="main_container_toolbar">
+    <div class="main_container_toolbar blur_div">
         <v-divider vertical class="divider_vertical"></v-divider>
         <button class="toolbar_btn" @click="code_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
@@ -8,7 +8,7 @@
     <div class="main_container_content">
         <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
-    <div class="main_container_status">
+    <div class="main_container_status blur_div">
         <span id="output">asdfasdf</span>
     </div>
 </template>

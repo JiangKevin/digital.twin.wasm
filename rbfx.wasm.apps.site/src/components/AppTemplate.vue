@@ -51,6 +51,7 @@
         <!--  -->
         <v-main>
             <RouterView></RouterView>
+            <iframe src="./code.html" class="code_contain"></iframe>
         </v-main>
         <!--  -->
     </v-layout>
@@ -103,6 +104,10 @@ onMounted(() => {
     if (mainStore_menu.is_logined != true) {
         router.push({ path: "login", replace: true });
     }
+    // var code_contain = document.getElementById("code_contain_div");
+    // if (code_contain) {
+    //     FM_GLOBAL.code_editor = monaco.editor.create(code_contain, monaco_config_for_cad);
+    // }
 });
 </script>
 <!--  style  -->

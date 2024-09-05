@@ -5,6 +5,13 @@
     font-style: normal;
     font-display: block;
 }
+.code_contain {
+    width: 800px;
+    height: calc(100vh - 88px);
+    position: fixed;
+    left: 255px;
+    top: 44px;
+}
 .v-application {
     background: url("../img/background.jpg");
 }

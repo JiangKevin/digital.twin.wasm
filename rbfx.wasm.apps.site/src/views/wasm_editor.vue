@@ -19,10 +19,24 @@ import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
-import { fm_addScript, simple_wasm } from "@/plugins/base.js";
+import { fm_addScript, fm_addScriptToDom, fm_download, fm_delScript } from "@/plugins/base.js";
 //
 onMounted(() => {
     console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
+    //
+    // console.log(Module);
+    // if (is_load_rbfx_wasm) {
+    //     console.log("+- Stop");
+    //     Module._Stop();
+    //     is_load_rbfx_wasm = false;
+    // }
+
+    // Module = {};
+    // fm_delScript("./data.js");
+    // fm_delScript("./common.js");
+    // console.log(Module);
+
+    //
     if (!is_load_rbfx_wasm) {
         Module = {
             preRun: [],
@@ -46,11 +60,24 @@ onMounted(() => {
                 Module["removeRunDependency"]("IndexedDB");
             });
         });
-        //
-        fm_addScript("./data.js", true);
-        fm_addScript("./common.js", true);
+        // //
+        var data_download = fm_download("./data.js").then(function (data) {
+            console.log("+- From js: Downloaded WASM Js File");
+            console.log(data);
+            eval(data);
+        });
+        var js_wasm_download = fm_download("./common.js").then(function (data) {
+            console.log("+- From js: Downloaded WASM Js File");
+            console.log(data);
+            eval(data);
+        });
+        // fm_addScript("./data.js", true, false);
+        // fm_addScript("./common.js", true, false);
         //
         is_load_rbfx_wasm = true;
+    } else {
+        // Module.canvas = document.getElementById("canvas");
+        // Module._main();
     }
 });
 //

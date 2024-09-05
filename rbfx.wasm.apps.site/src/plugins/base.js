@@ -39,17 +39,19 @@ export function fm_addScriptToDom(scriptCode) {
     });
 }
 //
-export function fm_addScript(js_url, async) {
+export function fm_addScript(js_url, async, m) {
     var script = document.createElement("script");
-    script.setAttribute("src", js_url);
+    if (m) {
+        script.setAttribute("type", "module");
+    }
     if (async) {
         script.setAttribute("async", "");
-    } else {
-        script.setAttribute("async", "false");
     }
-    script.onload = function () {
+    script.setAttribute("src", js_url);
+
+    script.onload = function (obj) {
         console.log("+- From js: " + js_url + " is Download. The type = " + async);
-        console.log(Module);
+        console.log(obj);
     };
     document.body.appendChild(script);
 }
@@ -200,4 +202,15 @@ export function simple_wasm(Module) {
             Module["removeRunDependency"]("IndexedDB");
         });
     });
+}
+
+//
+export function fm_delScript(js_url) {
+    var script = Array.from(document.getElementsByTagName("script")).find(function (script) {
+        var src = script.getAttribute("src");
+        return src && src.startsWith(js_url);
+    });
+    if (script) {
+        script.remove();
+    }
 }

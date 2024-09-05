@@ -51,7 +51,9 @@
         <!--  -->
         <v-main>
             <RouterView></RouterView>
-            <iframe src="./code.html" class="code_contain" frameBorder="0"></iframe>
+            <div class="code_contain">
+                <iframe src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
+            </div>
         </v-main>
         <!--  -->
     </v-layout>

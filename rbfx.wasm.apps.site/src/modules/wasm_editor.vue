@@ -45,6 +45,15 @@ onMounted(() => {
         //
         is_load_rbfx_wasm = true;
     }
+    //
+    var elem = document.getElementById("canvas");
+    elem.addEventListener(
+        "click",
+        function () {
+            elem.focus();
+        },
+        false
+    );
 });
 //
 function code_ck() {}

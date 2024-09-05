@@ -11,7 +11,6 @@ const https = require("https");
 const multer = require("multer");
 const project = require("./node-mid/project.js");
 const sqlite3 = require("sqlite3").verbose();
-// const wasm_importer = require("./web/assetImporter/assetImporter.js");
 const wasm_importer = require("./web/rbfxImporter/rbfxImporter.js");
 // const ai = AssetImporter();
 //////////////////////////////////////

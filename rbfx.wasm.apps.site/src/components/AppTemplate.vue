@@ -50,7 +50,7 @@
         </v-navigation-drawer>
         <!--  -->
         <v-main>
-            <FmContain></FmContain>
+            <RouterView></RouterView>
         </v-main>
         <!--  -->
     </v-layout>
@@ -58,7 +58,6 @@
 <!--  script  -->
 <script setup>
 import { RouterView } from "vue-router";
-import FmContain from "@/views/FmContain";
 //
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
@@ -74,7 +73,6 @@ function route_ck(item) {
     //
     if (mainStore_menu.is_logined) {
         console.log(item.text);
-        // router.push({ path: item.route, replace: true });
         mainStore_menu.menu_navigation_item = item.text;
     } else {
         router.push({ path: "login", replace: true });

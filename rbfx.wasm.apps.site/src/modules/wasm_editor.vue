@@ -65,6 +65,7 @@ function code_div_show_ck() {
 }
 function get_variables() {
     FM_GLOBAL.DTWIN_EDITOR = Module;
+    fm_addScript("./runtime/basic/digital_twin_wrap.js", true, false);
 }
 </script>
 <!--  style  -->

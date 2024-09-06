@@ -5,11 +5,20 @@
     font-style: normal;
     font-display: block;
 }
-.code_contain {
+.code_contain_have_left {
     width: 800px;
     height: calc(100vh - 88px);
     position: fixed;
     left: 255px;
+    top: 44px;
+    background-color: #1c1c1c;
+    opacity: 80%;
+}
+.code_contain_no_left {
+    width: 800px;
+    height: calc(100vh - 88px);
+    position: fixed;
+    left: 56px;
     top: 44px;
     background-color: #1c1c1c;
     opacity: 80%;
@@ -41,7 +50,7 @@
     margin-bottom: 20px;
 }
 .main_container_toolbar {
-    padding-left: 4px;
+    padding-left: 1px;
     height: 24px;
     position: fixed;
     top: 20px;
@@ -104,4 +113,12 @@
 }
 .divider_vertical {
     height: 24px;
+}
+.code_contain_show_div
+{
+    display: none;
+}
+.code_contain_hide_div
+{
+    display: block;
 }

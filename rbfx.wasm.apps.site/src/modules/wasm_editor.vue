@@ -2,7 +2,7 @@
 <template>
     <div class="main_container_toolbar blur_div">
         <v-divider vertical class="divider_vertical"></v-divider>
-        <button class="toolbar_btn" @click="code_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
+        <button class="toolbar_btn" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
     </div>
     <div class="main_container_content">
@@ -22,6 +22,7 @@ import { fm_addScript, fm_delScript } from "@/plugins/base.js";
 //
 onMounted(() => {
     console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
+    var log_span = document.getElementById("output");
     //
     if (!is_load_rbfx_wasm) {
         Module = {
@@ -30,11 +31,13 @@ onMounted(() => {
             print: (function () {
                 return function (text) {
                     console.log("+- From c++: " + text);
+                    log_span.innerText = "+- From c++: " + text;
                 };
             })(),
             printErr: (function () {
                 return function (text) {
                     console.log("[ERROR] +- From c++: " + text);
+                    log_span.innerText = "[ERROR] +- From c++: " + text;
                 };
             })(),
             canvas: document.getElementById("canvas"),
@@ -50,13 +53,17 @@ onMounted(() => {
     elem.addEventListener(
         "click",
         function () {
+            console.log("+- focus.");
             elem.focus();
         },
         false
     );
 });
 //
-function code_ck() {}
+function code_div_show_ck()
+{
+    mainStore_menu.yn_show_code_contain = !mainStore_menu.yn_show_code_contain;
+}
 </script>
 <!--  style  -->
 <style scoped>

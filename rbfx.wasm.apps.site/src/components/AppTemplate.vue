@@ -45,13 +45,13 @@
                 </v-list-item>
             </v-list>
             <!--  -->
-            <div class="fm_main_log_contain"><v-divider></v-divider><v-img :width="180" aspect-ratio="1/1" cover :src="logoImgUrl" class="animate__animated animate__rubberBand" :class="logo_class_Select(mainStore_menu.rail)"></v-img></div>
+            <div class="fm_main_log_contain"><v-divider></v-divider><v-img :width="180" aspect-ratio="1/1" cover :src="logoImgUrl" class="animate__animated animate__rubberBand" :class="logo_class_select(mainStore_menu.rail)"></v-img></div>
             <!--  -->
         </v-navigation-drawer>
         <!--  -->
         <v-main>
             <RouterView></RouterView>
-            <div class="code_contain">
+            <div class="code_contain" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)">
                 <iframe src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
         </v-main>
@@ -87,29 +87,49 @@ function view_manu_ck() {
 }
 //
 function logout_ck() {
-    mainStore_menu.logout();
+    mainStore_menu.is_logined = false;
+    mainStore_menu.user_info.username = "";
+    mainStore_menu.user_info.password = "";
+    mainStore_menu.user_info.token = "";
+    mainStore_menu.user_info.image = "";
+    mainStore_menu.user_info.email = "";
+    mainStore_menu.user_info.fullname = "";
+    //
     Module._Stop();
+    //
     fm_delScript("./data.js");
     fm_delScript("./common.js");
     router.push({ path: "login", replace: true });
 }
 //
-function logo_class_Select(is_view) {
+function logo_class_select(is_view) {
     if (!is_view) {
         return "fm_main_log ";
     } else {
         ("fm_main_log_min ");
     }
 }
+function code_div_class_select(is_view, rail) {
+    var rt = "";
+    //
+    if (rail) {
+        rt = rt + " code_contain_no_left ";
+    } else {
+        rt = rt + " code_contain_have_left ";
+    }
+    if (is_view) {
+        rt = rt + " code_contain_show_div ";
+    } else {
+        rt = rt + " code_contain_hide_div ";
+    }
+    //
+    return rt;
+}
 //
 onMounted(() => {
     if (mainStore_menu.is_logined != true) {
         router.push({ path: "login", replace: true });
     }
-    // var code_contain = document.getElementById("code_contain_div");
-    // if (code_contain) {
-    //     FM_GLOBAL.code_editor = monaco.editor.create(code_contain, monaco_config_for_cad);
-    // }
 });
 </script>
 <!--  style  -->

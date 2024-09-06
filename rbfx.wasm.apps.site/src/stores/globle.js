@@ -7,6 +7,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     var rail = ref(false);
     var is_logined = ref(true);
     var login_log = ref("");
+    var yn_show_code_contain = ref(false);
     //
     var menu_navigation_item = ref("All Proejcts");
     //
@@ -22,17 +23,6 @@ export const useStoreForMenu = defineStore("menu", () => {
     //
     var user_info = { username: "admin", password: "", token: "", image: avatarImgUrl, email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
     //
-    function logout() {
-        is_logined = false;
-        //
-        user_info.username = "";
-        user_info.password = "";
-        user_info.token = "";
-        user_info.image = "";
-        user_info.email = "";
-        user_info.fullname = "";
-    }
-    //
     function reset_menu_status() {
         for (var i = 0; i < menu_items.length; i++) {
             menu_items[i].active = false;
@@ -45,7 +35,7 @@ export const useStoreForMenu = defineStore("menu", () => {
         }
     }
     //
-    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, logout, reset_menu_status, menu_navigation_item };
+    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, reset_menu_status, menu_navigation_item, yn_show_code_contain };
 });
 //
 export const useStoreForHome = defineStore("home", () => {

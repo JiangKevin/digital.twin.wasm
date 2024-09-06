@@ -56,7 +56,7 @@
                     inherit: true,
                     rules: [{ token: "comment", foreground: "008000", fontStyle: "italic" }],
                     colors: {
-                        "editor.lineHighlightBackground": "#0000008c",
+                        "editor.lineHighlightBackground": "#cf141550",
                     },
                 });
                 vs_editor.monaco.editor.setTheme("fm-theme");
@@ -79,6 +79,10 @@
                 width: 100%;
                 height: 100%;
                 border: none;
+            }
+            .monaco-editor .margin {
+                background-color: #1a191c;
+                /* opacity: 80%; */
             }
         </style>
     </body>

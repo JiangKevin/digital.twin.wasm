@@ -11,7 +11,7 @@
     position: fixed;
     left: 255px;
     top: 44px;
-    background-color: #1c1c1c;
+    background-color: #1a191c;
     opacity: 80%;
 }
 .code_contain_no_left {
@@ -20,11 +20,24 @@
     position: fixed;
     left: 56px;
     top: 44px;
-    background-color: #1c1c1c;
+    background-color: #1a191c;
     opacity: 80%;
 }
+.code_contain_have_left:hover {
+    background-color: #cf1415;
+}
+.code_contain_no_left :hover {
+    background-color: #cf1415;
+}
+.code_contain_have_left:active {
+    background-color: #e90b0b;
+}
+.code_contain_no_left :active {
+    background-color: #e90b0b;
+}
+
 .code_contain_frame {
-    width: 100%;
+    width: calc(100% - 10px);
     height: 100%;
     background-color: #1c1c1c;
 }

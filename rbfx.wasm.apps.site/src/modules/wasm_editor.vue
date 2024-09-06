@@ -74,7 +74,7 @@ function get_variables() {
 function run_code_for_editor() {
     var log_span = document.getElementById("output");
     try {
-        eval(FM_GLOBAL.MONACO_EDITOR.getValue());
+        run_code(FM_GLOBAL.MONACO_EDITOR.getValue());
         log_span.innerText = "+-  Run ok. ";
     } catch (e) {
         log_span.innerText = "+-  " + e.message;

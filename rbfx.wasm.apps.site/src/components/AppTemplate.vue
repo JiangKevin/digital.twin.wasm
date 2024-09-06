@@ -51,7 +51,7 @@
         <!--  -->
         <v-main>
             <RouterView></RouterView>
-            <div class="code_contain" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)">
+            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)" id="vs_code_contain">
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
         </v-main>
@@ -131,12 +131,32 @@ onMounted(() => {
     if (mainStore_menu.is_logined != true) {
         router.push({ path: "login", replace: true });
     }
+    //
     var code_frame = document.getElementById("vs_code_frame");
     if (code_frame) {
         code_frame.onload = function () {
             console.log("+- From js: frame loaded.");
             FM_GLOBAL.MONACO_EDITOR = window.frames["vs_code_frame"].contentWindow.FM_GLOBAL.editor;
             console.log(FM_GLOBAL.MONACO_EDITOR);
+        };
+    }
+    //
+    var vs_code_contain = document.getElementById("vs_code_contain");
+    if (vs_code_contain) {
+        vs_code_contain.onmousedown = function (e) {
+            document.onmousemove = function (e) {
+                // console.log("e.clientX " + e.clientX);
+                // console.log("vs_code_contain.offsetWidth " + vs_code_contain.offsetWidth);
+                // console.log("vs_code_contain.offsetLeft " + vs_code_contain.offsetLeft);
+                vs_code_contain.style.width = e.clientX - vs_code_contain.offsetLeft + "px";
+            };
+            document.onmouseup = function (evt) {
+                document.onmousemove = null;
+                document.onmouseup = null;
+                vs_code_contain.releaseCapture && vs_code_contain.releaseCapture();
+            };
+            vs_code_contain.setCapture && vs_code_contain.setCapture();
+            return false;
         };
     }
 });
@@ -164,5 +184,9 @@ function frame_load() {
     animation-iteration-count: infinite;
     margin: 0px;
     padding: 0px;
+}
+.resizable {
+    overflow: auto;
+    resize: horizontal;
 }
 </style>

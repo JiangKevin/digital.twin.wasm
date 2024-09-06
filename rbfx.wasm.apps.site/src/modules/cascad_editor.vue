@@ -9,13 +9,13 @@
 <!--  script  -->
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
+
 //
-// onMounted(() => {
-//     var editor = monaco.editor.create(document.getElementById("cas_cad_container"), monaco_config_for_cad);
-// });
+onMounted(() => {
+    busy_div_control("other_log", true);
+});
 </script>
 
 <!--  style  -->
-<style scoped>
-
-</style>
+<style scoped></style>

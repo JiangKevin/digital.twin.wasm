@@ -45,12 +45,14 @@ onMounted(() => {
                 return function (text) {
                     console.log("+- From c++: " + text);
                     log_span.innerText = "+- From c++: " + text;
+                    FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "\n+- From c++: " + text;
                 };
             })(),
             printErr: (function () {
                 return function (text) {
                     console.log("[ERROR] +- From c++: " + text);
                     log_span.innerText = "[ERROR] +- From c++: " + text;
+                    FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "\n[ERROR] +- From c++: " + text;
                 };
             })(),
             canvas: document.getElementById("canvas"),

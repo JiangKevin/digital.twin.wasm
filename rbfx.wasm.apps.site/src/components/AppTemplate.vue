@@ -118,6 +118,7 @@ function logo_class_select(is_view) {
     } else {
         ("fm_main_log_min ");
     }
+  
 }
 function code_div_class_select(is_view, rail) {
     var rt = "";
@@ -161,6 +162,8 @@ onMounted(() => {
             console.log(FM_GLOBAL.MONACO_EDITOR);
         };
     }
+    //
+    FM_GLOBAL.LOG = document.getElementById("story");
 });
 //
 function frame_load() {
@@ -193,13 +196,15 @@ function frame_load() {
 }
 .output_wasm {
     background-color: rgba(0, 0, 255, 0);
-    border: 0px solid rgb(100, 0, 200);
+    border: none;
     color: aliceblue;
     font-size: 11px;
     width: 100%;
     outline: none;
     resize: none;
     height: 100%;
+    margin: 0px;
+    padding-left: 8px;
 }
 .output_wasm::-webkit-scrollbar {
     width: 0;

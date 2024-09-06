@@ -9,15 +9,18 @@
         <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Run Digital Twin Code</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
         <!--  -->
-        <input id="code-file" name="code-file" type="file" accept=".txt" style="display: none" />
-        <label for="code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Code File</v-tooltip></label>
+        <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
+        <label for="rbfx-code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Code File</v-tooltip></label>
+        <v-divider vertical class="divider_vertical"></v-divider>
+        <!--  -->
+        <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Save Code File</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
     </div>
     <div class="main_container_content">
         <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
     </div>
     <div class="main_container_status blur_div">
-        <span id="output">asdfasdf</span>
+        <span id="rbfx-output"></span>
     </div>
 </template>
 <!--  script  -->
@@ -26,11 +29,11 @@ import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_code_file } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile } from "@/plugins/base.js";
 //
 onMounted(() => {
     console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
-    var log_span = document.getElementById("output");
+    var log_span = document.getElementById("rbfx-output");
     //
     if (!is_load_rbfx_wasm) {
         Module = {
@@ -67,9 +70,7 @@ onMounted(() => {
         false
     );
     //
-    var code = "";
-    open_code_file(log_span.innerText, code);
-    console.log(code);
+    open_rbfx_code_file(FM_GLOBAL.MONACO_EDITOR, log_span);
 });
 //
 function code_div_show_ck() {
@@ -80,7 +81,7 @@ function get_variables() {
     fm_addScript("./runtime/basic/digital_twin_wrap.js", true, false);
 }
 function run_code_for_editor() {
-    var log_span = document.getElementById("output");
+    var log_span = document.getElementById("rbfx-output");
     try {
         run_code(FM_GLOBAL.MONACO_EDITOR.getValue());
         log_span.innerText = "+-  Run ok. ";
@@ -89,6 +90,10 @@ function run_code_for_editor() {
     } finally {
         //
     }
+}
+function save_code_ck() {
+    var log_span = document.getElementById("rbfx-output");
+    saveCodeToFile(FM_GLOBAL.MONACO_EDITOR.getValue(), log_span);
 }
 </script>
 <!--  style  -->

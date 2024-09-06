@@ -236,18 +236,78 @@ export function fm_delScript(js_url) {
     }
 }
 //
-export function open_code_file(log, code) {
-    var open_file_input = document.getElementById("code-file");
+export function open_rbfx_code_file(editor, log_span) {
+    var open_file_input = document.getElementById("rbfx-code-file");
+    //
     if (open_file_input) {
         open_file_input.addEventListener("input", async (event) => {
             try {
-                code = await event.srcElement.files[0].text();
-                log = "+-  Load File: " + event.srcElement.files[0].name;
+                var code = await event.srcElement.files[0].text();
+                editor.setValue(code);
+                log_span.innerText = "+-  Load File: " + event.srcElement.files[0].name;
             } catch (e) {
-                log = "+-  " + e.message;
+                log_span.innerText = "+-  " + e.message;
             } finally {
-                //
             }
         });
     }
 }
+//
+export function open_cascad_code_file(editor, log_span) {
+    var open_file_input = document.getElementById("cascade-code-file");
+    //
+    if (open_file_input) {
+        open_file_input.addEventListener("input", async (event) => {
+            try {
+                var code = await event.srcElement.files[0].text();
+                editor.setValue(code);
+                log_span.innerText = "+-  Load File: " + event.srcElement.files[0].name;
+            } catch (e) {
+                log_span.innerText = "+-  " + e.message;
+            } finally {
+            }
+        });
+    }
+}
+//
+async function getNewFileHandle(desc, mime, ext, open = false) {
+    const options = {
+        types: [
+            {
+                description: desc,
+                accept: {
+                    [mime]: ["." + ext],
+                },
+            },
+        ],
+    };
+    if (open) {
+        return await window.showOpenFilePicker(options);
+    } else {
+        return await window.showSaveFilePicker(options);
+    }
+}
+//
+async function downloadFile(data, name, mime, ext) {
+    const blob = new Blob([data], { type: mime });
+    const a = document.createElement("a");
+    a.download = name + "." + ext;
+    a.style.display = "none";
+    a.href = window.URL.createObjectURL(blob);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(a.href);
+}
+//
+export const saveCodeToFile = async (code, log_span) => {
+    //
+    if (window.showSaveFilePicker) {
+        const fileHandle = await getNewFileHandle("files", "text/plain", "js");
+        writeFile(fileHandle, code).then(() => {
+            log_span.innerText = "Saved code to " + fileHandle.name;
+        });
+    } else {
+        await downloadFile(result, "Untitled", "model/txt", "js");
+    }
+};

@@ -58,10 +58,7 @@
             <!-- busy div  -->
             <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
                 <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div"></v-progress-circular>
-                <textarea id="story" name="story" rows="8" class="output_wasm">
-It was a dark and stormy night...
-</textarea
-                >
+                <textarea id="story" name="story" rows="8" class="output_wasm"></textarea>
             </div>
         </v-main>
         <!--  -->
@@ -118,7 +115,6 @@ function logo_class_select(is_view) {
     } else {
         ("fm_main_log_min ");
     }
-  
 }
 function code_div_class_select(is_view, rail) {
     var rt = "";

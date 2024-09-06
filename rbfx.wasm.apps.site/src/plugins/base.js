@@ -320,3 +320,22 @@ export const saveCodeToFile = async (code, log_span) => {
         await downloadFile(result, "Untitled", "model/txt", "js");
     }
 };
+//
+export function busy_div_control(div_name, is_view, is_no_left) {
+    console.log("+- From js: busy_div_control run.")
+    var select_div = document.getElementById(div_name);
+    var rt = "";
+    //
+    if (is_no_left) {
+        rt = rt + " busy_contain_no_left ";
+    } else {
+        rt = rt + " busy_contain_have_left ";
+    }
+    if (is_view) {
+        rt = rt + " show_div ";
+    } else {
+        rt = rt + " hide_div ";
+    }
+    //
+    select_div.className = rt;
+}

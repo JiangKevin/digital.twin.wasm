@@ -56,7 +56,7 @@
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
             <!-- busy div  -->
-            <div id="busy_contain" :class="busy_div_class_select(is_busy, mainStore_menu.rail)"></div>
+            <div id="busy_contain"></div>
         </v-main>
         <!--  -->
     </v-layout>
@@ -120,22 +120,6 @@ function code_div_class_select(is_view, rail) {
         rt = rt + " code_contain_no_left ";
     } else {
         rt = rt + " code_contain_have_left ";
-    }
-    if (is_view) {
-        rt = rt + " show_div ";
-    } else {
-        rt = rt + " hide_div ";
-    }
-    //
-    return rt;
-}
-function busy_div_class_select(is_view, rail) {
-    var rt = "";
-    //
-    if (rail) {
-        rt = rt + " busy_contain_no_left ";
-    } else {
-        rt = rt + " busy_contain_have_left ";
     }
     if (is_view) {
         rt = rt + " show_div ";

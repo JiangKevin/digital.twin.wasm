@@ -140,25 +140,25 @@ onMounted(() => {
             console.log(FM_GLOBAL.MONACO_EDITOR);
         };
     }
-    //
-    var vs_code_contain = document.getElementById("vs_code_contain");
-    if (vs_code_contain) {
-        vs_code_contain.onmousedown = function (e) {
-            document.onmousemove = function (e) {
-                // console.log("e.clientX " + e.clientX);
-                // console.log("vs_code_contain.offsetWidth " + vs_code_contain.offsetWidth);
-                // console.log("vs_code_contain.offsetLeft " + vs_code_contain.offsetLeft);
-                vs_code_contain.style.width = e.clientX - vs_code_contain.offsetLeft + "px";
-            };
-            document.onmouseup = function (evt) {
-                document.onmousemove = null;
-                document.onmouseup = null;
-                vs_code_contain.releaseCapture && vs_code_contain.releaseCapture();
-            };
-            vs_code_contain.setCapture && vs_code_contain.setCapture();
-            return false;
-        };
-    }
+    // //
+    // var vs_code_contain = document.getElementById("vs_code_contain");
+    // if (vs_code_contain) {
+    //     vs_code_contain.onmousedown = function (e) {
+    //         document.onmousemove = function (e) {
+    //             // console.log("e.clientX " + e.clientX);
+    //             // console.log("vs_code_contain.offsetWidth " + vs_code_contain.offsetWidth);
+    //             // console.log("vs_code_contain.offsetLeft " + vs_code_contain.offsetLeft);
+    //             vs_code_contain.style.width = e.clientX - vs_code_contain.offsetLeft + "px";
+    //         };
+    //         document.onmouseup = function (evt) {
+    //             document.onmousemove = null;
+    //             document.onmouseup = null;
+    //             vs_code_contain.releaseCapture && vs_code_contain.releaseCapture();
+    //         };
+    //         vs_code_contain.setCapture && vs_code_contain.setCapture();
+    //         return false;
+    //     };
+    // }
 });
 //
 function frame_load() {

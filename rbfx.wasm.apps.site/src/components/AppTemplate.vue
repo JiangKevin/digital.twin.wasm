@@ -195,12 +195,12 @@ function frame_load() {
     border: none;
     color: aliceblue;
     font-size: 11px;
-    width: 100%;
+    width: calc(100% - 16px);
     outline: none;
     resize: none;
-    height: 100%;
-    margin: 0px;
-    padding-left: 8px;
+    height: calc(100% - 16px);
+    margin: 8px;
+    padding: 0px;
 }
 .output_wasm::-webkit-scrollbar {
     width: 0;

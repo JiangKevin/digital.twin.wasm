@@ -288,6 +288,15 @@ async function getNewFileHandle(desc, mime, ext, open = false) {
     }
 }
 //
+async function writeFile(fileHandle, contents) {
+    // Create a FileSystemWritableFileStream to write to.
+    const writable = await fileHandle.createWritable();
+    // Write the contents of the file to the stream.
+    await writable.write(contents);
+    // Close the file and write the contents to disk.
+    await writable.close();
+}
+//
 async function downloadFile(data, name, mime, ext) {
     const blob = new Blob([data], { type: mime });
     const a = document.createElement("a");

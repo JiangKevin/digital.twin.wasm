@@ -95,8 +95,9 @@ function logout_ck() {
     mainStore_menu.user_info.email = "";
     mainStore_menu.user_info.fullname = "";
     //
-    Module._Stop();
-    //
+    if (JSON.stringify(Module) != "{}") {
+        Module._Stop();
+    } //
     fm_delScript("./data.js");
     fm_delScript("./common.js");
     router.push({ path: "login", replace: true });

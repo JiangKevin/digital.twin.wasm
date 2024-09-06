@@ -56,7 +56,7 @@
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
             <!-- busy div  -->
-            <div id="busy_contain"></div>
+            <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)"></div>
         </v-main>
         <!--  -->
     </v-layout>
@@ -129,8 +129,20 @@ function code_div_class_select(is_view, rail) {
     //
     return rt;
 }
+function busy_div_class_select(rail) {
+    var rt = "";
+    //
+    if (rail) {
+        rt = rt + " busy_contain_no_left ";
+    } else {
+        rt = rt + " busy_contain_have_left ";
+    }
+    //
+    return rt;
+}
 //
 onMounted(() => {
+    busy_div_control("other_log", false);
     if (mainStore_menu.is_logined != true) {
         router.push({ path: "login", replace: true });
     }

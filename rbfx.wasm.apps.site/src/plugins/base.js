@@ -321,21 +321,11 @@ export const saveCodeToFile = async (code, log_span) => {
     }
 };
 //
-export function busy_div_control(div_name, is_view, is_no_left) {
-    console.log("+- From js: busy_div_control run.")
+export function busy_div_control(div_name, is_view) {
     var select_div = document.getElementById(div_name);
-    var rt = "";
-    //
-    if (is_no_left) {
-        rt = rt + " busy_contain_no_left ";
-    } else {
-        rt = rt + " busy_contain_have_left ";
-    }
     if (is_view) {
-        rt = rt + " show_div ";
+        select_div.style.visibility = "visible";
     } else {
-        rt = rt + " hide_div ";
+        select_div.style.visibility = "hidden";
     }
-    //
-    select_div.className = rt;
 }

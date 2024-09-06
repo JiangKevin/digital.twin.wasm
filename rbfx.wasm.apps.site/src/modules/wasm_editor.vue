@@ -34,7 +34,7 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 onMounted(() => {
     // console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
     var log_span = document.getElementById("rbfx-output");
-    busy_div_control("busy_contain", true, mainStore_menu.rail);
+    busy_div_control("other_log", true);
     //
     if (!is_load_rbfx_wasm) {
         //
@@ -81,7 +81,6 @@ function code_div_show_ck() {
 function get_variables() {
     FM_GLOBAL.DTWIN_EDITOR = Module;
     fm_addScript("./runtime/basic/digital_twin_wrap.js", true, false);
-    busy_div_control("busy_contain", false, mainStore_menu.rail);
 }
 function run_code_for_editor() {
     var log_span = document.getElementById("rbfx-output");

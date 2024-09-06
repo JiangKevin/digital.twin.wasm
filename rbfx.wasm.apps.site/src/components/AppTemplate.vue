@@ -135,6 +135,8 @@ onMounted(() => {
     if (code_frame) {
         code_frame.onload = function () {
             console.log("+- From js: frame loaded.");
+            FM_GLOBAL.MONACO_EDITOR = window.frames["vs_code_frame"].contentWindow.FM_GLOBAL.editor;
+            console.log(FM_GLOBAL.MONACO_EDITOR);
         };
     }
 });

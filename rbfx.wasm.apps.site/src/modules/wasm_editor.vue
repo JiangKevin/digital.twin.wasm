@@ -18,7 +18,7 @@ import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
-import { fm_addScript, fm_delScript } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript } from "@/plugins/base.js";
 //
 onMounted(() => {
     console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
@@ -27,7 +27,7 @@ onMounted(() => {
     if (!is_load_rbfx_wasm) {
         Module = {
             preRun: [],
-            postRun: [],
+            postRun: get_variables,
             print: (function () {
                 return function (text) {
                     console.log("+- From c++: " + text);
@@ -44,7 +44,7 @@ onMounted(() => {
         };
         //
         fm_addScript("./data.js", true, false);
-        fm_addScript("./common.js", true, false);
+        fm_addScript_for_dtwin("./common.js", true, false, FM_GLOBAL.DTWIN_EDITOR);
         //
         is_load_rbfx_wasm = true;
     }
@@ -60,9 +60,11 @@ onMounted(() => {
     );
 });
 //
-function code_div_show_ck()
-{
+function code_div_show_ck() {
     mainStore_menu.yn_show_code_contain = !mainStore_menu.yn_show_code_contain;
+}
+function get_variables() {
+    FM_GLOBAL.DTWIN_EDITOR = Module;
 }
 </script>
 <!--  style  -->

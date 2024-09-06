@@ -2,11 +2,11 @@
     <head>
         <link rel="stylesheet" data-name="vs/editor/editor.main" href="./runtime/js/monaco-editor/min/vs/editor/editor.main.css" />
         <script type="text/javascript" src="./runtime/js/monaco-editor/min/vs/loader.js"></script>
+        <script type="text/javascript" src="./runtime/basic/global.js"></script>
     </head>
     <body>
         <div id="code"></div>
         <script>
-            vs_editor = {};
             //
             const monaco_config = {
                 value: "",
@@ -47,11 +47,7 @@
             //
             require.config({ paths: { vs: "./runtime/js/monaco-editor/min/vs" } });
             require(["vs/editor/editor.main"], function () {
-                //
-                console.log(monaco);
-                console.log(window.monaco);
-                vs_editor.monaco = window.monaco;
-                vs_editor.monaco.editor.defineTheme("fm-theme", {
+                window.monaco.editor.defineTheme("fm-theme", {
                     base: "vs-dark",
                     inherit: true,
                     rules: [{ token: "comment", foreground: "008000", fontStyle: "italic" }],
@@ -60,12 +56,12 @@
                         "editorGutter.background": "#1a191c",
                     },
                 });
-                vs_editor.monaco.editor.setTheme("fm-theme");
+                window.monaco.editor.setTheme("fm-theme");
                 //
                 var code_contain = document.getElementById("code");
                 if (code_contain) {
-                    console.log(vs_editor.monaco);
-                    vs_editor.code_editor = vs_editor.monaco.editor.create(code_contain, monaco_config);
+                    FM_GLOBAL.editor = window.monaco.editor.create(code_contain, monaco_config);
+                    // console.log(FM_GLOBAL.editor);
                 }
             });
         </script>

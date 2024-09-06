@@ -56,6 +56,28 @@ export function fm_addScript(js_url, async, m) {
     };
     document.body.appendChild(script);
 }
+export function fm_addScript_for_dtwin(js_url, async, m, object) {
+    var script = document.createElement("script");
+    if (m) {
+        script.setAttribute("type", "module");
+    }
+    if (async) {
+        script.setAttribute("async", "");
+    }
+    script.setAttribute("src", js_url);
+    //
+    script.onload = function (obj) {
+        console.log("+- From js: " + js_url + " is Download.");
+        console.log(Module);
+    };
+    script.onDOMContentLoaded = function (obj) {
+        console.log("+- From js: " + js_url + " is DOMContentLoaded.");
+        console.log(Module);
+    };
+
+    //
+    document.body.appendChild(script);
+}
 //
 export function init_dt_wasm() {
     var div_canvas = document.getElementById("canvas");

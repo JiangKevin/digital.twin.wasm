@@ -56,7 +56,13 @@
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
             <!-- busy div  -->
-            <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)"></div>
+            <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
+                <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div"></v-progress-circular>
+                <textarea id="story" name="story" rows="8" class="output_wasm">
+It was a dark and stormy night...
+</textarea
+                >
+            </div>
         </v-main>
         <!--  -->
     </v-layout>
@@ -184,5 +190,24 @@ function frame_load() {
 .resizable {
     overflow: auto;
     resize: horizontal;
+}
+.output_wasm {
+    background-color: rgba(0, 0, 255, 0);
+    border: 0px solid rgb(100, 0, 200);
+    color: aliceblue;
+    font-size: 11px;
+    width: 100%;
+    outline: none;
+    resize: none;
+    height: 100%;
+}
+.output_wasm::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.output_progress_div {
+    position: fixed;
+    top: calc(50% - 64px);
+    left: calc(50% - 64px);
 }
 </style>

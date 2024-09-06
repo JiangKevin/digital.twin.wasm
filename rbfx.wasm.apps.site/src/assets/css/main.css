@@ -180,8 +180,9 @@
     left: 56px;
     top: 20px;
     background-color: var(--fm_toolbar);
-    opacity: 90%;
     z-index: 2000;
+    text-align: center;
+    /* line-height: calc(100vh - 40px); */
 }
 .busy_contain_have_left {
     width: calc(100% - 255px);
@@ -190,6 +191,7 @@
     left: 255px;
     top: 20px;
     background-color: var(--fm_toolbar);
-    opacity: 90%;
     z-index: 2000;
+    text-align: center;
+    /* line-height: calc(100vh - 40px); */
 }

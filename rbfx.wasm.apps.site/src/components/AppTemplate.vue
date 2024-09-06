@@ -56,7 +56,7 @@
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
             <!-- busy div  -->
-            <div id="busy_contain" :class="busy_div_class_select(mainStore_menu.is_busy, mainStore_menu.rail)"></div>
+            <div id="busy_contain" :class="busy_div_class_select(is_busy, mainStore_menu.rail)"></div>
         </v-main>
         <!--  -->
     </v-layout>

@@ -149,10 +149,10 @@
     height: 24px;
 }
 .show_div {
-    display: none;
+    display: block;
 }
 .hide_div {
-    display: block;
+    display: none;
 }
 .toolbar_btn_label {
     line-height: 24px;

@@ -1,6 +1,7 @@
 :root {
     --fm_btn_hover: #cf1415;
     --fm_btn_active: #e90b0b;
+    --fm_toolbar: #1b1a1e;
 }
 /*  */
 @font-face {
@@ -72,7 +73,7 @@
     height: 24px;
     position: fixed;
     top: 20px;
-    background-color: #1b1a1e;
+    background-color: var(--fm_toolbar);
     width: 100%;
     line-height: 24px;
     display: flex;
@@ -81,14 +82,14 @@
     height: 24px;
     position: fixed;
     bottom: 20px;
-    background-color: #1b1a1e;
+    background-color: var(--fm_toolbar);
     width: 100%;
     line-height: 24px;
     padding-left: 4px;
 }
 .main_container_status > span {
     font-size: 12px;
-    background-color: #1b1a1e;
+    background-color: var(--fm_toolbar);
     text-align: center;
 }
 .main_container_content {
@@ -178,7 +179,7 @@
     position: fixed;
     left: 56px;
     top: 20px;
-    background-color: #4f0bd7;
+    background-color: var(--fm_toolbar);
     opacity: 90%;
     z-index: 2000;
 }
@@ -188,7 +189,7 @@
     position: fixed;
     left: 255px;
     top: 20px;
-    background-color: #5412d7;
+    background-color: var(--fm_toolbar);
     opacity: 90%;
     z-index: 2000;
 }

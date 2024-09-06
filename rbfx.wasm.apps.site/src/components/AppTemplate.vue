@@ -70,7 +70,7 @@ import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 import logoImgUrl from "@/assets/img/logo_outlined.png";
 import "@/assets/css/animate/animate.min.css";
-import { fm_delScript } from "@/plugins/base.js";
+import { fm_delScript, busy_div_control } from "@/plugins/base.js";
 //
 import router from "@/router/router";
 function route_ck(item) {

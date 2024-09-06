@@ -2,7 +2,11 @@
 <template>
     <div class="main_container_toolbar blur_div">
         <v-divider vertical class="divider_vertical"></v-divider>
+        <!--  -->
         <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
+        <v-divider vertical class="divider_vertical"></v-divider>
+        <!--  -->
+        <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Run Digital Twin Code</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
     </div>
     <div class="main_container_content">
@@ -66,6 +70,17 @@ function code_div_show_ck() {
 function get_variables() {
     FM_GLOBAL.DTWIN_EDITOR = Module;
     fm_addScript("./runtime/basic/digital_twin_wrap.js", true, false);
+}
+function run_code_for_editor() {
+    var log_span = document.getElementById("output");
+    try {
+        eval(FM_GLOBAL.MONACO_EDITOR.getValue());
+        log_span.innerText = "+-  Run ok. ";
+    } catch (e) {
+        log_span.innerText = "+-  " + e.message;
+    } finally {
+        //
+    }
 }
 </script>
 <!--  style  -->

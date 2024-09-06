@@ -68,11 +68,11 @@ export function fm_addScript_for_dtwin(js_url, async, m, object) {
     //
     script.onload = function (obj) {
         console.log("+- From js: " + js_url + " is Download.");
-        console.log(Module);
+        // console.log(Module);
     };
     script.onDOMContentLoaded = function (obj) {
         console.log("+- From js: " + js_url + " is DOMContentLoaded.");
-        console.log(Module);
+        // console.log(Module);
     };
 
     //

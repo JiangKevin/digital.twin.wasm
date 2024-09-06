@@ -45,14 +45,16 @@ onMounted(() => {
                 return function (text) {
                     console.log("+- From c++: " + text);
                     log_span.innerText = "+- From c++: " + text;
-                    FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "\n+- From c++: " + text;
+                    FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From c++: " + text + "\n";
+                    FM_GLOBAL.LOG.scrollTop = FM_GLOBAL.LOG.scrollHeight;
                 };
             })(),
             printErr: (function () {
                 return function (text) {
                     console.log("[ERROR] +- From c++: " + text);
                     log_span.innerText = "[ERROR] +- From c++: " + text;
-                    FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "\n[ERROR] +- From c++: " + text;
+                    FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "[ERROR] +- From c++: " + text + "\n";
+                    FM_GLOBAL.LOG.scrollTop = FM_GLOBAL.LOG.scrollHeight;
                 };
             })(),
             canvas: document.getElementById("canvas"),

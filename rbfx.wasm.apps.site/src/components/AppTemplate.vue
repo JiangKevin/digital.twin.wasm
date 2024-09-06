@@ -51,9 +51,12 @@
         <!--  -->
         <v-main>
             <RouterView></RouterView>
+            <!-- code editor div -->
             <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)" id="vs_code_contain">
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
+            <!-- busy div  -->
+            <div id="busy_contain" :class="busy_div_class_select(mainStore_menu.is_busy, mainStore_menu.rail)"></div>
         </v-main>
         <!--  -->
     </v-layout>
@@ -95,8 +98,8 @@ function logout_ck() {
     mainStore_menu.user_info.email = "";
     mainStore_menu.user_info.fullname = "";
     //
-    if (JSON.stringify(Module) != "{}") {
-        Module._Stop();
+    if (is_load_rbfx_wasm) {
+        FM_GLOBAL.DTWIN_EDITOR._Stop();
     } //
     fm_delScript("./data.js");
     fm_delScript("./common.js");
@@ -119,9 +122,25 @@ function code_div_class_select(is_view, rail) {
         rt = rt + " code_contain_have_left ";
     }
     if (is_view) {
-        rt = rt + " code_contain_show_div ";
+        rt = rt + " show_div ";
     } else {
-        rt = rt + " code_contain_hide_div ";
+        rt = rt + " hide_div ";
+    }
+    //
+    return rt;
+}
+function busy_div_class_select(is_view, rail) {
+    var rt = "";
+    //
+    if (rail) {
+        rt = rt + " busy_contain_no_left ";
+    } else {
+        rt = rt + " busy_contain_have_left ";
+    }
+    if (is_view) {
+        rt = rt + " show_div ";
+    } else {
+        rt = rt + " hide_div ";
     }
     //
     return rt;

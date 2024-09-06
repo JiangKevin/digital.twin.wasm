@@ -36,6 +36,9 @@ onMounted(() => {
     var log_span = document.getElementById("rbfx-output");
     //
     if (!is_load_rbfx_wasm) {
+        //
+        mainStore_menu.is_busy = true;
+        //
         Module = {
             preRun: [],
             postRun: get_variables,

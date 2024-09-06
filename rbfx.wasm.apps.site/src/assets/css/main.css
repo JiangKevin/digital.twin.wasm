@@ -148,10 +148,10 @@
 .divider_vertical {
     height: 24px;
 }
-.code_contain_show_div {
+.show_div {
     display: none;
 }
-.code_contain_hide_div {
+.hide_div {
     display: block;
 }
 .toolbar_btn_label {
@@ -164,11 +164,31 @@
     cursor: pointer;
 }
 .toolbar_btn_label:hover {
-    background-color:var(--fm_btn_hover);
+    background-color: var(--fm_btn_hover);
 }
 .toolbar_btn_label:active {
-    background-color:var(--fm_btn_active);
+    background-color: var(--fm_btn_active);
 }
 .toolbar_btn_label i {
     font-size: 16px;
+}
+.busy_contain_no_left {
+    width: calc(100% - 56px);
+    height: calc(100vh - 40px);
+    position: fixed;
+    left: 56px;
+    top: 20px;
+    background-color: #4f0bd7;
+    opacity: 90%;
+    z-index: 2000;
+}
+.busy_contain_have_left {
+    width: calc(100% - 255px);
+    height: calc(100vh - 40px);
+    position: fixed;
+    left: 255px;
+    top: 20px;
+    background-color: #5412d7;
+    opacity: 90%;
+    z-index: 2000;
 }

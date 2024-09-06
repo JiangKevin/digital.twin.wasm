@@ -6,11 +6,11 @@ export const useStoreForMenu = defineStore("menu", () => {
     var drawer = ref(true);
     var rail = ref(false);
     var is_logined = ref(true);
-    var login_log = ref("");
-    var editor_log = ref("");
-
+    var is_busy = ref(false);
     var yn_show_code_contain = ref(false);
     //
+    var login_log = ref("");
+    var editor_log = ref("");
     var menu_navigation_item = ref("All Proejcts");
     //
     var menu_items = [
@@ -37,31 +37,9 @@ export const useStoreForMenu = defineStore("menu", () => {
         }
     }
     //
-    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain };
+    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy };
 });
 //
-export const useStoreForHome = defineStore("home", () => {
-    const count = ref(0);
-    //
-
-    //
-    const doubleCount = computed(() => count.value * 2);
-    function increment() {
-        count.value++;
-    }
-
-    return { count, doubleCount, increment };
-});
-//
-export const useStoreForLogin = defineStore("login", () => {
-    const count = ref(0);
-    //
-
-    //
-    const doubleCount = computed(() => count.value * 2);
-    function increment() {
-        count.value++;
-    }
-
-    return { count, doubleCount, increment };
+export const useStoreForTest = defineStore("test", () => {
+    return { count };
 });

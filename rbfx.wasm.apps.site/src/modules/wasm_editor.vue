@@ -2,7 +2,7 @@
 <template>
     <div class="main_container_toolbar blur_div">
         <v-divider vertical class="divider_vertical"></v-divider>
-        <button class="toolbar_btn" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
+        <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
     </div>
     <div class="main_container_content">

@@ -52,7 +52,7 @@
         <v-main>
             <RouterView></RouterView>
             <div class="code_contain" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)">
-                <iframe src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
+                <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
             </div>
         </v-main>
         <!--  -->
@@ -131,7 +131,17 @@ onMounted(() => {
     if (mainStore_menu.is_logined != true) {
         router.push({ path: "login", replace: true });
     }
+    var code_frame = document.getElementById("vs_code_frame");
+    if (code_frame) {
+        code_frame.onload = function () {
+            console.log("+- From js: frame loaded.");
+        };
+    }
 });
+//
+function frame_load() {
+    console.log("+- From js: frame loaded.");
+}
 </script>
 <!--  style  -->
 <style scoped>

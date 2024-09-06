@@ -51,8 +51,8 @@ export function fm_addScript(js_url, async, m) {
     script.setAttribute("src", js_url);
 
     script.onload = function (obj) {
-        console.log("+- From js: " + js_url + " is Download. The type = " + async);
-        console.log(obj);
+        console.log("+- From js: " + js_url + " is Download.");
+        // console.log(obj);
     };
     document.body.appendChild(script);
 }
@@ -178,7 +178,6 @@ export function init_dt_wasm() {
         };
     }
 }
-
 //
 export function simple_wasm(Module) {
     Module = {
@@ -204,7 +203,6 @@ export function simple_wasm(Module) {
         });
     });
 }
-
 //
 export function fm_delScript(js_url) {
     var script = Array.from(document.getElementsByTagName("script")).find(function (script) {

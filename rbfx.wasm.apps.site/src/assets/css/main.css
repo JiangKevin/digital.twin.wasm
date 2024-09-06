@@ -81,6 +81,22 @@
     padding-bottom: 24px;
     background-color: rgb(0, 0, 0);
 }
+.toolbar_btn_wide {
+    margin: 0px;
+    padding: 0px;
+    width: 61px;
+    height: 24px;
+}
+.toolbar_btn_wide:hover {
+    background-color: blue;
+}
+.toolbar_btn_wide:active {
+    background-color: rgba(255, 0, 123, 0.895);
+}
+.toolbar_btn_wide i {
+    font-size: 16px;
+}
+
 .toolbar_btn {
     margin: 0px;
     padding: 0px;
@@ -114,11 +130,9 @@
 .divider_vertical {
     height: 24px;
 }
-.code_contain_show_div
-{
+.code_contain_show_div {
     display: none;
 }
-.code_contain_hide_div
-{
+.code_contain_hide_div {
     display: block;
 }

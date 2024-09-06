@@ -235,3 +235,19 @@ export function fm_delScript(js_url) {
         script.remove();
     }
 }
+//
+export function open_code_file(log, code) {
+    var open_file_input = document.getElementById("code-file");
+    if (open_file_input) {
+        open_file_input.addEventListener("input", async (event) => {
+            try {
+                code = await event.srcElement.files[0].text();
+                log = "+-  Load File: " + event.srcElement.files[0].name;
+            } catch (e) {
+                log = "+-  " + e.message;
+            } finally {
+                //
+            }
+        });
+    }
+}

@@ -8,6 +8,10 @@
         <!--  -->
         <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Run Digital Twin Code</v-tooltip></button>
         <v-divider vertical class="divider_vertical"></v-divider>
+        <!--  -->
+        <input id="code-file" name="code-file" type="file" accept=".txt" style="display: none" />
+        <label for="code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Code File</v-tooltip></label>
+        <v-divider vertical class="divider_vertical"></v-divider>
     </div>
     <div class="main_container_content">
         <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
@@ -22,7 +26,7 @@ import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_code_file } from "@/plugins/base.js";
 //
 onMounted(() => {
     console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
@@ -62,6 +66,10 @@ onMounted(() => {
         },
         false
     );
+    //
+    var code = "";
+    open_code_file(log_span.innerText, code);
+    console.log(code);
 });
 //
 function code_div_show_ck() {

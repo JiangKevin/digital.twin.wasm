@@ -1,3 +1,8 @@
+:root {
+    --fm_btn_hover: #cf1415;
+    --fm_btn_active: #e90b0b;
+}
+/*  */
 @font-face {
     font-family: ExampleFont;
     src: url("../font/ARIALN.TTF") format("ttf");
@@ -12,7 +17,7 @@
     left: 255px;
     top: 44px;
     background-color: #1a191c;
-    opacity: 80%;
+    opacity: 90%;
 }
 .code_contain_no_left {
     width: 800px;
@@ -21,19 +26,19 @@
     left: 56px;
     top: 44px;
     background-color: #1a191c;
-    opacity: 80%;
+    opacity: 90%;
 }
 .code_contain_have_left:hover {
-    background-color: #cf1415;
+    background-color: var(--fm_btn_hover);
 }
 .code_contain_no_left :hover {
-    background-color: #cf1415;
+    background-color: var(--fm_btn_hover);
 }
 .code_contain_have_left:active {
-    background-color: #e90b0b;
+    background-color: var(--fm_btn_active);
 }
 .code_contain_no_left :active {
-    background-color: #e90b0b;
+    background-color: var(--fm_btn_active);
 }
 
 .code_contain_frame {
@@ -101,10 +106,10 @@
     height: 24px;
 }
 .toolbar_btn_wide:hover {
-    background-color: blue;
+    background-color: var(--fm_btn_hover);
 }
 .toolbar_btn_wide:active {
-    background-color: rgba(255, 0, 123, 0.895);
+    background-color: var(--fm_btn_active);
 }
 .toolbar_btn_wide i {
     font-size: 16px;
@@ -117,10 +122,10 @@
     height: 24px;
 }
 .toolbar_btn:hover {
-    background-color: blue;
+    background-color: var(--fm_btn_hover);
 }
 .toolbar_btn:active {
-    background-color: rgba(255, 0, 123, 0.895);
+    background-color: var(--fm_btn_active);
 }
 .toolbar_btn i {
     font-size: 16px;
@@ -148,4 +153,22 @@
 }
 .code_contain_hide_div {
     display: block;
+}
+.toolbar_btn_label {
+    line-height: 24px;
+    text-align: center;
+    font-size: 12px;
+    height: 24px;
+    width: 24px;
+    /* background-color: #dd2c00; */
+    cursor: pointer;
+}
+.toolbar_btn_label:hover {
+    background-color:var(--fm_btn_hover);
+}
+.toolbar_btn_label:active {
+    background-color:var(--fm_btn_active);
+}
+.toolbar_btn_label i {
+    font-size: 16px;
 }

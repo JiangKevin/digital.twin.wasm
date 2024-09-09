@@ -42,7 +42,7 @@
                     <v-row class="menu_group_items_row">
                         <v-col v-for="(item, i) in mainStore_menu.card_items" :key="i" class="menu_group_items_col">
                             <v-item v-slot="{ isSelected, toggle }">
-                                <v-btn :icon="isSelected ? 'mdi-heart' : 'mdi-heart-outline'" rounded="0"></v-btn>
+                                <v-btn :icon="item.icon" rounded="0"></v-btn>
                             </v-item>
                         </v-col>
                     </v-row>
@@ -71,7 +71,7 @@
         <v-main>
             <RouterView></RouterView>
             <!-- code editor div -->
-            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)" id="vs_code_contain">
+            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)" id="vs_code_contain" x>
                 <!--  -->
                 <div class="main_container_toolbar_no_top_padding">
                     <!--  -->
@@ -94,6 +94,9 @@
                 <div class="main_container_status_no_bottom_padding">
                     <span id="rbfx-output"></span>
                 </div>
+            </div>
+            <div :class="code_div_class_select_noshow(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)">
+                <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
             </div>
             <!-- busy div  -->
             <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
@@ -120,6 +123,7 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 import router from "@/router/router";
 function route_ck(item) {
     mainStore_menu.reset_menu_status();
+    mainStore_menu.card_items = item.sub;
     item.active = true;
     //
     if (mainStore_menu.is_logined) {
@@ -187,7 +191,7 @@ function logo_src_select(is_view) {
         return logoImgUrl_1;
     }
 }
-
+//
 function code_div_class_select(is_view, rail) {
     var rt = "";
     //
@@ -200,6 +204,23 @@ function code_div_class_select(is_view, rail) {
         rt = rt + " show_div ";
     } else {
         rt = rt + " hide_div ";
+    }
+    //
+    return rt;
+}
+//
+function code_div_class_select_noshow(is_view, rail) {
+    var rt = "";
+    //
+    if (rail) {
+        rt = rt + " code_contain_no_left_min ";
+    } else {
+        rt = rt + " code_contain_have_left_min ";
+    }
+    if (is_view) {
+        rt = rt + " hide_div ";
+    } else {
+        rt = rt + " show_div ";
     }
     //
     return rt;

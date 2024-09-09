@@ -42,6 +42,21 @@
     border-right: 2px solid var(--fm_btn_active);
 }
 
+.code_contain_have_left_min {
+    position: fixed;
+    left: 255px;
+    top: 0px;
+    opacity: 95%;
+    background-color: var(--fm_toolbar);
+}
+.code_contain_no_left_min {
+    position: fixed;
+    left: 56px;
+    top: 0px;
+    opacity: 95%;
+    background-color: var(--fm_toolbar);
+}
+
 .code_contain_frame {
     width: 100%;
     height: calc(100% - 48px);

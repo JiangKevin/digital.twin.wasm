@@ -7,7 +7,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     var rail = ref(false);
     var is_logined = ref(true);
     var is_busy = ref(false);
-    var yn_show_code_contain = ref(true);
+    var yn_show_code_contain = ref(false);
     //
     var login_log = ref("");
     var editor_log = ref("");
@@ -26,19 +26,19 @@ export const useStoreForMenu = defineStore("menu", () => {
             route: "/cascad_editor",
             sub: [
                 {
-                    src: "backgrounds/bg.jpg",
+                    icon: "mdi-crowd",
                 },
                 {
-                    src: "backgrounds/md.jpg",
+                    icon: "mdi-crowd",
                 },
                 {
-                    src: "backgrounds/bg-2.jpg",
+                    icon: "mdi-crowd",
                 },
                 {
-                    src: "backgrounds/md2.jpg",
+                    icon: "mdi-crowd",
                 },
                 {
-                    src: "backgrounds/md2.jpg",
+                    icon: "mdi-crowd",
                 },
             ],
         },
@@ -50,19 +50,7 @@ export const useStoreForMenu = defineStore("menu", () => {
             route: "/digital_twin_editor",
             sub: [
                 {
-                    src: "backgrounds/bg.jpg",
-                },
-                {
-                    src: "backgrounds/md.jpg",
-                },
-                {
-                    src: "backgrounds/bg-2.jpg",
-                },
-                {
-                    src: "backgrounds/md2.jpg",
-                },
-                {
-                    src: "backgrounds/md2.jpg",
+                    icon: "mdi-crowd",
                 },
             ],
         },

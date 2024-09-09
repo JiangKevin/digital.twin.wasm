@@ -248,14 +248,12 @@ function frame_load() {
     height: 86px;
     text-align: center;
     background-image: url("../assets/img/solar-1.gif");
-    /* 背景图垂直、水平均居中 */
     background-position: center center;
-    /* 背景图不平铺 */
-    /* background-repeat: no-repeat; */
-    /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+    background-repeat: no-repeat;
     background-attachment: fixed;
-    /* 让背景图基于容器大小伸缩 */
-    background-size: cover;
+    /* background-size: cover; */
+    /* background-size:120% 100%; */
+    background-size: 200% 180%;
 }
 .fm_main_log {
     animation-iteration-count: infinite;

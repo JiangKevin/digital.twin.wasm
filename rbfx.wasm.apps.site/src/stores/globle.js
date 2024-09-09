@@ -14,32 +14,62 @@ export const useStoreForMenu = defineStore("menu", () => {
     var menu_navigation_item = ref("All Proejcts");
     //
     var menu_items = [
-        { text: "All Proejcts", icon: "mdi-folder", active: false, disabled: false, route: "/all_project" },
-        { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/files_browse" },
+        { text: "All Proejcts", icon: "mdi-folder", active: false, disabled: false, route: "/all_project", sub: [] },
+        { text: "Files Browse", icon: "mdi-view-list", active: false, disabled: false, route: "/files_browse", sub: [] },
     ];
     var menu_editor_items = [
-        { text: "CAD Editor", icon: "mdi-ruler-square-compass", active: false, disabled: false, route: "/cascad_editor" },
-        { text: "Scene Editor", icon: "mdi-microsoft-xbox-controller", active: false, disabled: false, route: "/digital_twin_editor" },
+        {
+            text: "CAD Editor",
+            icon: "mdi-ruler-square-compass",
+            active: false,
+            disabled: false,
+            route: "/cascad_editor",
+            sub: [
+                {
+                    src: "backgrounds/bg.jpg",
+                },
+                {
+                    src: "backgrounds/md.jpg",
+                },
+                {
+                    src: "backgrounds/bg-2.jpg",
+                },
+                {
+                    src: "backgrounds/md2.jpg",
+                },
+                {
+                    src: "backgrounds/md2.jpg",
+                },
+            ],
+        },
+        {
+            text: "Scene Editor",
+            icon: "mdi-microsoft-xbox-controller",
+            active: false,
+            disabled: false,
+            route: "/digital_twin_editor",
+            sub: [
+                {
+                    src: "backgrounds/bg.jpg",
+                },
+                {
+                    src: "backgrounds/md.jpg",
+                },
+                {
+                    src: "backgrounds/bg-2.jpg",
+                },
+                {
+                    src: "backgrounds/md2.jpg",
+                },
+                {
+                    src: "backgrounds/md2.jpg",
+                },
+            ],
+        },
     ];
-    var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help" }];
+    var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help", sub: [] }];
     //
-    var card_items = [
-        {
-            src: "backgrounds/bg.jpg",
-        },
-        {
-            src: "backgrounds/md.jpg",
-        },
-        {
-            src: "backgrounds/bg-2.jpg",
-        },
-        {
-            src: "backgrounds/md2.jpg",
-        },
-        {
-            src: "backgrounds/md2.jpg",
-        },
-    ];
+    var card_items = [];
     var card_itemss_selection = [];
     //
     var user_info = { username: "admin", password: "", token: "", image: avatarImgUrl, email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };

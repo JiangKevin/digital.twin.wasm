@@ -181,7 +181,7 @@
     height: 24px;
     opacity: 95% !important;
     background-color: #2196f3 !important;
-    transform: translate(-10px);
+    transform: translate(-10px, -12px);
     font-size: 12px !important;
     line-height: 24px !important;
     padding-left: 5px !important;
@@ -223,6 +223,7 @@
     height: 100vh;
     position: fixed;
     left: 56px;
+    top: 0px;
     background-color: var(--fm_toolbar);
     z-index: 2000;
     text-align: center;
@@ -231,6 +232,7 @@
     width: calc(100% - 255px);
     height: 100vh;
     position: fixed;
+    top: 0px;
     left: 255px;
     background-color: var(--fm_toolbar);
     z-index: 2000;

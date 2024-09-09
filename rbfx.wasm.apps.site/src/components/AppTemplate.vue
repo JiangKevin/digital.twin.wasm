@@ -309,6 +309,9 @@ function frame_load() {
     height: calc(100% - 16px);
     margin: 8px;
     padding: 0px;
+    /* position: fixed;
+    top: 0px; */
+    /* right: 6px; */
 }
 .output_wasm::-webkit-scrollbar {
     width: 0;

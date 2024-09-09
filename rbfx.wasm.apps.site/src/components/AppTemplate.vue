@@ -34,23 +34,13 @@
                     <v-list-item-title v-text="item.text"></v-list-item-title>
                 </v-list-item>
             </v-list>
+
             <!--  -->
             <v-divider></v-divider>
-            <v-list density="compact" nav>
-                <v-list-item v-for="(item, i) in mainStore_menu.menu_help_items" :key="i" :value="item" :active="item.active" :disabled="item.disabled" @click="route_ck(item)">
-                    <template v-slot:prepend>
-                        <v-icon :icon="item.icon"></v-icon>
-                    </template>
-                    <v-list-item-title v-text="item.text"></v-list-item-title>
-                </v-list-item>
-            </v-list>
-            <!--  -->
-            <v-divider></v-divider>
-            <!-- <v-card class="mx-auto" max-width="400"> -->
             <v-container class="menu_group_items_contain">
                 <v-item-group v-model="mainStore_menu.card_itemss_selection" multiple class="menu_group_items">
                     <v-row class="menu_group_items_row">
-                        <v-col v-for="(item, i) in mainStore_menu.card_itemss" :key="i" class="menu_group_items_col">
+                        <v-col v-for="(item, i) in mainStore_menu.card_items" :key="i" class="menu_group_items_col">
                             <v-item v-slot="{ isSelected, toggle }">
                                 <v-btn :icon="isSelected ? 'mdi-heart' : 'mdi-heart-outline'" rounded="0"></v-btn>
                             </v-item>
@@ -58,9 +48,23 @@
                     </v-row>
                 </v-item-group>
             </v-container>
-            <!-- </v-card> -->
             <!--  -->
-            <div class="fm_main_log_contain"><v-divider></v-divider><v-img :width="180" aspect-ratio="1/1" cover :src="logoImgUrl" class="animate__animated animate__rubberBand" :class="logo_class_select(mainStore_menu.rail)"></v-img></div>
+            <div class="menu_list_fixed">
+                <v-divider></v-divider>
+                <v-list density="compact" nav>
+                    <v-list-item v-for="(item, i) in mainStore_menu.menu_help_items" :key="i" :value="item" :active="item.active" :disabled="item.disabled" @click="route_ck(item)">
+                        <template v-slot:prepend>
+                            <v-icon :icon="item.icon"></v-icon>
+                        </template>
+                        <v-list-item-title v-text="item.text"></v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </div>
+            <!--  -->
+            <div class="fm_main_log_contain">
+                <v-divider></v-divider>
+                <img :src="logoImgUrl" :class="logo_class_select(mainStore_menu.rail)" />
+            </div>
             <!--  -->
         </v-navigation-drawer>
         <!--  -->
@@ -107,7 +111,8 @@ import { RouterView } from "vue-router";
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
-import logoImgUrl from "@/assets/img/logo_outlined.png";
+import logoImgUrl_1 from "@/assets/img/logo_1.png";
+import logoImgUrl_2 from "@/assets/img/logo_2.png";
 import "@/assets/css/animate/animate.min.css";
 //
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
@@ -168,10 +173,10 @@ function save_code_ck() {
 }
 //
 function logo_class_select(is_view) {
-    if (!is_view) {
-        return "fm_main_log ";
+    if (is_view) {
+        return "fm_main_log_min ";
     } else {
-        ("fm_main_log_min ");
+        return "fm_main_log animate__animated animate__rubberBand";
     }
 }
 function code_div_class_select(is_view, rail) {
@@ -231,18 +236,29 @@ function frame_load() {
     left: 0px;
     bottom: 0px;
     width: 100%;
+    height: 80px;
+    text-align: center;
     background-image: url("../assets/img/solar-1.gif");
 }
 .fm_main_log {
     animation-iteration-count: infinite;
-    margin-top: 0px;
-    margin-left: 40px;
-    margin-bottom: 0px;
-}
-.fm_main_log_min {
-    animation-iteration-count: infinite;
+    width: 180px;
     margin: 0px;
     padding: 0px;
+    text-align: center;
+    margin-top: 10px;
+}
+.fm_main_log_min {
+    width: 68px;
+    height: 40px;
+    animation-iteration-count: infinite;
+    padding: 0;
+    text-align: center;
+    transform: rotate(-90deg);
+    margin-left: -4px;
+    margin-top: 22px;
+    margin-right: 0px;
+    margin-bottom: 0px;
 }
 .resizable {
     overflow: auto;
@@ -289,9 +305,13 @@ function frame_load() {
     padding-top: 0px;
     padding-bottom: 0px;
 }
-.menu_group_items_contain
-{
+.menu_group_items_contain {
     padding: 0px;
     margin: 0px;
+}
+.menu_list_fixed {
+    position: fixed;
+    bottom: 81px;
+    width: 100%;
 }
 </style>

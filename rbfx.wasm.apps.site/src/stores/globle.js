@@ -23,7 +23,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     ];
     var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help" }];
     //
-    var card_itemss = [
+    var card_items = [
         {
             src: "backgrounds/bg.jpg",
         },
@@ -56,7 +56,7 @@ export const useStoreForMenu = defineStore("menu", () => {
         }
     }
     //
-    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy, card_itemss_selection, card_itemss };
+    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy, card_itemss_selection, card_items };
 });
 //
 export const useStoreForTest = defineStore("test", () => {

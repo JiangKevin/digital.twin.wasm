@@ -28,7 +28,7 @@ import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 //
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
-import logoImgUrl from "@/assets/img/logo_outlined.png";
+import logoImgUrl from "@/assets/img/logo_1.png";
 import "@/assets/css/animate/animate.min.css";
 //
 import "@/assets/js/sha256/sha256.min.js";

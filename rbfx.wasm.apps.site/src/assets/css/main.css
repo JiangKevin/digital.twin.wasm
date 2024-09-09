@@ -19,6 +19,7 @@
     top: 0px;
     opacity: 95%;
     border-right: 2px solid #1a191c;
+    background-color: var(--fm_toolbar);
 }
 .code_contain_no_left {
     width: 800px;
@@ -28,6 +29,7 @@
     top: 0px;
     border-right: 2px solid #1a191c;
     opacity: 95%;
+    background-color: var(--fm_toolbar);
 }
 .code_contain_have_left:hover {
     border-right: 2px solid var(--fm_btn_hover);
@@ -58,7 +60,7 @@
 }
 
 .code_contain_frame {
-    width: 100%;
+    width: calc(100% - 2px);
     height: calc(100% - 48px);
     background-color: #1c1c1c;
 }
@@ -110,14 +112,14 @@
     padding-left: 1px;
     height: 24px;
     background-color: var(--fm_toolbar);
-    width: 100%;
+    width: calc(100% - 2px);
     line-height: 24px;
     display: flex;
 }
 .main_container_status_no_bottom_padding {
     height: 24px;
     background-color: var(--fm_toolbar);
-    width: 100%;
+    width: calc(100% - 2px);
     line-height: 24px;
     padding-left: 4px;
     margin-top: -7px;

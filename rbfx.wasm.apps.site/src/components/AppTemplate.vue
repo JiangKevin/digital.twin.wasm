@@ -57,7 +57,7 @@
             </div>
             <!-- busy div  -->
             <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
-                <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div"></v-progress-circular>
+                <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div" color="pink"></v-progress-circular>
                 <textarea id="story" name="story" rows="8" class="output_wasm"></textarea>
             </div>
         </v-main>

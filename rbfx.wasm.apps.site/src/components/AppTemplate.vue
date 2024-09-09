@@ -63,7 +63,7 @@
             <!--  -->
             <div class="fm_main_log_contain">
                 <v-divider></v-divider>
-                <img :src="logoImgUrl" :class="logo_class_select(mainStore_menu.rail)" />
+                <img :src="logo_src_select(mainStore_menu.rail)" :class="logo_class_select(mainStore_menu.rail)" />
             </div>
             <!--  -->
         </v-navigation-drawer>
@@ -174,11 +174,20 @@ function save_code_ck() {
 //
 function logo_class_select(is_view) {
     if (is_view) {
-        return "fm_main_log_min ";
+        return "fm_main_log_min animate__animated animate__rubberBand";
     } else {
         return "fm_main_log animate__animated animate__rubberBand";
     }
 }
+//
+function logo_src_select(is_view) {
+    if (is_view) {
+        return logoImgUrl_2;
+    } else {
+        return logoImgUrl_1;
+    }
+}
+
 function code_div_class_select(is_view, rail) {
     var rt = "";
     //
@@ -236,9 +245,17 @@ function frame_load() {
     left: 0px;
     bottom: 0px;
     width: 100%;
-    height: 80px;
+    height: 86px;
     text-align: center;
     background-image: url("../assets/img/solar-1.gif");
+    /* 背景图垂直、水平均居中 */
+    background-position: center center;
+    /* 背景图不平铺 */
+    /* background-repeat: no-repeat; */
+    /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+    background-attachment: fixed;
+    /* 让背景图基于容器大小伸缩 */
+    background-size: cover;
 }
 .fm_main_log {
     animation-iteration-count: infinite;
@@ -249,16 +266,13 @@ function frame_load() {
     margin-top: 10px;
 }
 .fm_main_log_min {
-    width: 68px;
-    height: 40px;
+    width: 40px;
+    height: 74px;
     animation-iteration-count: infinite;
     padding: 0;
     text-align: center;
-    transform: rotate(-90deg);
-    margin-left: -4px;
-    margin-top: 22px;
-    margin-right: 0px;
-    margin-bottom: 0px;
+    margin: 2px 0px 2px 0px;
+    line-height: 74px;
 }
 .resizable {
     overflow: auto;
@@ -311,7 +325,7 @@ function frame_load() {
 }
 .menu_list_fixed {
     position: fixed;
-    bottom: 81px;
+    bottom: 87px;
     width: 100%;
 }
 </style>

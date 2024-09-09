@@ -7,7 +7,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     var rail = ref(false);
     var is_logined = ref(true);
     var is_busy = ref(false);
-    var yn_show_code_contain = ref(false);
+    var yn_show_code_contain = ref(true);
     //
     var login_log = ref("");
     var editor_log = ref("");
@@ -23,6 +23,25 @@ export const useStoreForMenu = defineStore("menu", () => {
     ];
     var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help" }];
     //
+    var card_itemss = [
+        {
+            src: "backgrounds/bg.jpg",
+        },
+        {
+            src: "backgrounds/md.jpg",
+        },
+        {
+            src: "backgrounds/bg-2.jpg",
+        },
+        {
+            src: "backgrounds/md2.jpg",
+        },
+        {
+            src: "backgrounds/md2.jpg",
+        },
+    ];
+    var card_itemss_selection = [];
+    //
     var user_info = { username: "admin", password: "", token: "", image: avatarImgUrl, email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
     //
     function reset_menu_status() {
@@ -37,7 +56,7 @@ export const useStoreForMenu = defineStore("menu", () => {
         }
     }
     //
-    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy };
+    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy, card_itemss_selection, card_itemss };
 });
 //
 export const useStoreForTest = defineStore("test", () => {

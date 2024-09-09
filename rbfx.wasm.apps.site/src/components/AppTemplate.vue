@@ -45,6 +45,21 @@
                 </v-list-item>
             </v-list>
             <!--  -->
+            <v-divider></v-divider>
+            <!-- <v-card class="mx-auto" max-width="400"> -->
+            <v-container class="menu_group_items_contain">
+                <v-item-group v-model="mainStore_menu.card_itemss_selection" multiple class="menu_group_items">
+                    <v-row class="menu_group_items_row">
+                        <v-col v-for="(item, i) in mainStore_menu.card_itemss" :key="i" class="menu_group_items_col">
+                            <v-item v-slot="{ isSelected, toggle }">
+                                <v-btn :icon="isSelected ? 'mdi-heart' : 'mdi-heart-outline'" rounded="0"></v-btn>
+                            </v-item>
+                        </v-col>
+                    </v-row>
+                </v-item-group>
+            </v-container>
+            <!-- </v-card> -->
+            <!--  -->
             <div class="fm_main_log_contain"><v-divider></v-divider><v-img :width="180" aspect-ratio="1/1" cover :src="logoImgUrl" class="animate__animated animate__rubberBand" :class="logo_class_select(mainStore_menu.rail)"></v-img></div>
             <!--  -->
         </v-navigation-drawer>
@@ -53,7 +68,28 @@
             <RouterView></RouterView>
             <!-- code editor div -->
             <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)" id="vs_code_contain">
+                <!--  -->
+                <div class="main_container_toolbar_no_top_padding">
+                    <!--  -->
+                    <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
+                    <v-divider vertical class="divider_vertical"></v-divider>
+                    <!--  -->
+                    <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Run Digital Twin Code</v-tooltip></button>
+                    <v-divider vertical class="divider_vertical"></v-divider>
+                    <!--  -->
+                    <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
+                    <label for="rbfx-code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Code File</v-tooltip></label>
+                    <v-divider vertical class="divider_vertical"></v-divider>
+                    <!--  -->
+                    <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Save Code File</v-tooltip></button>
+                    <v-divider vertical class="divider_vertical"></v-divider>
+                </div>
+                <!--  -->
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
+                <!--  -->
+                <div class="main_container_status_no_bottom_padding">
+                    <span id="rbfx-output"></span>
+                </div>
             </div>
             <!-- busy div  -->
             <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
@@ -73,7 +109,8 @@ import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 import logoImgUrl from "@/assets/img/logo_outlined.png";
 import "@/assets/css/animate/animate.min.css";
-import { fm_delScript, busy_div_control } from "@/plugins/base.js";
+//
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
 //
 import router from "@/router/router";
 function route_ck(item) {
@@ -107,6 +144,27 @@ function logout_ck() {
     fm_delScript("./data.js");
     fm_delScript("./common.js");
     router.push({ path: "login", replace: true });
+}
+//
+function code_div_show_ck() {
+    mainStore_menu.yn_show_code_contain = !mainStore_menu.yn_show_code_contain;
+}
+//
+function run_code_for_editor() {
+    var log_span = document.getElementById("rbfx-output");
+    try {
+        run_code(FM_GLOBAL.MONACO_EDITOR.getValue());
+        log_span.innerText = "+-  Run ok. ";
+    } catch (e) {
+        log_span.innerText = "+-  " + e.message;
+    } finally {
+        //
+    }
+}
+//
+function save_code_ck() {
+    var log_span = document.getElementById("rbfx-output");
+    saveCodeToFile(FM_GLOBAL.MONACO_EDITOR.getValue(), log_span);
 }
 //
 function logo_class_select(is_view) {
@@ -177,9 +235,9 @@ function frame_load() {
 }
 .fm_main_log {
     animation-iteration-count: infinite;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-left: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 }
 .fm_main_log_min {
     animation-iteration-count: infinite;
@@ -189,6 +247,7 @@ function frame_load() {
 .resizable {
     overflow: auto;
     resize: horizontal;
+    min-width: 600px;
 }
 .output_wasm {
     background-color: rgba(0, 0, 255, 0);
@@ -210,5 +269,29 @@ function frame_load() {
     position: fixed;
     top: calc(50% - 64px);
     left: calc(50% - 64px);
+}
+.menu_group_items {
+    padding: 2px;
+}
+.menu_group_items_row {
+    flex-grow: 0;
+    margin: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 0px;
+}
+.menu_group_items_col {
+    flex-grow: 0;
+    margin: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.menu_group_items_contain
+{
+    padding: 0px;
+    margin: 0px;
 }
 </style>

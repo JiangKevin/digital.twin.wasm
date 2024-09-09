@@ -4,7 +4,7 @@ import avatarImgUrl from "@/assets/img/85.jpg";
 //
 export const useStoreForMenu = defineStore("menu", () => {
     var drawer = ref(true);
-    var rail = ref(false);
+    var rail = ref(true);
     var is_logined = ref(true);
     var is_busy = ref(false);
     var yn_show_code_contain = ref(false);
@@ -56,6 +56,8 @@ export const useStoreForMenu = defineStore("menu", () => {
         },
     ];
     var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help", sub: [] }];
+    var menu_exit_items = [{ text: "Exit Application", icon: "mdi-exit-to-app", active: false, disabled: false, route: "/login", sub: [] }];
+
     //
     var card_items = [];
     var card_itemss_selection = [];
@@ -72,9 +74,12 @@ export const useStoreForMenu = defineStore("menu", () => {
         for (var i = 0; i < menu_help_items.length; i++) {
             menu_help_items[i].active = false;
         }
+        for (var i = 0; i < menu_exit_items.length; i++) {
+            menu_exit_items[i].active = false;
+        }
     }
     //
-    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy, card_itemss_selection, card_items };
+    return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, is_busy, card_itemss_selection, card_items, menu_exit_items };
 });
 //
 export const useStoreForTest = defineStore("test", () => {

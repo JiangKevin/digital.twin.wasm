@@ -9,9 +9,9 @@
                             <v-img cover :src="mainStore_menu.user_info.image" @click="view_manu_ck"></v-img>
                         </v-avatar>
                     </template>
-                    <template v-slot:append>
+                    <!-- <template v-slot:append>
                         <v-btn icon="mdi-exit-to-app" size="small" variant="text" @click="logout_ck"></v-btn>
-                    </template>
+                    </template> -->
                 </v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -59,8 +59,20 @@
                         <v-list-item-title v-text="item.text"></v-list-item-title>
                     </v-list-item>
                 </v-list>
+                <!--  -->
+                <v-divider></v-divider>
+                <v-list density="compact" nav>
+                    <v-list-item v-for="(item, i) in mainStore_menu.menu_exit_items" :key="i" :value="item" :active="item.active" :disabled="item.disabled" @click="route_ck(item)">
+                        <template v-slot:prepend>
+                            <v-icon :icon="item.icon"></v-icon>
+                        </template>
+                        <v-list-item-title v-text="item.text"></v-list-item-title>
+                    </v-list-item>
+                </v-list>
+                <!-- <v-btn icon="mdi-exit-to-app" @click="logout_ck" class="logout_btn" rounded="0"> </v-btn> -->
             </div>
             <!--  -->
+
             <div class="fm_main_log_contain">
                 <v-divider></v-divider>
                 <img :src="logo_src_select(mainStore_menu.rail)" :class="logo_class_select(mainStore_menu.rail)" />
@@ -75,7 +87,8 @@
                 <!--  -->
                 <div class="main_container_toolbar_no_top_padding">
                     <!--  -->
-                    <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip></button>
+                    <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button> 
+                    <!-- <v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip> -->
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
                     <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Run Digital Twin Code</v-tooltip></button>
@@ -125,6 +138,10 @@ function route_ck(item) {
     mainStore_menu.reset_menu_status();
     mainStore_menu.card_items = item.sub;
     item.active = true;
+    //
+    if (item.text == "Exit Application") {
+        logout_ck();
+    }
     //
     if (mainStore_menu.is_logined) {
         console.log(item.text);
@@ -349,5 +366,9 @@ function frame_load() {
     position: fixed;
     bottom: 87px;
     width: 100%;
+}
+.logout_btn {
+    width: 100%;
+    min-width: 53px;
 }
 </style>

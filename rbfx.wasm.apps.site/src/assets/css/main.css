@@ -247,7 +247,7 @@
     position: absolute;
     top: 0px !important;
     right: 0px !important;
-    width: 256px !important;
+    width: 300px !important;
     backdrop-filter: blur(14px);
     opacity: 90%;
     z-index: 2000;

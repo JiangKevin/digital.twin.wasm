@@ -100,6 +100,13 @@
                     <!--  -->
                     <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Save Code File</v-tooltip></button>
                     <v-divider vertical class="divider_vertical"></v-divider>
+                    <!--  -->
+                    <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
+                    <label for="step-file" title="Load Model from File" class="toolbar_btn_label"><i class="mdi-cloud-upload mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Upload Model File</v-tooltip></label>
+                    <v-divider vertical class="divider_vertical"></v-divider>
+                    <!--  -->
+                    <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Download Model File</v-tooltip></button>
+                    <v-divider vertical class="divider_vertical"></v-divider>
                 </div>
                 <!--  -->
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
@@ -131,7 +138,7 @@ import logoImgUrl_1 from "@/assets/img/logo_1.png";
 import logoImgUrl_2 from "@/assets/img/logo_2.png";
 import "@/assets/css/animate/animate.min.css";
 //
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
 //
 import router from "@/router/router";
 function route_ck(item) {
@@ -318,6 +325,14 @@ onMounted(() => {
 //
 function frame_load() {
     console.log("+- From js: frame loaded.");
+}
+function down_load_modle_file() {
+    if (FM_GLOBAL.CAD_SCENE) {
+        // saveShapeOBJ( FM_GLOBAL.CAD_SCENE);
+        saveShapeSTL(FM_GLOBAL.CAD_SCENE);
+        // saveShapeSTEP();
+        // saveShapeGLTF(FM_GLOBAL.CAD_SCENE);
+    }
 }
 </script>
 <!--  style  -->

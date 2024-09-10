@@ -9,7 +9,7 @@
 <!--  script  -->
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, setupThreeJSCore } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, setupThreeJSCore,loadSTEPorIGES } from "@/plugins/base.js";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
@@ -56,6 +56,16 @@ onMounted(() => {
             if (viewport) {
                 viewport.appendChild(FM_GLOBAL.CAD_RENDERER.domElement);
             }
+            //
+            document.getElementById("step-file").addEventListener("input", async (event) => {
+                try {
+                    await loadSTEPorIGES(openCascade, event.srcElement.files[0], addVisulizeShapeToScene, FM_GLOBAL.CAD_SCENE);
+                } catch (e) {
+                    // console.log(" +-  " + e.message);
+                } finally {
+                    //
+                }
+            });
             //
             fm_addScript("./runtime/basic/cascad_wrap.js", true, false);
             //

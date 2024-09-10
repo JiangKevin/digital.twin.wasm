@@ -55,8 +55,8 @@ function login() {
         });
 }
 onMounted(() => {
-    console.log("+- From js: is_load_rbfx_wasm= " + is_load_rbfx_wasm);
-    if (is_load_rbfx_wasm) {
+    // console.log("+- From js: is_load_rbfx_wasm= " + is_load_rbfx_wasm);
+    if (is_load_rbfx_wasm || is_load_cad_wasm) {
         window.location.reload();
     }
 });

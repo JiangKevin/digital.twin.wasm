@@ -87,7 +87,7 @@
                 <!--  -->
                 <div class="main_container_toolbar_no_top_padding">
                     <!--  -->
-                    <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button> 
+                    <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
                     <!-- <v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip> -->
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
@@ -169,6 +169,9 @@ function logout_ck() {
     } //
     fm_delScript("./data.js");
     fm_delScript("./common.js");
+    fm_delScript("./runtime/basic/cascad_wrap.js");
+    fm_delScript("./runtime/basic/digital_twin_wrap.js");
+    //
     router.push({ path: "login", replace: true });
 }
 //
@@ -266,6 +269,9 @@ onMounted(() => {
             console.log("+- From js: frame loaded.");
             FM_GLOBAL.MONACO_EDITOR = window.frames["vs_code_frame"].contentWindow.FM_GLOBAL.editor;
             console.log(FM_GLOBAL.MONACO_EDITOR);
+            //
+            var log_span = document.getElementById("rbfx-output");
+            open_rbfx_code_file(FM_GLOBAL.MONACO_EDITOR, log_span);
         };
     }
     //

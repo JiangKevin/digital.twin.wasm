@@ -58,8 +58,6 @@ onMounted(() => {
         },
         false
     );
-    //
-    open_rbfx_code_file(FM_GLOBAL.MONACO_EDITOR, log_span);
 });
 
 function get_variables() {

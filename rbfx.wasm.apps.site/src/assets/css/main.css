@@ -2,6 +2,9 @@
     --fm_btn_hover: #cf1415;
     --fm_btn_active: #e90b0b;
     --fm_toolbar: #1b1a1e;
+    --tp-base-border-radius: 0px;
+    --tp-base-background-color: var(--fm_toolbar);
+    --bs-bg: var(--tp-base-background-color);
 }
 /*  */
 @font-face {
@@ -239,4 +242,16 @@
     background-color: var(--fm_toolbar);
     z-index: 2000;
     text-align: center;
+}
+.tp-dfwv {
+    position: absolute;
+    top: 0px !important;
+    right: 0px !important;
+    width: 256px !important;
+    backdrop-filter: blur(14px);
+    opacity: 90%;
+    z-index: 2000;
+}
+.tp-rotv {
+    background-color: var(--fm_toolbar);
 }

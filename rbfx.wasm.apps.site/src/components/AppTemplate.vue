@@ -83,7 +83,7 @@
         <v-main>
             <RouterView></RouterView>
             <!-- code editor div -->
-            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)" id="vs_code_contain" x>
+            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain" x>
                 <!--  -->
                 <div class="main_container_toolbar_no_top_padding">
                     <!--  -->
@@ -108,7 +108,7 @@
                     <span id="rbfx-output"></span>
                 </div>
             </div>
-            <div :class="code_div_class_select_noshow(mainStore_menu.yn_show_code_contain, mainStore_menu.rail)">
+            <div :class="code_div_class_select_noshow(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)">
                 <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
             </div>
             <!-- busy div  -->
@@ -222,35 +222,43 @@ function logo_src_select(is_view) {
     }
 }
 //
-function code_div_class_select(is_view, rail) {
+function code_div_class_select(is_view, rail, is_show_btn) {
     var rt = "";
     //
-    if (rail) {
-        rt = rt + " code_contain_no_left ";
+    if (is_show_btn) {
+        if (rail) {
+            rt = rt + " code_contain_no_left ";
+        } else {
+            rt = rt + " code_contain_have_left ";
+        }
+        if (is_view) {
+            rt = rt + " show_div ";
+        } else {
+            rt = rt + " hide_div ";
+        }
     } else {
-        rt = rt + " code_contain_have_left ";
-    }
-    if (is_view) {
-        rt = rt + " show_div ";
-    } else {
-        rt = rt + " hide_div ";
+        rt = " hide_div ";
     }
     //
     return rt;
 }
 //
-function code_div_class_select_noshow(is_view, rail) {
+function code_div_class_select_noshow(is_view, rail, is_show_btn) {
     var rt = "";
     //
-    if (rail) {
-        rt = rt + " code_contain_no_left_min ";
+    if (is_show_btn) {
+        if (rail) {
+            rt = rt + " code_contain_no_left_min ";
+        } else {
+            rt = rt + " code_contain_have_left_min ";
+        }
+        if (is_view) {
+            rt = rt + " hide_div ";
+        } else {
+            rt = rt + " show_div ";
+        }
     } else {
-        rt = rt + " code_contain_have_left_min ";
-    }
-    if (is_view) {
-        rt = rt + " hide_div ";
-    } else {
-        rt = rt + " show_div ";
+        rt = " hide_div ";
     }
     //
     return rt;
@@ -269,6 +277,8 @@ function busy_div_class_select(rail) {
 //
 onMounted(() => {
     busy_div_control("other_log", false);
+    mainStore_menu.yn_show_code_btn = false;
+    //
     if (mainStore_menu.is_logined != true) {
         router.push({ path: "login", replace: true });
     }

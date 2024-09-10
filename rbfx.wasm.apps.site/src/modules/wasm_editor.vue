@@ -19,6 +19,8 @@ onMounted(() => {
     var log_span = document.getElementById("rbfx-output");
     busy_div_control("other_log", true);
     //
+    mainStore_menu.yn_show_code_btn = true;
+    //
     if (!is_load_rbfx_wasm) {
         //
         Module = {

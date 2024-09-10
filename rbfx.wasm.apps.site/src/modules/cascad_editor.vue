@@ -33,10 +33,13 @@ FM_GLOBAL.TWEAKPANLE = new Pane({
     title: "Parameters",
     expanded: false,
 });
-FM_GLOBAL.TWEAKPANLE.hidden = true;
+// FM_GLOBAL.TWEAKPANLE.hidden = true;
 //
 onMounted(() => {
     busy_div_control("other_log", true);
+    //
+    mainStore_menu.yn_show_code_btn = true;
+    //
     if (!is_load_cad_wasm) {
         var fm_cad_core = setupThreeJSCore(mainStore_menu.rail);
         //

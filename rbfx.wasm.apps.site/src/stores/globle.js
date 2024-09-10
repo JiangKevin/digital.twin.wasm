@@ -8,6 +8,8 @@ export const useStoreForMenu = defineStore("menu", () => {
     var is_logined = ref(true);
     var is_busy = ref(false);
     var yn_show_code_contain = ref(false);
+    var yn_show_code_btn = ref(false);
+
     //
     var login_log = ref("");
     var editor_log = ref("");

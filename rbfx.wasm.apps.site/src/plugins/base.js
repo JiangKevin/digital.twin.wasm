@@ -478,9 +478,9 @@ export const setupThreeJSCore = (rail) => {
     //
     var renderer_w;
     if (rail) {
-        renderer_w = window.innerWidth - 255;
-    } else {
         renderer_w = window.innerWidth - 55;
+    } else {
+        renderer_w = window.innerWidth - 255;
     }
     //
     renderer.setSize(renderer_w, window.innerHeight);

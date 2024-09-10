@@ -153,6 +153,16 @@ function route_ck(item) {
 //
 function view_manu_ck() {
     mainStore_menu.rail = !mainStore_menu.rail;
+    if (is_load_cad_wasm) {
+        var renderer_w;
+        if (mainStore_menu.rail) {
+            renderer_w = window.innerWidth - 55;
+        } else {
+            renderer_w = window.innerWidth - 255;
+        }
+        //
+        FM_GLOBAL.CAD_RENDERER.setSize(renderer_w, window.innerHeight);
+    }
 }
 //
 function logout_ck() {

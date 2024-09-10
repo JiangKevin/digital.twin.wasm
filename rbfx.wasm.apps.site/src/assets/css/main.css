@@ -21,18 +21,18 @@
     left: 255px;
     top: 0px;
     opacity: 95%;
-    border-right: 2px solid #1a191c;
     background-color: var(--fm_toolbar);
+    border-right: 2px solid var(--fm_toolbar);
 }
 .code_contain_no_left {
     width: 800px;
     height: 100vh;
     position: fixed;
-    left: 56px;
+    left: 55px;
     top: 0px;
-    border-right: 2px solid #1a191c;
     opacity: 95%;
     background-color: var(--fm_toolbar);
+    border-right: 2px solid var(--fm_toolbar);
 }
 .code_contain_have_left:hover {
     border-right: 2px solid var(--fm_btn_hover);
@@ -211,7 +211,6 @@
     font-size: 12px;
     height: 24px;
     width: 32px;
-    /* background-color: #dd2c00; */
     cursor: pointer;
 }
 .toolbar_btn_label:hover {

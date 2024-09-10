@@ -88,24 +88,23 @@
                 <div class="main_container_toolbar_no_top_padding">
                     <!--  -->
                     <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
-                    <!-- <v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Digital Twin Code Editor</v-tooltip> -->
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
-                    <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Run Digital Twin Code</v-tooltip></button>
+                    <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i></button>
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
                     <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
-                    <label for="rbfx-code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Open Code File</v-tooltip></label>
+                    <label for="rbfx-code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i></label>
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
-                    <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Save Code File</v-tooltip></button>
+                    <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i></button>
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
                     <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
-                    <label for="step-file" title="Load Model from File" class="toolbar_btn_label"><i class="mdi-cloud-upload mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Upload Model File</v-tooltip></label>
+                    <label for="step-file" title="Load Model from File" class="toolbar_btn_label"><i class="mdi-cloud-upload mdi"></i></label>
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
-                    <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i><v-tooltip activator="parent" content-class="toolbar_btn_tooltip" opacity="0.1" location="end">Download Model File</v-tooltip></button>
+                    <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
                     <v-divider vertical class="divider_vertical"></v-divider>
                 </div>
                 <!--  -->
@@ -148,20 +147,23 @@ function route_ck(item) {
     //
     if (item.text == "Exit Application") {
         logout_ck();
-    }
-    //
-    if (item.text == "CAD Editor") {
+    } else if (item.text == "CAD Editor") {
         //
         mainStore_menu.yn_show_code_btn = true;
         //
         if (FM_GLOBAL.TWEAKPANLE) {
             FM_GLOBAL.TWEAKPANLE.hidden = false;
         }
-    }
-    //
-    if (item.text == "Scene Editor") {
+    } else if (item.text == "Scene Editor") {
         //
         mainStore_menu.yn_show_code_btn = true;
+        //
+        if (FM_GLOBAL.TWEAKPANLE) {
+            FM_GLOBAL.TWEAKPANLE.hidden = true;
+        }
+    } else {
+        //
+        mainStore_menu.yn_show_code_btn = false;
         //
         if (FM_GLOBAL.TWEAKPANLE) {
             FM_GLOBAL.TWEAKPANLE.hidden = true;

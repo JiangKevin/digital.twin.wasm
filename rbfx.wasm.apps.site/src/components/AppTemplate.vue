@@ -143,6 +143,24 @@ function route_ck(item) {
         logout_ck();
     }
     //
+    if (item.text == "CAD Editor") {
+        //
+        mainStore_menu.yn_show_code_btn = true;
+        //
+        if (FM_GLOBAL.TWEAKPANLE) {
+            FM_GLOBAL.TWEAKPANLE.hidden = false;
+        }
+    }
+    //
+    if (item.text == "Scene Editor") {
+        //
+        mainStore_menu.yn_show_code_btn = true;
+        //
+        if (FM_GLOBAL.TWEAKPANLE) {
+            FM_GLOBAL.TWEAKPANLE.hidden = true;
+        }
+    }
+    //
     if (mainStore_menu.is_logined) {
         console.log(item.text);
         mainStore_menu.menu_navigation_item = item.text;

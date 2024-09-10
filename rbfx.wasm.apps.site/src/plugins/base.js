@@ -469,14 +469,21 @@ export const setupThreeJSViewport = () => {
     }
     return scene;
 };
-export const setupThreeJSCore = () => {
+export const setupThreeJSCore = (rail) => {
     var cad_core = {};
     //
     var scene = new FM_GLOBAL.THREE.Scene();
     var camera = new FM_GLOBAL.THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     var renderer = new FM_GLOBAL.THREE.WebGLRenderer({ antialias: true });
     //
-    renderer.setSize(window.innerWidth - 275, window.innerHeight - 124);
+    var renderer_w;
+    if (rail) {
+        renderer_w = window.innerWidth - 255;
+    } else {
+        renderer_w = window.innerWidth - 55;
+    }
+    //
+    renderer.setSize(renderer_w, window.innerHeight);
     const light = new FM_GLOBAL.THREE.AmbientLight(0x404040);
     scene.add(light);
     const directionalLight = new FM_GLOBAL.THREE.DirectionalLight(0xffffff, 0.5);

@@ -10,6 +10,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, setupThreeJSCore } from "@/plugins/base.js";
+import { useStoreForMenu } from "@/stores/globle.js";
+const mainStore_menu = useStoreForMenu();
+//
 import * as THREE from "@/assets/js/three/three.module.js";
 import { OrbitControls } from "@/assets/js/three/OrbitControls.js";
 import { initOpenCascade } from "@/assets/js/opencascade/fm.opencascade.Instantiation.js";
@@ -35,7 +38,7 @@ FM_GLOBAL.TWEAKPANLE.hidden = true;
 onMounted(() => {
     busy_div_control("other_log", true);
     if (!is_load_cad_wasm) {
-        var fm_cad_core = setupThreeJSCore();
+        var fm_cad_core = setupThreeJSCore(mainStore_menu.rail);
         //
         FM_GLOBAL.CAD_SCENE = fm_cad_core.scene;
         FM_GLOBAL.CAD_RENDERER = fm_cad_core.renderer;
@@ -59,4 +62,13 @@ onMounted(() => {
 </script>
 
 <!--  style  -->
-<style scoped></style>
+<style scoped>
+#viewport {
+    width: 100%;
+    height: 100%;
+}
+#viewport canvas {
+    width: 100%;
+    height: 100vh;
+}
+</style>

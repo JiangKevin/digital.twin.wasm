@@ -9,9 +9,6 @@
                             <v-img cover :src="mainStore_menu.user_info.image" @click="view_manu_ck"></v-img>
                         </v-avatar>
                     </template>
-                    <!-- <template v-slot:append>
-                        <v-btn icon="mdi-exit-to-app" size="small" variant="text" @click="logout_ck"></v-btn>
-                    </template> -->
                 </v-list-item>
             </v-list>
             <v-divider></v-divider>
@@ -69,7 +66,6 @@
                         <v-list-item-title v-text="item.text"></v-list-item-title>
                     </v-list-item>
                 </v-list>
-                <!-- <v-btn icon="mdi-exit-to-app" @click="logout_ck" class="logout_btn" rounded="0"> </v-btn> -->
             </div>
             <!--  -->
 
@@ -89,23 +85,36 @@
                     <!--  -->
                     <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
                     <v-divider vertical class="divider_vertical"></v-divider>
-                    <!--  -->
-                    <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i></button>
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <!--  -->
-                    <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
-                    <label for="rbfx-code-file" title="Load code from File" class="toolbar_btn_label"><i class="mdi-folder-open mdi"></i></label>
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <!--  -->
-                    <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i></button>
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <!--  -->
-                    <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
-                    <label for="step-file" title="Load Model from File" class="toolbar_btn_label"><i class="mdi-cloud-upload mdi"></i></label>
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <!--  -->
-                    <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
-                    <v-divider vertical class="divider_vertical"></v-divider>
+                    <div class="left_toolbar_container">
+                        <!--  -->
+                        <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i></button>
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <!--  -->
+                        <div class="toolbar_btn_label">
+                            <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
+                            <label for="rbfx-code-file" title="Load code from File"><i class="mdi-folder-open mdi"></i></label>
+                        </div>
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <!--  -->
+                        <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i></button>
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                    </div>
+                    <div class="middl_toolbar_container">
+                        <!--  -->
+                        <div class="toolbar_btn_label">
+                            <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
+                            <label for="step-file" title="Load Model from File"><i class="mdi-cloud-upload mdi"></i></label>
+                        </div>
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <!--  -->
+                        <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                    </div>
+                    <div class="right_toolbar_container">
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
+                    </div>
                 </div>
                 <!--  -->
                 <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
@@ -303,7 +312,6 @@ function busy_div_class_select(rail) {
 }
 //
 onMounted(() => {
-    busy_div_control("other_log", false);
     mainStore_menu.yn_show_code_btn = false;
     //
     if (mainStore_menu.is_logined != true) {
@@ -330,10 +338,7 @@ function frame_load() {
 }
 function down_load_modle_file() {
     if (FM_GLOBAL.CAD_SCENE) {
-        // saveShapeOBJ( FM_GLOBAL.CAD_SCENE);
         saveShapeSTL(FM_GLOBAL.CAD_SCENE);
-        // saveShapeSTEP();
-        // saveShapeGLTF(FM_GLOBAL.CAD_SCENE);
     }
 }
 </script>

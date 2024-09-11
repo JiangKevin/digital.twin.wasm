@@ -11,8 +11,10 @@
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
-import markdownit from 'markdown-it'
-// 
+import markdownit from "markdown-it";
+import { useStoreForMenu } from "@/stores/globle.js";
+const mainStore_menu = useStoreForMenu();
+//
 FM_GLOBAL.MARKDOWN = markdownit({
     html: true,
     xhtmlOut: true,
@@ -28,11 +30,13 @@ FM_GLOBAL.MARKDOWN = markdownit({
 
 //
 onMounted(() => {
-    setTimeout(() => {
-        var md = window.frames["mark_down_frame"];
-        var md_view = window.frames["mark_down_view"];
-        md_view.document.body.innerHTML = "<link rel='stylesheet' href='runtime/css/fm_markdown.css' /> \n" + FM_GLOBAL.MARKDOWN.render(md.document.body.innerText);
-    }, 3000);
+    if (mainStore_menu.is_logined) {
+        setTimeout(() => {
+            var md = window.frames["mark_down_frame"];
+            var md_view = window.frames["mark_down_view"];
+            md_view.document.body.innerHTML = "<link rel='stylesheet' href='./runtime/css/fm_markdown.css' /> \n" + FM_GLOBAL.MARKDOWN.render(md.document.body.innerText);
+        }, 3000);
+    }
 });
 </script>
 

@@ -134,6 +134,10 @@ function route_ck(item) {
         }
     } else if (item.text == "Editor Help") {
         mainStore_menu.yn_show_code_btn = false;
+        //
+        if (FM_GLOBAL.TWEAKPANLE) {
+            FM_GLOBAL.TWEAKPANLE.hidden = true;
+        }
     } else {
         //
         mainStore_menu.yn_show_code_btn = false;

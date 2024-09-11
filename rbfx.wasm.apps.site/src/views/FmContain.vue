@@ -90,6 +90,7 @@
 </template>
 <!--  script  -->
 <script setup>
+import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
@@ -238,6 +239,14 @@ function save_code_ck() {
     var log_span = document.getElementById("rbfx-output");
     saveCodeToFile(FM_GLOBAL.MONACO_EDITOR.getValue(), log_span);
 }
+//
+onMounted(() => {
+    busy_div_control("other_log", false);
+    //
+    if (FM_GLOBAL.TWEAKPANLE) {
+        FM_GLOBAL.TWEAKPANLE.hidden = true;
+    }
+});
 </script>
 <!--  style  -->
 <style scoped>

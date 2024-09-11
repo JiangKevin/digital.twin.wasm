@@ -339,6 +339,6 @@
 .fm_markdown_iframe_view {
     width: 100%;
     border: none;
-    height: calc(100vh - 124px);
+    height: 100vh;
     background-color: #252325;
 }

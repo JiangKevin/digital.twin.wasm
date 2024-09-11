@@ -13,7 +13,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     //
     var login_log = ref("");
     var editor_log = ref("");
-    var menu_navigation_item = ref("All Proejcts");
+    var menu_navigation_item = ref("Editor Help");
     //
     var menu_items = [
         { text: "All Proejcts", icon: "mdi-folder", active: false, disabled: false, route: "/all_project", sub: [] },

@@ -5,6 +5,9 @@
             <v-window-item value="Editor Help">
                 <help_view></help_view>
             </v-window-item>
+            <v-window-item value="All Proejcts">
+                <project_view></project_view>
+            </v-window-item>
             <v-window-item value="CAD Editor">
                 <cascad_editor></cascad_editor>
             </v-window-item>
@@ -99,6 +102,7 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 import cascad_editor from "@/modules/cascad_editor";
 import wasm_editor from "@/modules/wasm_editor";
 import help_view from "@/modules/help";
+import project_view from "@/modules/projectView";
 //
 function code_div_class_select(is_view, rail, is_show_btn) {
     var rt = "";

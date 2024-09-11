@@ -119,7 +119,7 @@ function route_ck(item) {
         }
         //
         if (FM_GLOBAL.TWEAKPANLE) {
-            FM_GLOBAL.TWEAKPANLE.hidden = false;
+            FM_GLOBAL.TWEAKPANLE.hidden = true;
         }
     } else if (item.text == "Scene Editor") {
         //

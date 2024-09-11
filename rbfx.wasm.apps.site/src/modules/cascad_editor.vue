@@ -33,7 +33,7 @@ FM_GLOBAL.THREE_GLTFEXPORTER = GLTFExporter;
 onMounted(() => {
     //
     mainStore_menu.yn_show_code_btn = true;
-    FM_GLOBAL.TWEAKPANLE.hidden = false;
+
     //
     if (!is_load_cad_wasm) {
         var fm_cad_core = setupThreeJSCore(mainStore_menu.rail);
@@ -64,7 +64,10 @@ onMounted(() => {
             fm_addScript("./runtime/basic/cascad_wrap.js", true, false);
             //
             is_load_cad_wasm = true;
+            FM_GLOBAL.TWEAKPANLE.hidden = false;
         });
+    } else {
+        FM_GLOBAL.TWEAKPANLE.hidden = false;
     }
 });
 </script>

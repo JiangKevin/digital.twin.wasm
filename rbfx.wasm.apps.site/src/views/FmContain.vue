@@ -228,8 +228,10 @@ function run_code_for_editor() {
     try {
         run_code(FM_GLOBAL.MONACO_EDITOR.getValue());
         log_span.innerText = "+-  Run ok. ";
+        FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From code editor: Run ok. " + "\n";
     } catch (e) {
         log_span.innerText = "+-  " + e.message;
+        FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From code editor: Run ok. " + e.message + "\n";
     } finally {
         //
     }

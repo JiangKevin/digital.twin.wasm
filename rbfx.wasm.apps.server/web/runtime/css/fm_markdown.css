@@ -28,11 +28,10 @@ body {
 }
 table {
     margin-top: 4px;
-    /* table-layout: fixed; */
-    width: calc(100% - 10px);
+    width: calc(100% - 12px);
     border-collapse: collapse;
     margin-left: 4px;
-    margin-right: 6px;
+    margin-right: 4px;
 }
 
 thead th {
@@ -62,7 +61,7 @@ td {
 thead th:first-child {
     border-collapse: collapse;
     border: none;
-    background-color: black;
+    background-color: #1b1b1f;
 }
 /*  */
 h1 {
@@ -73,7 +72,7 @@ h1 {
     margin-bottom: 10px;
     margin-right: 4px;
     margin-top: 4px;
-    width: calc(100% - 14px);
+    width: calc(100% - 12px);
 }
 h2,
 h3,
@@ -85,7 +84,7 @@ h4 {
     margin-bottom: 6px;
     margin-right: 4px;
     margin-top: 6px;
-    width: calc(100% - 14px);
+    width: calc(100% - 12px);
 }
 
 ul {
@@ -102,10 +101,10 @@ hr {
     margin-bottom: 0px;
     margin-right: 4px;
     margin-top: 0px;
-    width: calc(100% - 18px);
+    width: calc(100% - 16px);
 }
 p {
-    padding-left: 8px;
+    padding-left: 12px;
     padding-right: 0px;
     margin-left: 4px;
     margin-bottom: 0px;
@@ -128,7 +127,7 @@ pre code {
     font-style: italic;
     padding: 4px 4px;
     margin: 0px;
-    width: calc(100% - 18px);
+    width: calc(100% - 16px);
     display: block;
 }
 
@@ -152,7 +151,7 @@ details[open] {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 16px;
-    width: calc(100% - 12px);
+    width: calc(100% - 8px);
 }
 summary {
     font-weight: bold;
@@ -163,4 +162,9 @@ summary[open] {
 
 .img_left {
     margin: 8px;
+}
+.img_left_max {
+    margin: 4px 4px;
+    height: 300px;
+    width: 300px;
 }

@@ -3,7 +3,7 @@
     <div class="main_container_content_max blur_div_95">
         <!--  -->
         <iframe src="./runtime/markdown/help.md" id="mark_down_frame" name="mark_down_frame" class="fm_markdown_iframe"></iframe>
-        <iframe id="mark_down_view" name="mark_down_view" class="fm_markdown_iframe_view"></iframe>
+        <iframe id="mark_down_view" name="mark_down_view" class="fm_markdown_iframe_view" scrolling="auto" style="overflow-x: scroll;"></iframe>
         <!--  -->
     </div>
 </template>
@@ -31,10 +31,12 @@ FM_GLOBAL.MARKDOWN = markdownit({
 //
 onMounted(() => {
     if (mainStore_menu.is_logined) {
+        busy_div_control("other_log", true);
         setTimeout(() => {
             var md = window.frames["mark_down_frame"];
             var md_view = window.frames["mark_down_view"];
             md_view.document.body.innerHTML = "<link rel='stylesheet' href='./runtime/css/fm_markdown.css' /> \n" + FM_GLOBAL.MARKDOWN.render(md.document.body.innerText);
+            busy_div_control("other_log", false);
         }, 3000);
     }
 });

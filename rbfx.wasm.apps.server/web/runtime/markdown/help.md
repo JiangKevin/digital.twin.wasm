@@ -4,11 +4,11 @@
 
 ## Key objects retained by the system
 
--   FM\*GLOBAL.DTWIN:Object names exposed by the Digital Twin Designer。Secondary packaging, namespace FM\_;
+-   FM_GLOBAL.DTWIN:Object names exposed by the Digital Twin Designer。Secondary packaging, namespace FM\_;
 
 ## Digital Twin Editor for js function list
 
-<details >
+<details open>
 <summary>function list</summary>
 
 |                                       | Function return value | Number of parameters                                                         | Function Description                                                                                                         | Calling Example                                                                                                                                                              |
@@ -126,13 +126,22 @@ RestAndCreateScene();
 
 ## Key objects retained by the system
 
-大是大非
+-   FM_GLOBAL.CAD_SCENE:The reference to the scene global object created retains the name;
+-   FM_GLOBAL.OPENCASCADE:The reference to the cascad global object created retains the name;
+-   FM_GLOBAL.TWEAKPANLE:The reference to the tweak panle global object created retains the name;
 
-/_Build by angelscripten_/
-#include "test.hpp"
+## Overview
 
----
+A typical application developed using OCCT deals with two or three-dimensional (2D or 3D) geometric modeling in general-purpose or specialized Computer Aided Design (CAD) systems, manufacturing or analysis applications, simulation applications, or even illustration tools.
 
-`FM_GLOBAL.DTWIN.cwrap('CreateChild', '', ['string'])('Hello'); `
+<img src="./runtime/img/technical_overview_schema.png" class=img_left_max /><img src="./runtime/img/dot_schema_all_modules.png" class=img_left_max />
 
-`FM_GLOBAL.DTWIN.cwrap('CreateChild', '', ['string'])('Hello'); `
+-   Foundation Classes module underlies all other OCCT classes;
+-   Modeling Data module supplies data structures to represent 2D and 3D geometric primitives and their compositions into CAD models;
+-   Modeling Algorithms module contains a vast range of geometrical and topological algorithms;
+-   Mesh toolkit from "Modeling Algorithms" module implements tessellated representations of objects;
+-   Visualization module provides complex mechanisms for graphical data representation;
+-   Data Exchange module inter-operates with popular data formats and relies on Shape Healing to improve compatibility between CAD software of different vendors;
+-   Application Framework module offers ready-to-use solutions for handling application-specific data (user attributes) and commonly used functionality (save/restore, undo/redo, copy/paste, tracking CAD modifications, etc).
+
+The diagram above illustrates this modular structure.

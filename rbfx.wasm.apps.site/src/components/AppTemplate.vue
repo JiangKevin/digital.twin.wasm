@@ -78,68 +78,6 @@
         <!--  -->
         <v-main>
             <RouterView></RouterView>
-            <!-- code editor div -->
-            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain">
-                <!--  -->
-                <div class="main_container_toolbar_no_top_padding">
-                    <!--  -->
-                    <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <div class="left_toolbar_container">
-                        <!--  -->
-                        <button class="toolbar_btn" @click="run_code_for_editor"><i class="mdi-play mdi"></i></button>
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <!--  -->
-                        <div class="toolbar_btn_label">
-                            <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
-                            <label for="rbfx-code-file" title="Load code from File"><i class="mdi-folder-open mdi"></i></label>
-                        </div>
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <!--  -->
-                        <button class="toolbar_btn" @click="save_code_ck"><i class="mdi-content-save mdi"></i></button>
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                    </div>
-                    <div class="middl_toolbar_container">
-                        <!--  -->
-                        <div class="toolbar_btn_label">
-                            <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
-                            <label for="step-file" title="Load Model from File"><i class="mdi-cloud-upload mdi"></i></label>
-                        </div>
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <!--  -->
-                        <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                    </div>
-                    <div class="right_toolbar_container">
-                        <!--  -->
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi" @click="code_editor_laout_ck(0)"></i></button>
-                        <!--  -->
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(1)"></i></button>
-                        <!--  -->
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(2)"></i></button>
-                        <!--  -->
-                        <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(3)"><i class="mdi-align-horizontal-distribute mdi"></i></button>
-                    </div>
-                </div>
-                <!--  -->
-                <iframe id="vs_code_frame" src="./code.html" class="code_contain_frame" frameBorder="0"></iframe>
-                <!--  -->
-                <div class="main_container_status_no_bottom_padding">
-                    <span id="rbfx-output"></span>
-                </div>
-            </div>
-            <div :class="code_div_class_select_noshow(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)">
-                <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
-            </div>
-            <!-- busy div  -->
-            <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
-                <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div" color="pink"></v-progress-circular>
-                <textarea id="story" name="story" rows="8" class="output_wasm"></textarea>
-            </div>
         </v-main>
         <!--  -->
     </v-layout>
@@ -230,27 +168,6 @@ function logout_ck() {
     router.push({ path: "login", replace: true });
 }
 //
-function code_div_show_ck() {
-    mainStore_menu.yn_show_code_contain = !mainStore_menu.yn_show_code_contain;
-}
-//
-function run_code_for_editor() {
-    var log_span = document.getElementById("rbfx-output");
-    try {
-        run_code(FM_GLOBAL.MONACO_EDITOR.getValue());
-        log_span.innerText = "+-  Run ok. ";
-    } catch (e) {
-        log_span.innerText = "+-  " + e.message;
-    } finally {
-        //
-    }
-}
-//
-function save_code_ck() {
-    var log_span = document.getElementById("rbfx-output");
-    saveCodeToFile(FM_GLOBAL.MONACO_EDITOR.getValue(), log_span);
-}
-//
 function logo_class_select(is_view) {
     if (is_view) {
         return "fm_main_log_min animate__animated animate__rubberBand";
@@ -264,106 +181,6 @@ function logo_src_select(is_view) {
         return logoImgUrl_2;
     } else {
         return logoImgUrl_1;
-    }
-}
-//
-function code_div_class_select(is_view, rail, is_show_btn) {
-    var rt = "";
-    //
-    if (is_show_btn) {
-        if (rail) {
-            rt = rt + " code_contain_no_left ";
-        } else {
-            rt = rt + " code_contain_have_left ";
-        }
-        if (is_view) {
-            rt = rt + " show_div ";
-        } else {
-            rt = rt + " hide_div ";
-        }
-    } else {
-        rt = " hide_div ";
-    }
-    //
-    return rt;
-}
-//
-function code_div_class_select_noshow(is_view, rail, is_show_btn) {
-    var rt = "";
-    //
-    if (is_show_btn) {
-        if (rail) {
-            rt = rt + " code_contain_no_left_min ";
-        } else {
-            rt = rt + " code_contain_have_left_min ";
-        }
-        if (is_view) {
-            rt = rt + " hide_div ";
-        } else {
-            rt = rt + " show_div ";
-        }
-    } else {
-        rt = " hide_div ";
-    }
-    //
-    return rt;
-}
-function busy_div_class_select(rail) {
-    var rt = "";
-    //
-    if (rail) {
-        rt = rt + " busy_contain_no_left ";
-    } else {
-        rt = rt + " busy_contain_have_left ";
-    }
-    //
-    return rt;
-}
-//
-function code_editor_laout_ck(layout) {
-    var vs_code_contain = document.getElementById("vs_code_contain");
-
-    if (mainStore_menu.menu_navigation_item == "Scene Editor") {
-        //
-        if (layout == 0) {
-            var rbfx_w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(2);
-            var w;
-            if (mainStore_menu.rail) {
-                w = window.innerWidth - rbfx_w - 55 - 1;
-            } else {
-                w = window.innerWidth - rbfx_w - 255 - 1;
-            }
-            vs_code_contain.style.width = w + "px";
-        } else if (layout == 1) {
-            var rbfx_w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(1);
-            var w;
-            if (mainStore_menu.rail) {
-                w = window.innerWidth - rbfx_w - 55 - 1;
-            } else {
-                w = window.innerWidth - rbfx_w - 255 - 1;
-            }
-            vs_code_contain.style.width = w + "px";
-        } else if (layout == 2) {
-            var rbfx_w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(0);
-            var w;
-            if (mainStore_menu.rail) {
-                w = window.innerWidth - rbfx_w - 55 - 1;
-            } else {
-                w = window.innerWidth - rbfx_w - 255 - 1;
-            }
-            vs_code_contain.style.width = w + "px";
-        } else if (layout == 3) {
-            var rbfx_w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(3);
-            var w;
-            if (mainStore_menu.rail) {
-                w = window.innerWidth - rbfx_w - 55 - 1;
-            } else {
-                w = window.innerWidth - rbfx_w - 255 - 1;
-            }
-            vs_code_contain.style.width = "600px";
-        }
-    } else if (mainStore_menu.menu_navigation_item == "CAD Editor") {
-        //
     }
 }
 //
@@ -388,15 +205,6 @@ onMounted(() => {
     //
     FM_GLOBAL.LOG = document.getElementById("story");
 });
-//
-function frame_load() {
-    console.log("+- From js: frame loaded.");
-}
-function down_load_modle_file() {
-    if (FM_GLOBAL.CAD_SCENE) {
-        saveShapeSTL(FM_GLOBAL.CAD_SCENE);
-    }
-}
 </script>
 <!--  style  -->
 <style scoped>
@@ -432,35 +240,7 @@ function down_load_modle_file() {
     margin: 2px 0px 2px 0px;
     line-height: 74px;
 }
-.resizable {
-    overflow: auto;
-    resize: horizontal;
-    min-width: 600px;
-}
-.output_wasm {
-    background-color: rgba(0, 0, 255, 0);
-    border: none;
-    color: aliceblue;
-    font-size: 11px;
-    width: calc(100% - 16px);
-    outline: none;
-    resize: none;
-    height: calc(100% - 16px);
-    margin: 8px;
-    padding: 0px;
-    /* position: fixed;
-    top: 0px; */
-    /* right: 6px; */
-}
-.output_wasm::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-}
-.output_progress_div {
-    position: fixed;
-    top: calc(50% - 64px);
-    left: calc(50% - 64px);
-}
+
 .menu_group_items {
     padding: 2px;
 }

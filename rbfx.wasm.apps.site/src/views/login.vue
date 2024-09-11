@@ -58,6 +58,7 @@ function login() {
 onMounted(() => {
     // console.log("+- From js: is_load_rbfx_wasm= " + is_load_rbfx_wasm);
     if (is_load_rbfx_wasm || is_load_cad_wasm || mainStore_menu.user_info.token != "" || mainStore_menu.is_logined || reload) {
+        console.log("+- Refresh or Reload.");
         window.location.reload();
     }
 });

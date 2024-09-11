@@ -218,9 +218,9 @@ onMounted(() => {
     var code_frame = document.getElementById("vs_code_frame");
     if (code_frame) {
         code_frame.onload = function () {
-            console.log("+- From js: frame loaded.");
+            // console.log("+- From js: frame loaded.");
             FM_GLOBAL.MONACO_EDITOR = window.frames["vs_code_frame"].contentWindow.FM_GLOBAL.editor;
-            console.log(FM_GLOBAL.MONACO_EDITOR);
+            // console.log(FM_GLOBAL.MONACO_EDITOR);
             //
             var log_span = document.getElementById("rbfx-output");
             open_rbfx_code_file(FM_GLOBAL.MONACO_EDITOR, log_span);

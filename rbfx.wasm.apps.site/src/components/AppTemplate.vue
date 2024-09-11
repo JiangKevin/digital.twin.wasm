@@ -113,7 +113,16 @@
                     <div class="right_toolbar_container">
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn_m"><i class="mdi-align-horizontal-distribute mdi"></i></button>
                     </div>
                 </div>
                 <!--  -->

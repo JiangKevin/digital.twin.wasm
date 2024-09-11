@@ -119,7 +119,9 @@ function route_ck(item) {
         }
         //
         if (FM_GLOBAL.TWEAKPANLE) {
-            FM_GLOBAL.TWEAKPANLE.hidden = true;
+            if (is_load_cad_wasm) {
+                FM_GLOBAL.TWEAKPANLE.hidden = false;
+            }
         }
     } else if (item.text == "Scene Editor") {
         //

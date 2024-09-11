@@ -43,6 +43,7 @@ function login() {
                 mainStore_menu.login_log = "";
                 mainStore_menu.user_info = response.data.user_info;
                 mainStore_menu.is_logined = true;
+                reload = true;
                 //
                 router.push({ path: "/main_contain", replace: true });
             } else {
@@ -56,7 +57,7 @@ function login() {
 }
 onMounted(() => {
     // console.log("+- From js: is_load_rbfx_wasm= " + is_load_rbfx_wasm);
-    if (is_load_rbfx_wasm || is_load_cad_wasm || mainStore_menu.user_info.token != "" || mainStore_menu.is_logined) {
+    if (is_load_rbfx_wasm || is_load_cad_wasm || mainStore_menu.user_info.token != "" || mainStore_menu.is_logined || reload) {
         window.location.reload();
     }
 });

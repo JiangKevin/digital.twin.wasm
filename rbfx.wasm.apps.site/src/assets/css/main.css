@@ -328,3 +328,7 @@
 .tp-rotv_b {
     background-color: var(--fm_toolbar);
 }
+.flex_div
+{
+    display: flex;
+}

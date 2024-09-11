@@ -31,15 +31,17 @@
                     <v-divider vertical class="divider_vertical"></v-divider>
                 </div>
                 <div class="middl_toolbar_container">
-                    <!--  -->
-                    <div class="toolbar_btn_label">
-                        <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
-                        <label for="step-file" title="Load Model from File"><i class="mdi-cloud-upload mdi"></i></label>
+                    <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'CAD Editor'">
+                        <!--  -->
+                        <div class="toolbar_btn_label">
+                            <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
+                            <label for="step-file" title="Load Model from File"><i class="mdi-cloud-upload mdi"></i></label>
+                        </div>
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <!--  -->
+                        <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
+                        <v-divider vertical class="divider_vertical"></v-divider>
                     </div>
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <!--  -->
-                    <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
-                    <v-divider vertical class="divider_vertical"></v-divider>
                 </div>
                 <div class="right_toolbar_container">
                     <!--  -->

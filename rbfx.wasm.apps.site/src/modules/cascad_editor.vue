@@ -31,7 +31,6 @@ FM_GLOBAL.THREE_GLTFEXPORTER = GLTFExporter;
 
 //
 onMounted(() => {
-    busy_div_control("other_log", true);
     //
     mainStore_menu.yn_show_code_btn = true;
     FM_GLOBAL.TWEAKPANLE.hidden = false;

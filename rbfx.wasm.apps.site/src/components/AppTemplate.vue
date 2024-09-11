@@ -111,6 +111,9 @@ function route_ck(item) {
     } else if (item.text == "CAD Editor") {
         //
         mainStore_menu.yn_show_code_btn = true;
+        if (!is_load_cad_wasm) {
+            busy_div_control("other_log", true);
+        }
         //
         if (FM_GLOBAL.TWEAKPANLE) {
             FM_GLOBAL.TWEAKPANLE.hidden = false;
@@ -118,6 +121,10 @@ function route_ck(item) {
     } else if (item.text == "Scene Editor") {
         //
         mainStore_menu.yn_show_code_btn = true;
+        //
+        if (!is_load_rbfx_wasm) {
+            busy_div_control("other_log", true);
+        }
         //
         if (FM_GLOBAL.TWEAKPANLE) {
             FM_GLOBAL.TWEAKPANLE.hidden = true;
@@ -164,7 +171,10 @@ function logout_ck() {
     //
     if (is_load_rbfx_wasm) {
         FM_GLOBAL.DTWIN_EDITOR._Stop();
-    } //
+    }
+    is_load_rbfx_wasm = false;
+    is_load_cad_wasm = false;
+    //
     fm_delScript("./data.js");
     fm_delScript("./common.js");
     fm_delScript("./runtime/basic/cascad_wrap.js");

@@ -17,7 +17,6 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 onMounted(() => {
     // console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
     var log_span = document.getElementById("rbfx-output");
-    busy_div_control("other_log", true);
     //
     if (!is_load_rbfx_wasm) {
         //

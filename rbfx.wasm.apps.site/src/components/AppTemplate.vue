@@ -79,7 +79,7 @@
         <v-main>
             <RouterView></RouterView>
             <!-- code editor div -->
-            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain" x>
+            <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain">
                 <!--  -->
                 <div class="main_container_toolbar_no_top_padding">
                     <!--  -->
@@ -116,7 +116,7 @@
                         <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(1)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
                         <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi"></i></button>
@@ -318,6 +318,24 @@ function busy_div_class_select(rail) {
     }
     //
     return rt;
+}
+//
+function code_editor_laout_ck(layout) {
+    var vs_code_contain = document.getElementById("vs_code_contain");
+
+    if (mainStore_menu.menu_navigation_item == "Scene Editor") {
+        //
+        if (layout == 1) {
+            //
+            var w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(1);
+            vs_code_contain.style.width = "900px";
+            console.log(vs_code_contain);
+        } else if (layout == 2) {
+            //
+        }
+    } else if (mainStore_menu.menu_navigation_item == "CAD Editor") {
+        //
+    }
 }
 //
 onMounted(() => {

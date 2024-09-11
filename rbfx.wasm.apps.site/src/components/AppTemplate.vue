@@ -1,7 +1,7 @@
 <!-- template -->
 <template>
     <v-layout full-height>
-        <v-navigation-drawer v-model="mainStore_menu.drawer" :rail="mainStore_menu.rail" permanent class="blur_div">
+        <v-navigation-drawer v-model="mainStore_menu.drawer" :rail="mainStore_menu.rail" permanent class="blur_div_80">
             <v-list>
                 <v-list-item :subtitle="mainStore_menu.user_info.email" :title="mainStore_menu.user_info.fullname">
                     <template v-slot:prepend>
@@ -92,6 +92,11 @@ const mainStore_menu = useStoreForMenu();
 import logoImgUrl_1 from "@/assets/img/logo_1.png";
 import logoImgUrl_2 from "@/assets/img/logo_2.png";
 import "@/assets/css/animate/animate.min.css";
+import { Pane } from "@/assets/js/Tweakpane/tweakpane.min.js";
+FM_GLOBAL.TWEAKPANLE = new Pane({
+    title: "Parameters",
+    expanded: false,
+});
 //
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
 //

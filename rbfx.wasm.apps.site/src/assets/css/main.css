@@ -93,9 +93,13 @@
 .v-application {
     background: url("../img/background.jpg");
 }
-.blur_div {
+.blur_div_80 {
     backdrop-filter: blur(14px);
     opacity: 80%;
+}
+.blur_div_95 {
+    backdrop-filter: blur(14px);
+    opacity: 95%;
 }
 .main_container {
     width: 100%;
@@ -200,7 +204,6 @@
     margin-top: 0px;
     margin-bottom: 0px;
     background-color: rgb(0, 0, 0);
-    opacity: 95%;
 }
 
 .toolbar_btn_m {

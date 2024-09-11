@@ -10,7 +10,7 @@
             </v-window-item>
         </v-window>
         <!-- code editor div -->
-        <div class="resizable" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain">
+        <div class="resizable blur_div_80" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain">
             <!--  -->
             <div class="main_container_toolbar_no_top_padding">
                 <!--  -->

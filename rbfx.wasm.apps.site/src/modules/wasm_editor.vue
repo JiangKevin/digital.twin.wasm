@@ -1,6 +1,6 @@
 <!-- template -->
 <template>
-    <div class="main_container_content_max blur_div">
+    <div class="main_container_content_max blur_div_95">
         <!--  -->
         <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
         <!--  -->

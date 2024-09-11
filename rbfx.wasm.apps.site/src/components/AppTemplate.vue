@@ -327,8 +327,14 @@ function code_editor_laout_ck(layout) {
         //
         if (layout == 1) {
             //
-            var w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(1);
-            vs_code_contain.style.width = "900px";
+            var rbfx_w = FM_GLOBAL.DTWIN_EDITOR._AdjustmentLaout(1);
+            var w;
+            if (mainStore_menu.rail) {
+                w = window.innerWidth - rbfx_w - 55 - 1;
+            } else {
+                w = window.innerWidth - rbfx_w - 255 - 1;
+            }
+            vs_code_contain.style.width = w + "px";
             console.log(vs_code_contain);
         } else if (layout == 2) {
             //

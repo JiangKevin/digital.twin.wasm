@@ -12,7 +12,7 @@
     --fm_toolbar_right: 109px;
     --fm_toolbar_btn_w_width: 64px;
     --fm_toolbar_btn_width: 32px;
-    --fm_toolbar_btn_m_width: 16px;
+    --fm_toolbar_btn_m_width: 14px;
     --fm_toolbar_btn_height: 21px;
     --fm_toolbar_status_height: 21px;
     --cnt-usz: var(--tp-container-unit-size, 16px);
@@ -172,6 +172,7 @@
     margin: 0px;
     line-height: var(--fm_toolbar_btn_height);
     display: flex;
+    flex-direction: row-reverse;
 }
 
 .main_container_status_no_bottom_padding {
@@ -213,7 +214,6 @@
     min-width: var(--fm_toolbar_btn_m_width);
     max-width: var(--fm_toolbar_btn_m_width);
     height: var(--fm_toolbar_btn_height);
-    text-align: left;
 }
 .toolbar_btn {
     margin: 0px;
@@ -301,7 +301,7 @@
     left: 56px;
     top: 0px;
     background-color: var(--fm_toolbar);
-    z-index: 2000;
+    z-index: 3000;
     text-align: center;
 }
 .busy_contain_have_left {
@@ -328,7 +328,17 @@
 .tp-rotv_b {
     background-color: var(--fm_toolbar);
 }
-.flex_div
-{
+.flex_div {
     display: flex;
+}
+.fm_markdown_iframe {
+    width: 0px;
+    height: 0px;
+    border: none;
+}
+.fm_markdown_iframe_view {
+    width: 100%;
+    border: none;
+    height: calc(100vh - 124px);
+    background-color: #252325;
 }

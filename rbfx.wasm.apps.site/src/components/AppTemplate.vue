@@ -93,14 +93,17 @@ import logoImgUrl_1 from "@/assets/img/logo_1.png";
 import logoImgUrl_2 from "@/assets/img/logo_2.png";
 import "@/assets/css/animate/animate.min.css";
 import { Pane } from "@/assets/js/Tweakpane/tweakpane.min.js";
+import router from "@/router/router";
+//
 FM_GLOBAL.TWEAKPANLE = new Pane({
     title: "Parameters",
     expanded: false,
+    hidden: true,
 });
 //
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
+
 //
-import router from "@/router/router";
 function route_ck(item) {
     mainStore_menu.reset_menu_status();
     mainStore_menu.card_items = item.sub;
@@ -129,6 +132,8 @@ function route_ck(item) {
         if (FM_GLOBAL.TWEAKPANLE) {
             FM_GLOBAL.TWEAKPANLE.hidden = true;
         }
+    } else if (item.text == "Editor Help") {
+        mainStore_menu.yn_show_code_btn = false;
     } else {
         //
         mainStore_menu.yn_show_code_btn = false;

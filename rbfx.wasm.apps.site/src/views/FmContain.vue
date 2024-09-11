@@ -2,6 +2,9 @@
 <template>
     <div class="main_container">
         <v-window v-model="mainStore_menu.menu_navigation_item">
+            <v-window-item value="Editor Help">
+                <help_view></help_view>
+            </v-window-item>
             <v-window-item value="CAD Editor">
                 <cascad_editor></cascad_editor>
             </v-window-item>
@@ -44,18 +47,28 @@
                     </div>
                 </div>
                 <div class="right_toolbar_container">
-                    <!--  -->
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi" @click="code_editor_laout_ck(0)"></i></button>
-                    <!--  -->
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(1)"></i></button>
-                    <!--  -->
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(2)"></i></button>
-                    <!--  -->
-                    <v-divider vertical class="divider_vertical"></v-divider>
-                    <button class="toolbar_btn_m" @click="code_editor_laout_ck(3)"><i class="mdi-align-horizontal-distribute mdi"></i></button>
+                    <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'Scene Editor'">
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi" @click="code_editor_laout_ck(0)"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(1)"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(2)"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(3)"><i class="mdi-align-horizontal-distribute mdi"></i></button>
+                    </div>
+                    <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'CAD Editor'">
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(0)"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(1)"><i class="mdi-align-horizontal-distribute mdi"></i></button>
+                    </div>
                 </div>
             </div>
             <!--  -->
@@ -84,6 +97,7 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 //
 import cascad_editor from "@/modules/cascad_editor";
 import wasm_editor from "@/modules/wasm_editor";
+import help_view from "@/modules/help";
 //
 function code_div_class_select(is_view, rail, is_show_btn) {
     var rt = "";
@@ -183,6 +197,18 @@ function code_editor_laout_ck(layout) {
         }
     } else if (mainStore_menu.menu_navigation_item == "CAD Editor") {
         //
+        if (layout == 0) {
+            var rbfx_w = 300;
+            var w;
+            if (mainStore_menu.rail) {
+                w = window.innerWidth - rbfx_w - 55 - 1;
+            } else {
+                w = window.innerWidth - rbfx_w - 255 - 1;
+            }
+            vs_code_contain.style.width = w + "px";
+        } else if (layout == 1) {
+            vs_code_contain.style.width = "600px";
+        }
     }
 }
 //

@@ -280,12 +280,12 @@ function open_dt_project(obj) {
         //
         mainStore_menu.reset_menu_status();
         //
+        mainStore_menu.menu_navigation_item = "Scene Editor";
         for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
             if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {
                 mainStore_menu.menu_editor_items[i].active = true;
             }
         }
-        mainStore_menu.menu_navigation_item = "Scene Editor";
         mainStore_menu.yn_show_code_btn = true;
         // 监听该事件。
         window.addEventListener(

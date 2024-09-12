@@ -35,7 +35,7 @@
                                                     <v-spacer></v-spacer>
                                                     <v-btn icon="mdi-eye" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-btn icon="mdi-image-search" @click="texture_import_ck(n)" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
-                                                    <v-btn icon="mdi-cube-scan" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
+                                                    <v-btn icon="mdi-cube-scan" @click="model_import_ck(n)" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                 </v-card-actions>
                                                 <v-expand-transition>
                                                     <v-card v-if="n.toDel" class="position-absolute w-100" height="100%" style="bottom: 0" color="fm_card_ext" rounded="0">
@@ -79,10 +79,11 @@
                         <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list"></v-select>
                         <v-select prepend-icon="mdi-powershell" label="Command" variant="outlined" v-model="mainStore_project.res_import_commond_info.command" :items="mainStore_project.res_import_commond_list"></v-select>
                         <v-file-input id="model_upload_inputs" ref="model_upload_inputs" label="Select Resouse Files( FBX File )" accept=".fbx" variant="outlined" prepend-icon="mdi-cube-scan"></v-file-input>
+                        <v-text-field prepend-icon="mdi-cards-diamond" label="Parameter" variant="outlined" v-model="mainStore_project.res_import_commond_info.parameter"></v-text-field>
 
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
-                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Import" @click=""></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Import" @click="model_import_do"></v-btn>
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_project_drawer"></v-btn>
                             </v-card-actions>
                         </div>
@@ -222,6 +223,33 @@ function texture_import_do() {
         .then((response) => {
             close_project_drawer();
             mainStore_project.project_log = "+- From js: Import Texture for project [ " + mainStore_project.project_info.name + " ] ok.";
+        })
+        .catch((error) => {
+            mainStore_project.project_log = error;
+            console.error(error);
+        });
+}
+//
+function model_import_ck(obj) {
+    //
+    mainStore_project.drawer = true;
+    mainStore_project.project_selected_to_modify = obj;
+    mainStore_project.resource_info.project = obj.fileName;
+    mainStore_project.project_modify_type = "ModelImport";
+}
+function model_import_do() {
+    const formData = new FormData();
+    if (model_upload_inputs.files) {
+        for (var i = 0; i < model_upload_inputs.files.length; i++) {
+            formData.append("files", model_upload_inputs.files[i]);
+        }
+    }
+    //
+    axios
+        .post("/upload_res_and_wasm_import?Name=" + mainStore_project.resource_info.project + "&Command=" + mainStore_project.res_import_commond_info.command + "&Parameter=" + mainStore_project.res_import_commond_info.parameter, formData)
+        .then((response) => {
+            close_project_drawer();
+            mainStore_project.project_log = "+- From js: Model Texture for project [ " + mainStore_project.project_info.name + " ] ok.";
         })
         .catch((error) => {
             mainStore_project.project_log = error;

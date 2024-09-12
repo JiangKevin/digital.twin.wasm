@@ -3,6 +3,7 @@
     --fm_btn_active: #e90b0b;
     --fm_toolbar: #1b1a1e;
     --fm_toolbar_boder: #302f31;
+    --fm_contain_bg: #00000080;
 
     --tp-base-border-radius: 0px;
     --tp-base-background-color: var(--fm_toolbar);
@@ -215,7 +216,7 @@
 .main_container_content {
     height: calc(100vh - var(--fm_toolbar_btn_height) - var(--fm_toolbar_status_height));
     margin: 0px;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--fm_contain_bg);
     opacity: 95%;
 }
 .main_container_content_max {
@@ -224,7 +225,7 @@
     margin-right: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--fm_contain_bg);
 }
 
 .toolbar_btn_m {

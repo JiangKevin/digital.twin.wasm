@@ -7,7 +7,7 @@
             <button class="toolbar_btn_wide" @click="create_new_project_ck"><i class="mdi-folder-plus mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
         </div>
-        <div class="main_container_content blur_div_95">
+        <div class="main_container_content">
             <v-layout full-height>
                 <v-main class="main_contain_project">
                     <v-item-group>
@@ -61,7 +61,7 @@
                         </v-row>
                     </v-item-group>
                 </v-main>
-                <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer" width="500">
+                <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer" width="400">
                     <div v-show="(mainStore_project.project_modify_type = 'CreateProject')" class="r_modify_div">
                         <v-text-field prepend-icon="mdi-black-mesa" label="Name" variant="outlined" v-model="mainStore_project.project_info.name" rounded="0" density="compact"></v-text-field>
                         <v-textarea prepend-icon="mdi-hololens" label="Remark" variant="outlined" v-model="mainStore_project.project_info.info" rounded="0" density="compact"></v-textarea>
@@ -181,5 +181,6 @@ function create_new_project_ck() {
     padding-left: 10px;
     padding-right: 8px;
     padding-top: 20px;
+    background-color: var(--fm_toolbar);
 }
 </style>

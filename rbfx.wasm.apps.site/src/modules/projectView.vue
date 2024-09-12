@@ -16,7 +16,7 @@
                                 <v-item v-slot="{ isSelected, toggle }">
                                     <v-hover>
                                         <template v-slot:default="{ isHovering, props }">
-                                            <v-card v-bind="props" class="mx-auto" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0" density="compact">
+                                            <v-card v-bind="props" class="mx-auto opacity-70" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0" density="compact">
                                                 <v-card-title> {{ n.fileName + " [" + n.Id + "]" }} </v-card-title>
                                                 <v-card-subtitle>{{ n.stats.birthtime + " / " + n.stats.mtime }}</v-card-subtitle>
                                                 <v-card-text class="py-0">
@@ -63,7 +63,16 @@
                 </v-main>
                 <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer" width="500">
                     <div v-show="(mainStore_project.project_modify_type = 'CreateProject')" class="r_modify_div">
-                        <v-text-field prepend-icon="mdi-black-mesa" label="Name" variant="outlined" v-model="mainStore_project.project_info.name"></v-text-field>
+                        <v-text-field prepend-icon="mdi-black-mesa" label="Name" variant="outlined" v-model="mainStore_project.project_info.name" rounded="0" density="compact"></v-text-field>
+                        <v-textarea prepend-icon="mdi-hololens" label="Remark" variant="outlined" v-model="mainStore_project.project_info.info" rounded="0" density="compact"></v-textarea>
+                        <v-select prepend-icon="mdi-database-search" label="Template" variant="outlined" v-model="mainStore_project.project_info.wizard" :items="mainStore_project.wizard_list" rounded="0" density="compact" class="mx-auto"> </v-select>
+                        <v-file-input id="upload_inputs" ref="upload_inputs" multiple label="Select Resouse Files( ZIP File )" accept=".zip" variant="outlined" rounded="0" density="compact"></v-file-input>
+                        <div class="submit_contain">
+                            <v-card-actions class="fm_v_card_actions">
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Create" @click=""></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click=""></v-btn>
+                            </v-card-actions>
+                        </div>
                     </div>
                 </v-navigation-drawer>
             </v-layout>
@@ -84,6 +93,7 @@ const mainStore_project = useStoreForProject();
 //
 onMounted(() => {
     getProjectList();
+    getWizardList();
 });
 //
 function getProjectList() {
@@ -99,6 +109,22 @@ function getProjectList() {
         .catch((error) => {
             mainStore_project.project_log = error;
             console.error(error);
+        });
+}
+//
+function getWizardList() {
+    axios
+        .get("project_wizard_lists")
+        .then((res) => {
+            mainStore_project.wizard_list = [];
+            for (var i in res.data) {
+                mainStore_project.wizard_list.push(res.data[i]["fileName"]);
+            }
+        })
+        .catch(function (error) {
+            // 请求失败处理
+            mainStore_project.project_log = error;
+            console.log(error);
         });
 }
 //
@@ -120,7 +146,7 @@ function del_project_click(obj) {
 //
 function create_new_project_ck() {
     mainStore_project.drawer = !mainStore_project.drawer;
-    mainStore_project = "CreateProject";
+    mainStore_project.project_selected_to_modify = "CreateProject";
 }
 </script>
 
@@ -133,7 +159,7 @@ function create_new_project_ck() {
 .submit_btn {
     width: 50%;
     border: none;
-    font-size: 13px !important;
+    font-size: 12px !important;
     color: white !important;
     background-color: #cf1415;
     border-radius: 0px !important;

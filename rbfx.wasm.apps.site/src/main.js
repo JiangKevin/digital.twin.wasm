@@ -1,8 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import vuetify from "@/plugins/vuetify";
-import { loadFonts } from "@/plugins/webfontloader";
-//
 import App from "./App.vue";
 import router from "./router/router";
 //
@@ -12,7 +10,7 @@ import "@/assets/css/main.css";
 import { fm_addScript, fm_delScript } from "@/plugins/base.js";
 
 //
-loadFonts();
+
 const app = createApp(App);
 // add plugin
 app.use(createPinia());

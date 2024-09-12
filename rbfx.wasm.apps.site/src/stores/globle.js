@@ -92,7 +92,8 @@ export const useStoreForProject = defineStore("project", () => {
     var project_selected_to_modify = {};
     var project_info = { name: "demo", wizard: "template", info: "This is new project.", resource: [] };
     var project_modify_type = ref("");
+    var wizard_list = [];
 
     //
-    return { drawer, project_log, user_project_list, project_list, project_selected_to_modify, project_info, project_modify_type };
+    return { drawer, project_log, user_project_list, project_list, project_selected_to_modify, project_info, project_modify_type, wizard_list };
 });

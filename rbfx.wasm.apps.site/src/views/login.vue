@@ -9,8 +9,8 @@
                     </div>
                     <div class="fm_main_login_form_right">
                         <div class="fm_main_login_form_right_contain">
-                            <v-text-field label="Admin User" variant="outlined" v-model="mainStore_menu.user_info.username" autocomplete="off"></v-text-field>
-                            <v-text-field label="Password" variant="outlined" v-model="mainStore_menu.user_info.password" autocomplete="off" type="password"></v-text-field>
+                            <v-text-field label="Admin User" variant="outlined" v-model="mainStore_menu.user_info.username" autocomplete="off" rounded="0"></v-text-field>
+                            <v-text-field label="Password" variant="outlined" v-model="mainStore_menu.user_info.password" autocomplete="off" type="password" rounded="0"></v-text-field>
                             <div>
                                 <v-btn @click="login"> Sign in </v-btn>
                                 <span>{{ mainStore_menu.login_log }}</span>

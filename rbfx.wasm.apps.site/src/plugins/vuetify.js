@@ -18,6 +18,10 @@ export default createVuetify({
           secondary: "#5CBBF6",
           grey: "#a5a5a5",
           "pink-red": "#FF597B",
+          "fm_card":"#1e1e1e",
+          "fm_card_select":"#cf1415",
+          "fm_card_ext":"#79460e"
+
         },
         variables: {
           "border-color": "#000000",

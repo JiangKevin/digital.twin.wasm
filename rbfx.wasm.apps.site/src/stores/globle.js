@@ -84,6 +84,12 @@ export const useStoreForMenu = defineStore("menu", () => {
     return { menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, yn_show_code_btn, is_busy, card_itemss_selection, card_items, menu_exit_items };
 });
 //
-export const useStoreForTest = defineStore("test", () => {
-    return { count };
+export const useStoreForProject = defineStore("project", () => {
+    var drawer = ref(false);
+    var project_log = ref("");
+    var user_project_list = [];
+    var project_list = [];
+    var project_selected_to_modify: {};
+    //
+    return { drawer, project_log, user_project_list, project_list, project_selected_to_modify };
 });

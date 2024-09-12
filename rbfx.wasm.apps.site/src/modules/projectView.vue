@@ -2,10 +2,70 @@
 <template>
     <div class="main_container_content_max blur_div_95">
         <!--  -->
-        <div class="main_container_toolbar_no_pm"></div>
-        <div class="main_container_content blur_div_95"></div>
+        <div class="main_container_toolbar_no_pm">
+            <!--  -->
+            <button class="toolbar_btn_wide" @click="mainStore_project.drawer = !mainStore_project.drawer"><i class="mdi-folder-plus mdi"></i></button>
+            <v-divider vertical class="divider_vertical"></v-divider>
+        </div>
+        <div class="main_container_content blur_div_95">
+            <v-layout full-height>
+                <v-main class="main_contain_project">
+                    <v-item-group>
+                        <v-row dense>
+                            <v-col v-for="n in mainStore_project.user_project_list" cols="12" md="3">
+                                <v-item v-slot="{ isSelected, toggle }">
+                                    <v-hover>
+                                        <template v-slot:default="{ isHovering, props }">
+                                            <v-card v-bind="props" class="mx-auto" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0">
+                                                <v-card-title> {{ n.fileName + " [" + n.Id + "]" }} </v-card-title>
+                                                <v-card-subtitle>{{ n.stats.birthtime + " / " + n.stats.mtime }}</v-card-subtitle>
+                                                <v-card-text class="py-0">
+                                                    <v-row align="center" no-gutters>
+                                                        <v-col class="text-h3" cols="8"> {{ n.stats.size }} </v-col>
+
+                                                        <v-col class="text-right" cols="4">
+                                                            <v-icon icon="mdi-folder" size="60"></v-icon>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-card-text>
+                                                <v-card-text> {{ n.info.Remark }} </v-card-text>
+                                                <v-divider></v-divider>
+                                                <v-card-actions>
+                                                    <v-btn icon="mdi-delete" @click="n.toDel = true" size="small"></v-btn>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn icon="mdi-eye" @click="" size="small"> </v-btn>
+                                                    <v-btn icon="mdi-image-search" @click="" size="small"> </v-btn>
+                                                    <v-btn icon="mdi-cube-scan" size="small" @click=""> </v-btn>
+                                                </v-card-actions>
+                                                <v-expand-transition>
+                                                    <!-- <div w3-include-html="./Fragment/deleteProjectExpand.html"></div> -->
+                                                    <v-card v-if="n.toDel" class="position-absolute w-100" height="100%" style="bottom: 0" color="fm_card_ext" rounded="0">
+                                                        <v-card-text class="pb-0">
+                                                            <p class="text-h5">Delete Project</p>
+                                                            <v-divider></v-divider>
+
+                                                            <p class="text-medium-emphasis">Confirm to delete the current project. Once deleted, it cannot be restored. The deleted data includes resource files, project descriptions, scene configurations, etc.</p>
+                                                        </v-card-text>
+                                                        <div class="submit_contain">
+                                                            <v-card-actions class="fm_v_card_actions">
+                                                                <v-btn color="fm_ok" class="ml-auto submit_btn" text="Delete" variant="elevated" @click="del_project_click(n)"></v-btn>
+                                                                <v-btn color="fm_cancel" class="ml-auto submit_btn" text="Close" variant="elevated" @click="n.toDel = false"> </v-btn>
+                                                            </v-card-actions>
+                                                        </div>
+                                                    </v-card>
+                                                </v-expand-transition>
+                                            </v-card> </template
+                                    ></v-hover>
+                                </v-item>
+                            </v-col>
+                        </v-row>
+                    </v-item-group>
+                </v-main>
+                <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer"> </v-navigation-drawer>
+            </v-layout>
+        </div>
         <div class="main_container_status_no_pm">
-            <span id="project_log_output"></span>
+            <span id="project_log_output">{{ mainStore_project.project_log }}</span>
         </div>
         <!--  -->
     </div>
@@ -13,14 +73,69 @@
 <!--  script  -->
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
-import { useStoreForMenu } from "@/stores/globle.js";
-const mainStore_menu = useStoreForMenu();
+import { useStoreForProject } from "@/stores/globle.js";
+const mainStore_project = useStoreForProject();
 //
 
 //
-onMounted(() => {});
+onMounted(() => {
+    getProjectList();
+});
+//
+function getProjectList() {
+    axios
+        .get("/project_user_lists")
+        .then((response) => {
+            mainStore_project.user_project_list = response.data;
+            mainStore_project.project_list = [];
+            for (var i in response.data) {
+                mainStore_project.project_list.push(response.data[i]["fileName"]);
+            }
+        })
+        .catch((error) => {
+            mainStore_project.project_log = error;
+            console.error(error);
+        });
+}
+//
+function del_project_click(obj) {
+    obj.toDel = false;
+    mainStore_project.project_selected_to_modify = obj;
+    //
+    axios
+        .post("/delete_project?Name=" + obj.info.Name + "&Type=PROJECT")
+        .then((response) => {
+            getProjectList();
+        })
+        .catch((error) => {
+            mainStore_project.project_log = error;
+            console.error(error);
+        });
+}
 </script>
 
 <!--  style  -->
-<style scoped></style>
+<style scoped>
+.main_contain_project {
+    padding: 8px;
+    padding-right: 0px;
+}
+.submit_btn {
+    width: 50%;
+    border: none;
+    font-size: 13px !important;
+    color: white !important;
+    background-color: #cf1415;
+    border-radius: 0px !important;
+    text-align: center;
+}
+.submit_contain {
+    width: 100%;
+    position: absolute;
+    bottom: 2px;
+    left: 0px;
+}
+.fm_v_card_actions {
+    padding: 0rem;
+}
+</style>

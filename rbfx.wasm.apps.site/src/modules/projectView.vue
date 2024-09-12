@@ -34,7 +34,7 @@
                                                     <v-btn icon="mdi-delete" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_orange' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-spacer></v-spacer>
                                                     <v-btn icon="mdi-eye" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
-                                                    <v-btn icon="mdi-image-search" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
+                                                    <v-btn icon="mdi-image-search" @click="texture_import_ck(n)" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-btn icon="mdi-cube-scan" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                 </v-card-actions>
                                                 <v-expand-transition>
@@ -61,7 +61,8 @@
                     </v-item-group>
                 </v-main>
                 <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer" width="400">
-                    <div v-show="(mainStore_project.project_modify_type = 'CreateProject')" class="r_modify_div">
+                    <!--  -->
+                    <div v-show="mainStore_project.project_modify_type == 'CreateProject'" class="r_modify_div">
                         <v-text-field prepend-icon="mdi-black-mesa" label="Name" variant="outlined" v-model="mainStore_project.project_info.name" rounded="0" density="compact"></v-text-field>
                         <v-textarea prepend-icon="mdi-hololens" label="Remark" variant="outlined" v-model="mainStore_project.project_info.info" rounded="0" density="compact"></v-textarea>
                         <v-select prepend-icon="mdi-database-search" label="Template" variant="outlined" v-model="mainStore_project.project_info.wizard" :items="mainStore_project.wizard_list" rounded="0" density="compact" class="mx-auto"> </v-select>
@@ -69,7 +70,32 @@
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Create" @click="create_and_uploadFiles"></v-btn>
-                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click=""></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_project_drawer"></v-btn>
+                            </v-card-actions>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div v-show="mainStore_project.project_modify_type == 'ModelImport'" class="r_modify_div">
+                        <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list"></v-select>
+                        <v-select prepend-icon="mdi-powershell" label="Command" variant="outlined" v-model="mainStore_project.res_import_commond_info.command" :items="mainStore_project.res_import_commond_list"></v-select>
+                        <v-file-input id="model_upload_inputs" ref="model_upload_inputs" label="Select Resouse Files( FBX File )" accept=".fbx" variant="outlined" prepend-icon="mdi-cube-scan"></v-file-input>
+
+                        <div class="submit_contain">
+                            <v-card-actions class="fm_v_card_actions">
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Import" @click=""></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_project_drawer"></v-btn>
+                            </v-card-actions>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div v-show="mainStore_project.project_modify_type == 'TextureImport'" class="r_modify_div">
+                        <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list"></v-select>
+                        <v-text-field prepend-icon="mdi-cards-diamond" label="Target Path" variant="outlined" v-model="mainStore_project.res_import_des_info.desPath"></v-text-field>
+                        <v-file-input id="texture_upload_inputs" ref="texture_upload_inputs" multiple label="Select Resouse Files( Texture File Or Other )" accept=".png" variant="outlined" prepend-icon="mdi-image-search"></v-file-input>
+                        <div class="submit_contain">
+                            <v-card-actions class="fm_v_card_actions">
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Import" @click="texture_import_do"></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_project_drawer"></v-btn>
                             </v-card-actions>
                         </div>
                     </div>
@@ -116,12 +142,10 @@ function getWizardList() {
         .get("project_wizard_lists")
         .then((res) => {
             mainStore_project.wizard_list = [];
-            var count = 0;
             for (var i in res.data) {
-                count += 1;
                 mainStore_project.wizard_list.push(res.data[i]["fileName"]);
             }
-            mainStore_project.project_log = "+- From js: Get project List [ Count: " + count + " ] ok.";
+            mainStore_project.project_log = "+- From js: Get project List [ Count: " + res.data.length + " ] ok.";
         })
         .catch(function (error) {
             // 请求失败处理
@@ -147,8 +171,8 @@ function del_project_click(obj) {
 }
 //
 function create_new_project_ck() {
-    mainStore_project.drawer = !mainStore_project.drawer;
-    mainStore_project.project_selected_to_modify = "CreateProject";
+    mainStore_project.drawer = true;
+    mainStore_project.project_modify_type = "CreateProject";
 }
 //
 function create_and_uploadFiles() {
@@ -163,7 +187,7 @@ function create_and_uploadFiles() {
         .post("/create_and_upload_res?Name=" + mainStore_project.project_info.name + "&Wizard=" + mainStore_project.project_info.wizard + "&Remark=" + mainStore_project.project_info.info, formData)
         .then((response) => {
             getProjectList();
-            mainStore_project.drawer = false;
+            close_project_drawer();
             mainStore_project.project_log = "+- From js: Create project [ " + mainStore_project.project_info.name + " ] ok.";
         })
         .catch((error) => {
@@ -171,6 +195,40 @@ function create_and_uploadFiles() {
             console.error(error);
         });
 }
+//
+function close_project_drawer() {
+    mainStore_project.drawer = false;
+    mainStore_project.project_modify_type = "";
+}
+//
+function texture_import_ck(obj) {
+    //
+    mainStore_project.drawer = true;
+    mainStore_project.project_selected_to_modify = obj;
+    mainStore_project.resource_info.project = obj.fileName;
+    mainStore_project.project_modify_type = "TextureImport";
+}
+//
+function texture_import_do() {
+    const formData = new FormData();
+    if (texture_upload_inputs.files) {
+        for (var i = 0; i < texture_upload_inputs.files.length; i++) {
+            formData.append("files", texture_upload_inputs.files[i]);
+        }
+    }
+    //
+    axios
+        .post("/upload_texture_and_wasm_import?Name=" + mainStore_project.resource_info.project + "&TargetPath=" + mainStore_project.res_import_des_info.desPath, formData)
+        .then((response) => {
+            close_project_drawer();
+            mainStore_project.project_log = "+- From js: Import Texture for project [ " + mainStore_project.project_info.name + " ] ok.";
+        })
+        .catch((error) => {
+            mainStore_project.project_log = error;
+            console.error(error);
+        });
+}
+//
 </script>
 
 <!--  style  -->

@@ -91,9 +91,14 @@ export const useStoreForProject = defineStore("project", () => {
     var project_list = [];
     var project_selected_to_modify = {};
     var project_info = { name: "demo", wizard: "template", info: "This is new project.", resource: [] };
+    var resource_info = { project: "demo", resource: [] };
+    var res_import_commond_list = ["model", "anim", "scene", "node", "dump", "lod"];
+    var res_import_commond_info = { command: "model", parameter: "-l" };
+    var res_import_des_info = { desPath: "Textures" };
+
     var project_modify_type = ref("");
     var wizard_list = [];
 
     //
-    return { drawer, project_log, user_project_list, project_list, project_selected_to_modify, project_info, project_modify_type, wizard_list };
+    return { drawer, project_log, user_project_list, project_list, project_selected_to_modify, project_info, project_modify_type, wizard_list, resource_info, res_import_commond_list, res_import_commond_info, res_import_des_info };
 });

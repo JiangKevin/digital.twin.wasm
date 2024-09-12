@@ -31,14 +31,13 @@
                                                 <v-card-text> {{ n.info.Remark }} </v-card-text>
                                                 <v-divider></v-divider>
                                                 <v-card-actions>
-                                                    <v-btn icon="mdi-delete" @click="n.toDel = true" size="small"></v-btn>
+                                                    <v-btn icon="mdi-delete" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_orange' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn icon="mdi-eye" @click="" size="small"> </v-btn>
-                                                    <v-btn icon="mdi-image-search" @click="" size="small"> </v-btn>
-                                                    <v-btn icon="mdi-cube-scan" size="small" @click=""> </v-btn>
+                                                    <v-btn icon="mdi-eye" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
+                                                    <v-btn icon="mdi-image-search" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
+                                                    <v-btn icon="mdi-cube-scan" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                 </v-card-actions>
                                                 <v-expand-transition>
-                                                    <!-- <div w3-include-html="./Fragment/deleteProjectExpand.html"></div> -->
                                                     <v-card v-if="n.toDel" class="position-absolute w-100" height="100%" style="bottom: 0" color="fm_card_ext" rounded="0">
                                                         <v-card-text class="pb-0">
                                                             <p class="text-h5">Delete Project</p>
@@ -69,7 +68,7 @@
                         <v-file-input id="upload_inputs" ref="upload_inputs" multiple label="Select Resouse Files( ZIP File )" accept=".zip" variant="outlined" rounded="0" density="compact"></v-file-input>
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
-                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Create" @click=""></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Create" @click="create_and_uploadFiles"></v-btn>
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click=""></v-btn>
                             </v-card-actions>
                         </div>
@@ -117,9 +116,12 @@ function getWizardList() {
         .get("project_wizard_lists")
         .then((res) => {
             mainStore_project.wizard_list = [];
+            var count = 0;
             for (var i in res.data) {
+                count += 1;
                 mainStore_project.wizard_list.push(res.data[i]["fileName"]);
             }
+            mainStore_project.project_log = "+- From js: Get project List [ Count: " + count + " ] ok.";
         })
         .catch(function (error) {
             // 请求失败处理
@@ -131,12 +133,12 @@ function getWizardList() {
 function del_project_click(obj) {
     obj.toDel = false;
     mainStore_project.project_selected_to_modify = obj;
-    console.log(obj);
     //
     axios
         .post("/delete_project?Name=" + obj.info.Name + "&Type=PROJECT")
         .then((response) => {
             getProjectList();
+            mainStore_project.project_log = "+- From js: Delete project [ " + mainStore_project.project_info.name + " ] ok.";
         })
         .catch((error) => {
             mainStore_project.project_log = error;
@@ -148,6 +150,27 @@ function create_new_project_ck() {
     mainStore_project.drawer = !mainStore_project.drawer;
     mainStore_project.project_selected_to_modify = "CreateProject";
 }
+//
+function create_and_uploadFiles() {
+    const formData = new FormData();
+    if (upload_inputs.files) {
+        for (var i = 0; i < upload_inputs.files.length; i++) {
+            formData.append("files", upload_inputs.files[i]);
+        }
+    }
+    //
+    axios
+        .post("/create_and_upload_res?Name=" + mainStore_project.project_info.name + "&Wizard=" + mainStore_project.project_info.wizard + "&Remark=" + mainStore_project.project_info.info, formData)
+        .then((response) => {
+            getProjectList();
+            mainStore_project.drawer = false;
+            mainStore_project.project_log = "+- From js: Create project [ " + mainStore_project.project_info.name + " ] ok.";
+        })
+        .catch((error) => {
+            mainStore_project.project_log = error;
+            console.error(error);
+        });
+}
 </script>
 
 <!--  style  -->
@@ -157,6 +180,7 @@ function create_new_project_ck() {
     padding-right: 0px;
 }
 .submit_btn {
+    height: 24px;
     width: 50%;
     border: none;
     font-size: 12px !important;

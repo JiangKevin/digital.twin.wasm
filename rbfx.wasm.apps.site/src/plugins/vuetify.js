@@ -19,9 +19,11 @@ export default createVuetify({
           grey: "#a5a5a5",
           "pink-red": "#FF597B",
           "fm_card":"#1e1e1e",
-          "fm_card_select":"#cf1415",
-          "fm_card_ext":"#79460e"
-
+          "fm_card_select":"#3949AB",
+          "fm_card_ext":"#79460e",
+          "fm_red":"#cf1415",
+          "fm_white":"#ffffff",
+          "fm_orange":"#FF9800",
         },
         variables: {
           "border-color": "#000000",

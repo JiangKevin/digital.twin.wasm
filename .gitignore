@@ -32,5 +32,9 @@ rbfx.wasm.apps.server/web/data.js
 rbfx.wasm.apps.server/web/index.html
 rbfx.wasm.apps.server/web/common/**
 rbfx.wasm.apps.server/data/**
+rbfx.wasm.apps.server/data/*
+rbfx.wasm.apps.server/data
+rbfx.wasm.apps.server/data/
 rbfx.wasm.apps.server/Upload/**
 rbfx.wasm.apps.server/tmp/**
+

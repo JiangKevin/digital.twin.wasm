@@ -252,3 +252,7 @@ FM_.OpenProject = function (proeject_name) {
     // free
     _free(string_on_wasm_heap_for_proeject_name);
 };
+
+//
+const fm_dt_wrap_load_ok_event = new Event("DT_WRAP_LOADED");
+window.dispatchEvent(fm_dt_wrap_load_ok_event);

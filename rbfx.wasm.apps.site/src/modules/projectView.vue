@@ -291,8 +291,8 @@ function open_dt_project(obj) {
         window.addEventListener(
             "DT_LOAD_PROJECT_OK",
             (e) => {
-                // FM_.OpenProject(obj.fileName);
-                console.log(obj.fileName + " load !!!");
+                console.log(" +- From js&c++: Digital Twin Load project ok !!!");
+                mainStore_project.project_log = " +- From js&c++: Digital Twin Load project ok !!!";
             },
             false
         );
@@ -300,9 +300,21 @@ function open_dt_project(obj) {
             "DT_INIT_PROJECT_OK",
             (e) => {
                 is_load_rbfx_wasm = true;
-                console.log(obj.fileName + " new !!!");
+                console.log(" +- From js&c++: Digital Twin init ok !!!");
+                mainStore_project.project_log = " +- From js&c++: Digital Twin init ok !!!";
+            },
+            false
+        );
+        window.addEventListener(
+            "DT_WRAP_LOADED",
+            (e) => {
+                is_load_rbfx_wasm = true;
+                mainStore_project.project_log = "+- From js:digital_twin_wrap loaded .";
                 if (FM_) {
-                    FM_.OpenProject(obj.fileName);
+                    if (obj.fileName != "") {
+                        busy_div_control("other_log", true);
+                        FM_.OpenProject(obj.fileName);
+                    }
                 }
             },
             false

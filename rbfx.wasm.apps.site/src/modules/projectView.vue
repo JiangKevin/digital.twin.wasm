@@ -275,10 +275,38 @@ function open_dt_project(obj) {
         }
         mainStore_menu.menu_navigation_item = "Scene Editor";
         mainStore_menu.yn_show_code_btn = true;
-    }
-    else
-    {
-        
+    } else {
+        busy_div_control("other_log", true);
+        //
+        mainStore_menu.reset_menu_status();
+        //
+        for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
+            if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {
+                mainStore_menu.menu_editor_items[i].active = true;
+            }
+        }
+        mainStore_menu.menu_navigation_item = "Scene Editor";
+        mainStore_menu.yn_show_code_btn = true;
+        // 监听该事件。
+        window.addEventListener(
+            "DT_LOAD_PROJECT_OK",
+            (e) => {
+                // FM_.OpenProject(obj.fileName);
+                console.log(obj.fileName + " load !!!");
+            },
+            false
+        );
+        window.addEventListener(
+            "DT_INIT_PROJECT_OK",
+            (e) => {
+                is_load_rbfx_wasm = true;
+                console.log(obj.fileName + " new !!!");
+                if (FM_) {
+                    FM_.OpenProject(obj.fileName);
+                }
+            },
+            false
+        );
     }
 }
 //

@@ -33,7 +33,7 @@
                                                 <v-card-actions>
                                                     <v-btn icon="mdi-delete" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_orange' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn icon="mdi-eye" @click="n.toDel = true" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
+                                                    <v-btn icon="mdi-eye" @click="open_dt_project(n)" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-btn icon="mdi-image-search" @click="texture_import_ck(n)" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                     <v-btn icon="mdi-cube-scan" @click="model_import_ck(n)" size="small" :variant="isHovering ? 'flat' : 'text'" :color="isHovering ? 'fm_red' : 'fm_white'" density="comfortable"></v-btn>
                                                 </v-card-actions>
@@ -112,8 +112,10 @@
 <!--  script  -->
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
-import { useStoreForProject } from "@/stores/globle.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
+import { useStoreForMenu, useStoreForProject } from "@/stores/globle.js";
 const mainStore_project = useStoreForProject();
+const mainStore_menu = useStoreForMenu();
 //
 
 //
@@ -237,6 +239,7 @@ function model_import_ck(obj) {
     mainStore_project.resource_info.project = obj.fileName;
     mainStore_project.project_modify_type = "ModelImport";
 }
+//
 function model_import_do() {
     const formData = new FormData();
     if (model_upload_inputs.files) {
@@ -255,6 +258,28 @@ function model_import_do() {
             mainStore_project.project_log = error;
             console.error(error);
         });
+}
+//
+function open_dt_project(obj) {
+    mainStore_project.project_selected_to_modify = obj;
+    if (is_load_rbfx_wasm) {
+        busy_div_control("other_log", true);
+        FM_.OpenProject(obj.fileName);
+        //
+        mainStore_menu.reset_menu_status();
+        //
+        for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
+            if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {
+                mainStore_menu.menu_editor_items[i].active = true;
+            }
+        }
+        mainStore_menu.menu_navigation_item = "Scene Editor";
+        mainStore_menu.yn_show_code_btn = true;
+    }
+    else
+    {
+        
+    }
 }
 //
 </script>

@@ -241,3 +241,14 @@ FM_.LoadSceneFromFile = function (fileName) {
     // free
     _free(string_on_wasm_heap_for_fileName);
 };
+//
+FM_.OpenProject = function (proeject_name) {
+    // to wasm heap
+    var lengthBytes_for_proeject_name = lengthBytesUTF8(proeject_name) + 1;
+    var string_on_wasm_heap_for_proeject_name = _malloc(lengthBytes_for_proeject_name);
+    stringToUTF8(proeject_name, string_on_wasm_heap_for_proeject_name, lengthBytes_for_proeject_name);
+    // call
+    FM_GLOBAL.DTWIN_EDITOR._OpenProject(string_on_wasm_heap_for_proeject_name);
+    // free
+    _free(string_on_wasm_heap_for_proeject_name);
+};

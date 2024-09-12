@@ -264,22 +264,19 @@ function open_dt_project(obj) {
     mainStore_project.project_selected_to_modify = obj;
     if (is_load_rbfx_wasm) {
         busy_div_control("other_log", true);
-        FM_.OpenProject(obj.fileName);
-        //
         mainStore_menu.reset_menu_status();
-        //
+        mainStore_menu.menu_navigation_item = "Scene Editor";
         for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
             if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {
                 mainStore_menu.menu_editor_items[i].active = true;
             }
         }
-        mainStore_menu.menu_navigation_item = "Scene Editor";
         mainStore_menu.yn_show_code_btn = true;
+        // 
+        FM_.OpenProject(obj.fileName);
     } else {
         busy_div_control("other_log", true);
-        //
         mainStore_menu.reset_menu_status();
-        //
         mainStore_menu.menu_navigation_item = "Scene Editor";
         for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
             if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {

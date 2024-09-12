@@ -4,7 +4,7 @@
         <!--  -->
         <div class="main_container_toolbar_no_pm">
             <!--  -->
-            <button class="toolbar_btn_wide" @click="mainStore_project.drawer = !mainStore_project.drawer"><i class="mdi-folder-plus mdi"></i></button>
+            <button class="toolbar_btn_wide" @click="create_new_project_ck"><i class="mdi-folder-plus mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
         </div>
         <div class="main_container_content blur_div_95">
@@ -16,7 +16,7 @@
                                 <v-item v-slot="{ isSelected, toggle }">
                                     <v-hover>
                                         <template v-slot:default="{ isHovering, props }">
-                                            <v-card v-bind="props" class="mx-auto" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0">
+                                            <v-card v-bind="props" class="mx-auto" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0" density="compact">
                                                 <v-card-title> {{ n.fileName + " [" + n.Id + "]" }} </v-card-title>
                                                 <v-card-subtitle>{{ n.stats.birthtime + " / " + n.stats.mtime }}</v-card-subtitle>
                                                 <v-card-text class="py-0">
@@ -48,8 +48,8 @@
                                                         </v-card-text>
                                                         <div class="submit_contain">
                                                             <v-card-actions class="fm_v_card_actions">
-                                                                <v-btn color="fm_ok" class="ml-auto submit_btn" text="Delete" variant="elevated" @click="del_project_click(n)"></v-btn>
-                                                                <v-btn color="fm_cancel" class="ml-auto submit_btn" text="Close" variant="elevated" @click="n.toDel = false"> </v-btn>
+                                                                <v-btn class="ml-auto submit_btn" text="Delete" variant="elevated" @click="del_project_click(n)"></v-btn>
+                                                                <v-btn class="ml-auto submit_btn" text="Close" variant="elevated" @click="n.toDel = false"> </v-btn>
                                                             </v-card-actions>
                                                         </div>
                                                     </v-card>
@@ -61,7 +61,11 @@
                         </v-row>
                     </v-item-group>
                 </v-main>
-                <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer"> </v-navigation-drawer>
+                <v-navigation-drawer location="right" permanent temporary v-model="mainStore_project.drawer" width="500">
+                    <div v-show="(mainStore_project.project_modify_type = 'CreateProject')" class="r_modify_div">
+                        <v-text-field prepend-icon="mdi-black-mesa" label="Name" variant="outlined" v-model="mainStore_project.project_info.name"></v-text-field>
+                    </div>
+                </v-navigation-drawer>
             </v-layout>
         </div>
         <div class="main_container_status_no_pm">
@@ -101,6 +105,7 @@ function getProjectList() {
 function del_project_click(obj) {
     obj.toDel = false;
     mainStore_project.project_selected_to_modify = obj;
+    console.log(obj);
     //
     axios
         .post("/delete_project?Name=" + obj.info.Name + "&Type=PROJECT")
@@ -111,6 +116,11 @@ function del_project_click(obj) {
             mainStore_project.project_log = error;
             console.error(error);
         });
+}
+//
+function create_new_project_ck() {
+    mainStore_project.drawer = !mainStore_project.drawer;
+    mainStore_project = "CreateProject";
 }
 </script>
 
@@ -137,5 +147,13 @@ function del_project_click(obj) {
 }
 .fm_v_card_actions {
     padding: 0rem;
+}
+.r_modify_div {
+    margin: 0;
+    border-left: 1px solid var(--fm_toolbar_boder);
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 8px;
+    padding-top: 20px;
 }
 </style>

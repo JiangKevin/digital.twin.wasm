@@ -288,8 +288,8 @@ function open_dt_project(obj) {
         window.addEventListener(
             "DT_LOAD_PROJECT_OK",
             (e) => {
-                console.log(" +- From js&c++: Digital Twin Load project ok !!!");
-                mainStore_project.project_log = " +- From js&c++: Digital Twin Load project ok !!!";
+                console.log("+-From js&c++: Digital Twin Load project ok !!!");
+                mainStore_project.project_log = "+-From js&c++: Digital Twin Load project ok !!!";
             },
             false
         );
@@ -297,8 +297,8 @@ function open_dt_project(obj) {
             "DT_INIT_PROJECT_OK",
             (e) => {
                 is_load_rbfx_wasm = true;
-                console.log(" +- From js&c++: Digital Twin init ok !!!");
-                mainStore_project.project_log = " +- From js&c++: Digital Twin init ok !!!";
+                console.log("+-From js&c++: Digital Twin init ok !!!");
+                mainStore_project.project_log = "+-From js&c++: Digital Twin init ok !!!";
             },
             false
         );

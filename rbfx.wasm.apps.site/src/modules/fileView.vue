@@ -19,7 +19,7 @@
             <button class="toolbar_btn" @click="zip_folder_or_file_for_selected"><i class="mdi-folder-zip mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
             <!--  -->
-            <button class="toolbar_btn" @click=""><i class="mdi-folder-zip-outline mdi"></i></button>
+            <button class="toolbar_btn" @click="unzip_folder_or_file_for_selected"><i class="mdi-folder-zip-outline mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
             <!--  -->
             <button class="toolbar_btn" @click=""><i class="mdi-content-copy mdi"></i></button>
@@ -96,7 +96,7 @@
                                 </v-text-field>
                             </div>
                             <v-divider></v-divider>
-                            <v-list lines="false" density="compact" :max-height="win_height - 80" class="fm_not_select_list" rounded="0">
+                            <v-list lines="false" density="compact" :max-height="mainStore_files.win_height - 80" class="fm_not_select_list" rounded="0">
                                 <v-list-subheader>The selected folder or file is</v-list-subheader>
                                 <v-list-item v-for="(n, i) in mainStore_files.selected_folder_and_files" :key="i" variant="plain">
                                     <v-list-item-title class="fm_right_list_item_title">{{ n.filePath }}</v-list-item-title>
@@ -112,6 +112,39 @@
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Zip" @click="zip_folder_or_file_click"></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_files_drawer"></v-btn>
+                            </v-card-actions>
+                        </div>
+                    </div>
+                    <!-- unzip -->
+                    <div v-show="mainStore_files.is_right_files_unzip_drawer" class="r_modify_div">
+                        <div v-show="if_have_selected_folder_or_file">
+                            <div>
+                                <v-text-field label="Unzip Folder Name" variant="outlined" v-model="mainStore_files.to_unzip_name" rounded="0" density="compact">
+                                    <template v-slot:prepend>
+                                        <v-avatar class="fm_card_prepend_avatar_no_hover">
+                                            <v-icon icon="mdi-folder-zip-outline"></v-icon>
+                                        </v-avatar>
+                                    </template>
+                                </v-text-field>
+                            </div>
+                            <v-divider></v-divider>
+                            <v-list lines="false" density="compact" :max-height="mainStore_files.win_height - 80" class="fm_not_select_list" rounded="0">
+                                <v-list-subheader>The selected folder or file is</v-list-subheader>
+                                <v-list-item v-for="(n, i) in mainStore_files.selected_zip_files" :key="i" variant="plain">
+                                    <v-list-item-title class="fm_right_list_item_title">{{ n.filePath }}</v-list-item-title>
+                                    <v-list-item-subtitle class="fm_right_list_item_sub_title">{{ n.uptime }}</v-list-item-subtitle>
+                                    <template v-slot:prepend>
+                                        <v-avatar class="fm_card_prepend_avatar_no_hover">
+                                            <v-icon :icon="get_icon_for_file_type(n)"></v-icon>
+                                        </v-avatar>
+                                    </template>
+                                </v-list-item>
+                            </v-list>
+                        </div>
+                        <div class="submit_contain">
+                            <v-card-actions class="fm_v_card_actions">
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Zip" @click="unzip_folder_or_file_click"></v-btn>
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_files_drawer"></v-btn>
                             </v-card-actions>
                         </div>
@@ -313,8 +346,33 @@ function zip_folder_or_file_click() {
         });
 }
 //
+function unzip_folder_or_file_for_selected() {
+    //
+    if (mainStore_files.selected_zip_files.length > 0) {
+        close_files_drawer();
+        mainStore_files.is_right_files_drawer = true;
+        mainStore_files.is_right_files_unzip_drawer = true;
+    }
+}
+//
+function unzip_folder_or_file_click() {
+    axios
+        .post("/unzip_folder_or_file?path=" + mainStore_files.selected_folder_path + "&name=" + mainStore_files.to_unzip_name, mainStore_files.selected_zip_files)
+        .then((response) => {
+            mainStore_files.selected_folder_and_files = [];
+            getFilesList(mainStore_files.selected_folder_path);
+            close_files_drawer();
+            mainStore_files.files_log = "+- From js: UnZip [ " + mainStore_files.to_unzip_name + " ] ok.";
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+//
 onMounted(() => {
     getFilesList("./");
+    mainStore_files.win_height = window.innerHeight;
+    mainStore_files.win_width = window.innerWidth;
 });
 </script>
 

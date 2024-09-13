@@ -10,13 +10,13 @@
             <button class="toolbar_btn" @click="create_new_folder"><i class="mdi-folder-plus mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
             <!--  -->
-            <button class="toolbar_btn" @click=""><i class="mdi-check-all mdi"></i></button>
+            <button class="toolbar_btn" @click="checkOrUncheck_all_folder_or_file"><i class="mdi-check-all mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
             <!--  -->
-            <button class="toolbar_btn" @click=""><i class="mdi-broom mdi"></i></button>
+            <button class="toolbar_btn" @click="clear_check_all_folder_or_file"><i class="mdi-broom mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
             <!--  -->
-            <button class="toolbar_btn" @click=""><i class="mdi-folder-zip mdi"></i></button>
+            <button class="toolbar_btn" @click="zip_folder_or_file_for_selected"><i class="mdi-folder-zip mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
             <!--  -->
             <button class="toolbar_btn" @click=""><i class="mdi-folder-zip-outline mdi"></i></button>
@@ -67,7 +67,7 @@
                     </v-item-group>
                 </v-main>
                 <v-navigation-drawer location="right" permanent temporary width="400" v-model="mainStore_files.is_right_files_drawer">
-                    <!--  -->
+                    <!-- new folder -->
                     <div v-show="mainStore_files.is_right_files_newFolder_drawer" class="r_modify_div">
                         <v-text-field label="New Folder Name" variant="outlined" v-model="mainStore_files.to_create_new_folder" rounded="0" density="compact">
                             <template v-slot:prepend>
@@ -78,7 +78,40 @@
                         </v-text-field>
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
-                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="New Folder" @click=""></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="New Folder" @click="new_folder_click"></v-btn>
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_files_drawer"></v-btn>
+                            </v-card-actions>
+                        </div>
+                    </div>
+                    <!-- zip -->
+                    <div v-show="mainStore_files.is_right_files_zip_drawer" class="r_modify_div">
+                        <div v-show="if_have_selected_folder_or_file">
+                            <div>
+                                <v-text-field label="Name" variant="outlined" v-model="mainStore_files.to_zip_name" rounded="0" density="compact">
+                                    <template v-slot:prepend>
+                                        <v-avatar class="fm_card_prepend_avatar_no_hover">
+                                            <v-icon icon="mdi-folder-zip"></v-icon>
+                                        </v-avatar>
+                                    </template>
+                                </v-text-field>
+                            </div>
+                            <v-divider></v-divider>
+                            <v-list lines="false" density="compact" :max-height="win_height - 80" class="fm_not_select_list" rounded="0">
+                                <v-list-subheader>The selected folder or file is</v-list-subheader>
+                                <v-list-item v-for="(n, i) in mainStore_files.selected_folder_and_files" :key="i" variant="plain">
+                                    <v-list-item-title class="fm_right_list_item_title">{{ n.filePath }}</v-list-item-title>
+                                    <v-list-item-subtitle class="fm_right_list_item_sub_title">{{ n.uptime }}</v-list-item-subtitle>
+                                    <template v-slot:prepend>
+                                        <v-avatar class="fm_card_prepend_avatar_no_hover">
+                                            <v-icon :icon="get_icon_for_file_type(n)"></v-icon>
+                                        </v-avatar>
+                                    </template>
+                                </v-list-item>
+                            </v-list>
+                        </div>
+                        <div class="submit_contain">
+                            <v-card-actions class="fm_v_card_actions">
+                                <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Zip" @click="zip_folder_or_file_click"></v-btn>
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Close" @click="close_files_drawer"></v-btn>
                             </v-card-actions>
                         </div>
@@ -192,6 +225,93 @@ function create_new_folder() {
         mainStore_files.is_right_files_newFolder_drawer = true;
     }
 }
+function new_folder_click() {
+    axios
+        .post("/create_new_folder?path=" + mainStore_files.selected_folder_path + "&name=" + mainStore_files.to_create_new_folder)
+        .then((response) => {
+            mainStore_files.selected_folder_and_files = [];
+            getFilesList(mainStore_files.selected_folder_path);
+            close_files_drawer();
+            mainStore_files.files_log = "+- From js: Create Folder [ " + mainStore_files.to_create_new_folder + " ] ok.";
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+//
+function get_zip_file_from_select() {
+    var new_array = mainStore_files.selected_folder_and_files.filter((item) => {
+        return item.filePath.endsWith(".zip");
+    });
+    return new_array;
+}
+//
+function checkOrUncheck_all_folder_or_file() {
+    mainStore_files.selected_folder_and_files = [];
+    for (var i = 0; i < mainStore_files.folder_and_files.length; i++) {
+        mainStore_files.folder_and_files[i].selected = !mainStore_files.folder_and_files[i].selected;
+        if (mainStore_files.folder_and_files[i].selected) {
+            var li = {};
+            li.type = mainStore_files.folder_and_files[i].type;
+            li.filePath = mainStore_files.folder_and_files[i].filePath;
+            li.uptime = mainStore_files.folder_and_files[i].uptime;
+            li.name = mainStore_files.folder_and_files[i].name;
+            li.path = mainStore_files.selected_folder_path;
+            mainStore_files.selected_folder_and_files.push(li);
+        }
+    }
+    mainStore_files.selected_zip_files = get_zip_file_from_select();
+}
+//
+function clear_check_all_folder_or_file() {
+    mainStore_files.selected_folder_and_files = [];
+    for (var i = 0; i < mainStore_files.folder_and_files.length; i++) {
+        mainStore_files.folder_and_files[i].selected = false;
+    }
+    close_files_drawer();
+}
+//
+function zip_folder_or_file_for_selected() {
+    if (mainStore_files.selected_folder_and_files.length > 0) {
+        close_files_drawer();
+        mainStore_files.is_right_files_drawer = true;
+        mainStore_files.is_right_files_zip_drawer = true;
+    }
+}
+function folder_or_files_check_click(item) {
+    item.selected = !item.selected;
+    mainStore_files.selected_folder_and_files = [];
+    for (var i = 0; i < mainStore_files.folder_and_files.length; i++) {
+        if (mainStore_files.folder_and_files[i].selected) {
+            var li = {};
+            li.type = mainStore_files.folder_and_files[i].type;
+            li.filePath = mainStore_files.folder_and_files[i].filePath;
+            li.uptime = mainStore_files.folder_and_files[i].uptime;
+            li.name = mainStore_files.folder_and_files[i].name;
+            li.path = mainStore_files.selected_folder_path;
+            mainStore_files.selected_folder_and_files.push(li);
+        }
+    }
+    mainStore_files.selected_zip_files = get_zip_file_from_select();
+}
+//
+function if_have_selected_folder_or_file() {
+    return mainStore_files.selected_folder_and_files.length > 0;
+}
+//
+function zip_folder_or_file_click() {
+    axios
+        .post("/zip_folder_or_file?path=" + mainStore_files.selected_folder_path + "&name=" + mainStore_files.to_zip_name, mainStore_files.selected_folder_and_files)
+        .then((response) => {
+            mainStore_files.selected_folder_and_files = [];
+            getFilesList(mainStore_files.selected_folder_path);
+            close_files_drawer();
+            mainStore_files.files_log = "+- From js: Zip [ " + mainStore_files.to_zip_name + " ] ok.";
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
 //
 onMounted(() => {
     getFilesList("./");
@@ -264,5 +384,16 @@ onMounted(() => {
 }
 .fm_v_card_actions {
     padding: 0rem;
+}
+.fm_not_select_list {
+    user-select: none !important;
+    width: 100%;
+    height: 100%;
+}
+.fm_right_list_item_title {
+    font-size: 13px;
+}
+.fm_right_list_item_sub_title {
+    font-size: 11px;
 }
 </style>

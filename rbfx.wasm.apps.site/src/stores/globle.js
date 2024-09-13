@@ -109,6 +109,8 @@ export const useStoreForFiles = defineStore("files", () => {
     var folder_and_files = [];
     var selected_folder_path = "./";
     var selected_folder_and_files = [];
+    var selected_zip_files = [];
+    var copy_folder_and_files = [];
     //
     var is_right_files_drawer = ref(false);
     var is_right_files_del_drawer = ref(false);
@@ -119,6 +121,9 @@ export const useStoreForFiles = defineStore("files", () => {
     var is_right_files_newFolder_drawer = ref(false);
     //
     var to_create_new_folder = "NewFolder";
+    var to_zip_name = "tmp";
+    var to_unzip_name = "tmp";
+
     //
-    return { files_log, folder_and_files, selected_folder_path, selected_folder_and_files, is_right_files_copy_drawer, is_right_files_drawer, is_right_files_del_drawer, is_right_files_zip_drawer, is_right_files_unzip_drawer, is_right_files_paste_drawer, is_right_files_newFolder_drawer, to_create_new_folder };
+    return { files_log, folder_and_files, selected_folder_path, selected_folder_and_files, is_right_files_copy_drawer, is_right_files_drawer, is_right_files_del_drawer, is_right_files_zip_drawer, is_right_files_unzip_drawer, is_right_files_paste_drawer, is_right_files_newFolder_drawer, to_create_new_folder, copy_folder_and_files, to_zip_name, to_unzip_name };
 });

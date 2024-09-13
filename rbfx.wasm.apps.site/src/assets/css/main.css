@@ -49,6 +49,9 @@
     font-style: normal;
     font-display: block;
 }
+/* html {
+    font-size: 12px;
+} */
 .code_contain_have_left {
     width: 600px;
     height: 100vh;
@@ -191,7 +194,7 @@
     width: 100%;
     line-height: var(--fm_toolbar_btn_height);
     padding-left: 4px;
-    margin:0px;
+    margin: 0px;
     border-top: 1px solid var(--fm_toolbar_boder);
 }
 .main_container_status_no_bottom_padding {
@@ -203,6 +206,15 @@
     margin-top: -7px;
     border-top: 1px solid var(--fm_toolbar_boder);
 }
+
+.main_container_toolbar_no_pm > span {
+    font-size: 10px;
+    background-color: var(--fm_toolbar);
+    text-align: center;
+    padding-left: 10px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
 .main_container_status_no_pm > span {
     font-size: 12px;
     background-color: var(--fm_toolbar);
@@ -256,7 +268,7 @@
 .toolbar_btn_m i,
 .toolbar_btn_wide i,
 .toolbar_btn i {
-    font-size: 16px;
+    font-size: 15px;
 }
 .toolbar_btn_m i {
     font-size: 14px;
@@ -313,7 +325,7 @@
     background-color: var(--fm_btn_active);
 }
 .toolbar_btn_label i {
-    font-size: 16px;
+    font-size: 15px;
 }
 .busy_contain_no_left {
     width: calc(100% - 56px);
@@ -364,4 +376,24 @@
     background-color: #252325;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+.fm_tool_card_tooltip {
+    border-radius: 18px !important;
+    height: 32px;
+    opacity: 95% !important;
+    background-color: #2196f3 !important;
+    transform: translate(-6px);
+    color: aliceblue;
+}
+.v-label,
+.v-field,
+.v-textarea textarea,
+.v-select input,
+.v-file-input input,
+.v-text-field input {
+    font-size: 13px;
+}
+.v-overlay-container > .v-menu > .v-select__content {
+    border-radius: 0px;
+    padding-left: 4px;
 }

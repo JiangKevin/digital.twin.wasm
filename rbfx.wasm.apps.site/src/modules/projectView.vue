@@ -4,7 +4,7 @@
         <!--  -->
         <div class="main_container_toolbar_no_pm">
             <!--  -->
-            <button class="toolbar_btn_wide" @click="create_new_project_ck"><i class="mdi-folder-plus mdi"></i></button>
+            <button class="toolbar_btn_wide" @click="create_new_project_ck"><i class="mdi-flask-plus mdi"></i></button>
             <v-divider vertical class="divider_vertical"></v-divider>
         </div>
         <div class="main_container_content">
@@ -16,7 +16,7 @@
                                 <v-item v-slot="{ isSelected, toggle }">
                                     <v-hover>
                                         <template v-slot:default="{ isHovering, props }">
-                                            <v-card v-bind="props" class="mx-auto opacity-70" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0" density="compact">
+                                            <v-card v-bind="props" class="mx-auto opacity-70" :color="isHovering ? 'fm_card_select' : 'fm_card'" rounded="0" density="compact" style="user-select: none">
                                                 <v-card-title> {{ n.fileName + " [" + n.Id + "]" }} </v-card-title>
                                                 <v-card-subtitle>{{ n.stats.birthtime + " / " + n.stats.mtime }}</v-card-subtitle>
                                                 <v-card-text class="py-0">
@@ -24,7 +24,7 @@
                                                         <v-col class="text-h3" cols="8"> {{ n.stats.size }} </v-col>
 
                                                         <v-col class="text-right" cols="4">
-                                                            <v-icon icon="mdi-folder" size="60"></v-icon>
+                                                            <v-icon icon="mdi-flask" size="60"></v-icon>
                                                         </v-col>
                                                     </v-row>
                                                 </v-card-text>
@@ -76,10 +76,10 @@
                     </div>
                     <!--  -->
                     <div v-show="mainStore_project.project_modify_type == 'ModelImport'" class="r_modify_div">
-                        <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list"></v-select>
-                        <v-select prepend-icon="mdi-powershell" label="Command" variant="outlined" v-model="mainStore_project.res_import_commond_info.command" :items="mainStore_project.res_import_commond_list"></v-select>
-                        <v-file-input id="model_upload_inputs" ref="model_upload_inputs" label="Select Resouse Files( FBX File )" accept=".fbx" variant="outlined" prepend-icon="mdi-cube-scan"></v-file-input>
-                        <v-text-field prepend-icon="mdi-cards-diamond" label="Parameter" variant="outlined" v-model="mainStore_project.res_import_commond_info.parameter"></v-text-field>
+                        <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list" rounded="0" density="compact"></v-select>
+                        <v-select prepend-icon="mdi-powershell" label="Command" variant="outlined" v-model="mainStore_project.res_import_commond_info.command" :items="mainStore_project.res_import_commond_list" rounded="0" density="compact"></v-select>
+                        <v-file-input id="model_upload_inputs" ref="model_upload_inputs" label="Select Resouse Files( FBX File )" accept=".fbx" variant="outlined" prepend-icon="mdi-cube-scan" rounded="0" density="compact"></v-file-input>
+                        <v-text-field prepend-icon="mdi-cards-diamond" label="Parameter" variant="outlined" v-model="mainStore_project.res_import_commond_info.parameter" rounded="0" density="compact"></v-text-field>
 
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
@@ -90,9 +90,9 @@
                     </div>
                     <!--  -->
                     <div v-show="mainStore_project.project_modify_type == 'TextureImport'" class="r_modify_div">
-                        <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list"></v-select>
-                        <v-text-field prepend-icon="mdi-cards-diamond" label="Target Path" variant="outlined" v-model="mainStore_project.res_import_des_info.desPath"></v-text-field>
-                        <v-file-input id="texture_upload_inputs" ref="texture_upload_inputs" multiple label="Select Resouse Files( Texture File Or Other )" accept=".png" variant="outlined" prepend-icon="mdi-image-search"></v-file-input>
+                        <v-select prepend-icon="mdi-black-mesa" label="Project" variant="outlined" v-model="mainStore_project.resource_info.project" :items="mainStore_project.project_list" rounded="0" density="compact"></v-select>
+                        <v-text-field prepend-icon="mdi-cards-diamond" label="Target Path" variant="outlined" v-model="mainStore_project.res_import_des_info.desPath" rounded="0" density="compact"></v-text-field>
+                        <v-file-input id="texture_upload_inputs" ref="texture_upload_inputs" multiple label="Select Resouse Files( Texture File Or Other )" accept=".png" variant="outlined" prepend-icon="mdi-image-search" rounded="0" density="compact"></v-file-input>
                         <div class="submit_contain">
                             <v-card-actions class="fm_v_card_actions">
                                 <v-btn class="ml-auto submit_btn" variant="elevated" rounded="0" text="Import" @click="texture_import_do"></v-btn>
@@ -272,7 +272,7 @@ function open_dt_project(obj) {
             }
         }
         mainStore_menu.yn_show_code_btn = true;
-        // 
+        //
         FM_.OpenProject(obj.fileName);
     } else {
         busy_div_control("other_log", true);

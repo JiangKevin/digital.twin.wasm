@@ -102,3 +102,23 @@ export const useStoreForProject = defineStore("project", () => {
     //
     return { drawer, project_log, user_project_list, project_list, project_selected_to_modify, project_info, project_modify_type, wizard_list, resource_info, res_import_commond_list, res_import_commond_info, res_import_des_info };
 });
+//
+export const useStoreForFiles = defineStore("files", () => {
+    var files_log = ref("");
+    //
+    var folder_and_files = [];
+    var selected_folder_path = "./";
+    var selected_folder_and_files = [];
+    //
+    var is_right_files_drawer = ref(false);
+    var is_right_files_del_drawer = ref(false);
+    var is_right_files_zip_drawer = ref(false);
+    var is_right_files_unzip_drawer = ref(false);
+    var is_right_files_copy_drawer = ref(false);
+    var is_right_files_paste_drawer = ref(false);
+    var is_right_files_newFolder_drawer = ref(false);
+    //
+    var to_create_new_folder = "NewFolder";
+    //
+    return { files_log, folder_and_files, selected_folder_path, selected_folder_and_files, is_right_files_copy_drawer, is_right_files_drawer, is_right_files_del_drawer, is_right_files_zip_drawer, is_right_files_unzip_drawer, is_right_files_paste_drawer, is_right_files_newFolder_drawer, to_create_new_folder };
+});

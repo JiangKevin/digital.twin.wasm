@@ -1,0 +1,1194 @@
+{
+	"attributes": {
+		"Elapsed Time": 351.53607177734377,
+		"Lightmaps": "Texture2D",
+		"Name": "Scene",
+		"Next Component ID": 1065,
+		"Next Node ID": 1075,
+		"Time Scale": 1.0,
+		"Update Events": [
+			"@SceneForcedUpdate",
+			"SceneUpdate",
+			"AttributeAnimationUpdate",
+			"SceneSubsystemUpdate",
+			"ScenePostUpdate",
+			"@SceneForcedPostUpdate"
+		],
+		"Variables": {}
+	},
+	"children": [
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "FreeCamera",
+				"Position": "-2.27499 3.13189 7.47176",
+				"Rotation": "-0.38438 -0.0461016 -0.915462 0.109798",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [],
+			"components": [
+				{
+					"attributes": {
+						"Aspect Ratio": 2.4900662899017336
+					},
+					"id": 2,
+					"type": "Camera"
+				}
+			],
+			"id": 2
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "Zone",
+				"Position": "0 0 0",
+				"Rotation": "1 0 0 0",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [],
+			"components": [
+				{
+					"attributes": {
+						"Ambient Color": "0.15 0.15 0.15 1",
+						"Bounding Box Max": "1000 1000 1000",
+						"Bounding Box Min": "-1000 -1000 -1000",
+						"Fog Color": "0.5 0.5 0.7 1",
+						"Fog End": 300.0,
+						"Fog Start": 100.0
+					},
+					"id": 3,
+					"type": "Zone"
+				}
+			],
+			"id": 3
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "DirectionalLight",
+				"Position": "-40.3979 5 -3.39741",
+				"Rotation": "0.891352 0.388712 0.233228 -0",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [],
+			"components": [
+				{
+					"attributes": {
+						"CSM Splits": "10 50 200 0",
+						"Cast Shadows": true,
+						"Color": "0.5493 1 0.5493 1",
+						"Depth Constant Bias": 0.0002500000118743628,
+						"Light Type": "Directional",
+						"Specular Intensity": 0.5
+					},
+					"id": 4,
+					"type": "Light"
+				},
+				{
+					"attributes": {
+						"Animations": [
+							{
+								"type": "Int",
+								"value": 1
+							},
+							{
+								"type": "ResourceRef",
+								"value": "Animation;Animations/LightAnimation.xml"
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Int",
+								"value": 0
+							},
+							{
+								"type": "Int",
+								"value": 0
+							},
+							{
+								"type": "String",
+								"value": ""
+							},
+							{
+								"type": "Float",
+								"value": 0.0
+							},
+							{
+								"type": "Float",
+								"value": 3.5493004322052
+							},
+							{
+								"type": "Float",
+								"value": 0.0
+							},
+							{
+								"type": "Float",
+								"value": 4.0
+							},
+							{
+								"type": "Float",
+								"value": 1.0
+							},
+							{
+								"type": "Bool",
+								"value": false
+							},
+							{
+								"type": "Float",
+								"value": 1.0
+							},
+							{
+								"type": "Float",
+								"value": 1.0
+							},
+							{
+								"type": "Float",
+								"value": 0.0
+							}
+						]
+					},
+					"id": 270,
+					"type": "AnimationController"
+				}
+			],
+			"id": 4
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "Box1",
+				"Position": "0.6 2 0.8",
+				"Rotation": "1 0 0 0",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [],
+			"components": [
+				{
+					"attributes": {
+						"Cast Shadows": true,
+						"Material": "Material;",
+						"Model": "Model;Models/Box.mdl"
+					},
+					"id": 5,
+					"type": "StaticModel"
+				},
+				{
+					"attributes": {
+						"End Color": "1 1 0 0",
+						"Material": "Material;Materials/RibbonTrail.xml",
+						"Start Color": "1 0.5 0 1",
+						"Tail Column": 1,
+						"Update Invisible": true,
+						"Width": 0.5
+					},
+					"id": 6,
+					"type": "RibbonTrail"
+				}
+			],
+			"id": 5
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "Ninja",
+				"Position": "5 0 0",
+				"Rotation": "-4.37114e-08 0 1 -0",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [
+				{
+					"attributes": {
+						"Is Enabled": true,
+						"Name": "Joint1",
+						"Position": "0.00185046 -0.0774395 0.0471731",
+						"Rotation": "1 0 0 0",
+						"Scale": "1 1 1",
+						"Tags": [],
+						"Variables": {}
+					},
+					"children": [
+						{
+							"attributes": {
+								"Is Enabled": true,
+								"Name": "Joint2",
+								"Position": "0 1.08105 0.0156659",
+								"Rotation": "0.97237 -0 0.233445 0",
+								"Scale": "1 1 1",
+								"Tags": [],
+								"Variables": {}
+							},
+							"children": [
+								{
+									"attributes": {
+										"Is Enabled": true,
+										"Name": "Joint3",
+										"Position": "0.0064804 0.0831341 -0.0041358",
+										"Rotation": "0.999959 0.009039 0 0",
+										"Scale": "1 1 1",
+										"Tags": [],
+										"Variables": {}
+									},
+									"children": [
+										{
+											"attributes": {
+												"Is Enabled": true,
+												"Name": "Joint4",
+												"Position": "0.00710697 0.108656 -0.00404375",
+												"Rotation": "0.996088 0.0861444 0.0152566 0.0124672",
+												"Scale": "1 1 1",
+												"Tags": [],
+												"Variables": {}
+											},
+											"children": [
+												{
+													"attributes": {
+														"Is Enabled": true,
+														"Name": "Joint5",
+														"Position": "-0.00843986 0.171487 0.0102208",
+														"Rotation": "0.982117 0.182053 -0.00874463 -0.0471744",
+														"Scale": "1 1 1",
+														"Tags": [],
+														"Variables": {}
+													},
+													"children": [
+														{
+															"attributes": {
+																"Is Enabled": true,
+																"Name": "Joint6",
+																"Position": "3.72529e-10 0.197703 -0.0261099",
+																"Rotation": "0.995396 -0.0958456 0 0",
+																"Scale": "1 1 1",
+																"Tags": [],
+																"Variables": {}
+															},
+															"children": [
+																{
+																	"attributes": {
+																		"Is Enabled": true,
+																		"Name": "Joint7",
+																		"Position": "0 0.0474305 0.010444",
+																		"Rotation": "0.992546 0 -0.121869 0",
+																		"Scale": "1 1 1",
+																		"Tags": [],
+																		"Variables": {}
+																	},
+																	"children": [
+																		{
+																			"attributes": {
+																				"Is Enabled": true,
+																				"Name": "Joint8",
+																				"Position": "-0.00185046 0.0918524 0.0308366",
+																				"Rotation": "1 0 0 0",
+																				"Scale": "1 1 1",
+																				"Tags": [],
+																				"Variables": {}
+																			},
+																			"children": [],
+																			"components": [],
+																			"id": 14
+																		}
+																	],
+																	"components": [],
+																	"id": 13
+																},
+																{
+																	"attributes": {
+																		"Is Enabled": true,
+																		"Name": "Joint9",
+																		"Position": "0.143431 -0.0365739 -0.0676722",
+																		"Rotation": "1 -0 -0 0",
+																		"Scale": "1 1 1",
+																		"Tags": [],
+																		"Variables": {}
+																	},
+																	"children": [
+																		{
+																			"attributes": {
+																				"Is Enabled": true,
+																				"Name": "Joint10",
+																				"Position": "0.0590596 -0.0202329 0",
+																				"Rotation": "0.615987 -0.731469 -0.292259 0.00991827",
+																				"Scale": "1 1 1",
+																				"Tags": [],
+																				"Variables": {}
+																			},
+																			"children": [
+																				{
+																					"attributes": {
+																						"Is Enabled": true,
+																						"Name": "Joint11",
+																						"Position": "0.0337483 -0.294451 0.0574418",
+																						"Rotation": "0.87688 -0.477014 0.0531761 -0.0266556",
+																						"Scale": "1 1 1",
+																						"Tags": [],
+																						"Variables": {}
+																					},
+																					"children": [
+																						{
+																							"attributes": {
+																								"Is Enabled": true,
+																								"Name": "Joint12",
+																								"Position": "0.0133815 -0.286038 0.0313318",
+																								"Rotation": "0.956113 0.254574 0.12085 -0.0802221",
+																								"Scale": "1 1 1",
+																								"Tags": [],
+																								"Variables": {}
+																							},
+																							"children": [
+																								{
+																									"attributes": {
+																										"Is Enabled": true,
+																										"Name": "Joint13",
+																										"Position": "0.00136921 -0.0624266 0.0342546",
+																										"Rotation": "0.869347 -0.428754 -0.242212 -0.0416927",
+																										"Scale": "1 1 1",
+																										"Tags": [],
+																										"Variables": {}
+																									},
+																									"children": [
+																										{
+																											"attributes": {
+																												"Is Enabled": true,
+																												"Name": "Joint29",
+																												"Position": "-0.000284957 -0.0580133 0.760905",
+																												"Rotation": "1 -0 -0 0",
+																												"Scale": "1 1 1",
+																												"Tags": [],
+																												"Variables": {}
+																											},
+																											"children": [],
+																											"components": [
+																												{
+																													"attributes": {
+																														"End Color": "0.2 0.5 1 0",
+																														"Material": "Material;Materials/SlashTrail.xml",
+																														"Start Color": "1 1 1 0.75",
+																														"Tail Column": 4,
+																														"Tail Lifetime": 0.2199999988079071,
+																														"Trail Type": "Bone",
+																														"Update Invisible": true
+																													},
+																													"id": 9,
+																													"type": "RibbonTrail"
+																												}
+																											],
+																											"id": 20
+																										}
+																									],
+																									"components": [],
+																									"id": 19
+																								}
+																							],
+																							"components": [],
+																							"id": 18
+																						}
+																					],
+																					"components": [],
+																					"id": 17
+																				}
+																			],
+																			"components": [],
+																			"id": 16
+																		}
+																	],
+																	"components": [],
+																	"id": 15
+																},
+																{
+																	"attributes": {
+																		"Is Enabled": true,
+																		"Name": "Joint14",
+																		"Position": "-0.143431 -0.0369103 -0.0676722",
+																		"Rotation": "1 0 0 0",
+																		"Scale": "1 1 1",
+																		"Tags": [],
+																		"Variables": {}
+																	},
+																	"children": [
+																		{
+																			"attributes": {
+																				"Is Enabled": true,
+																				"Name": "Joint15",
+																				"Position": "-0.0717153 -0.0210322 0",
+																				"Rotation": "0.750371 -0.626517 0.0903775 -0.1904",
+																				"Scale": "1 1 1",
+																				"Tags": [],
+																				"Variables": {}
+																			},
+																			"children": [
+																				{
+																					"attributes": {
+																						"Is Enabled": true,
+																						"Name": "Joint16",
+																						"Position": "-0.0253113 -0.286038 0.0574418",
+																						"Rotation": "0.802694 -0.576225 -0.00403657 -0.153724",
+																						"Scale": "1 1 1",
+																						"Tags": [],
+																						"Variables": {}
+																					},
+																					"children": [
+																						{
+																							"attributes": {
+																								"Is Enabled": true,
+																								"Name": "Joint17",
+																								"Position": "-0.0168742 -0.302864 0.0313318",
+																								"Rotation": "0.97437 -0.224951 0 0",
+																								"Scale": "1 1 1",
+																								"Tags": [],
+																								"Variables": {}
+																							},
+																							"children": [],
+																							"components": [],
+																							"id": 24
+																						}
+																					],
+																					"components": [],
+																					"id": 23
+																				}
+																			],
+																			"components": [],
+																			"id": 22
+																		}
+																	],
+																	"components": [],
+																	"id": 21
+																}
+															],
+															"components": [],
+															"id": 12
+														}
+													],
+													"components": [],
+													"id": 11
+												}
+											],
+											"components": [],
+											"id": 10
+										}
+									],
+									"components": [],
+									"id": 9
+								},
+								{
+									"attributes": {
+										"Is Enabled": true,
+										"Name": "Joint18",
+										"Position": "0.0970265 -0.0841289 0.0208879",
+										"Rotation": "0.976151 -0.0728188 0.0674932 0.193056",
+										"Scale": "1 1 1",
+										"Tags": [],
+										"Variables": {}
+									},
+									"children": [
+										{
+											"attributes": {
+												"Is Enabled": true,
+												"Name": "Joint19",
+												"Position": "0.0295298 -0.43747 -0.0156659",
+												"Rotation": "0.924372 0.291454 0.234761 -0.0740199",
+												"Scale": "1 1 1",
+												"Tags": [],
+												"Variables": {}
+											},
+											"children": [
+												{
+													"attributes": {
+														"Is Enabled": true,
+														"Name": "Joint20",
+														"Position": "-0.00843709 -0.461989 -0.1134",
+														"Rotation": "0.973132 -0.115178 -0.0456952 -0.194061",
+														"Scale": "1 1 1",
+														"Tags": [],
+														"Variables": {}
+													},
+													"children": [
+														{
+															"attributes": {
+																"Is Enabled": true,
+																"Name": "Joint21",
+																"Position": "0.0143906 -0.0937045 0.131049",
+																"Rotation": "1 0 0 0",
+																"Scale": "1 1 1",
+																"Tags": [],
+																"Variables": {}
+															},
+															"children": [
+																{
+																	"attributes": {
+																		"Is Enabled": true,
+																		"Name": "Joint22",
+																		"Position": "0.00421854 -0.00438055 0.0761888",
+																		"Rotation": "1 -0 -0 0",
+																		"Scale": "1 1 1",
+																		"Tags": [],
+																		"Variables": {}
+																	},
+																	"children": [],
+																	"components": [],
+																	"id": 29
+																}
+															],
+															"components": [],
+															"id": 28
+														}
+													],
+													"components": [],
+													"id": 27
+												}
+											],
+											"components": [],
+											"id": 26
+										}
+									],
+									"components": [],
+									"id": 25
+								},
+								{
+									"attributes": {
+										"Is Enabled": true,
+										"Name": "Joint23",
+										"Position": "-0.0885894 -0.0841289 0.0208879",
+										"Rotation": "0.951719 -0.283578 -0.0429017 -0.109428",
+										"Scale": "1 1 1",
+										"Tags": [],
+										"Variables": {}
+									},
+									"children": [
+										{
+											"attributes": {
+												"Is Enabled": true,
+												"Name": "Joint24",
+												"Position": "-0.0337484 -0.433263 -0.0156659",
+												"Rotation": "0.979841 0.199351 0.000570969 -0.0130771",
+												"Scale": "1 1 1",
+												"Tags": [],
+												"Variables": {}
+											},
+											"children": [
+												{
+													"attributes": {
+														"Is Enabled": true,
+														"Name": "Joint25",
+														"Position": "-0.00843709 -0.466195 -0.1134",
+														"Rotation": "0.990636 0.118512 -0.00708645 0.0674232",
+														"Scale": "1 1 1",
+														"Tags": [],
+														"Variables": {}
+													},
+													"children": [
+														{
+															"attributes": {
+																"Is Enabled": true,
+																"Name": "Joint26",
+																"Position": "-0.00557851 -0.097911 0.131049",
+																"Rotation": "1 0 0 0",
+																"Scale": "1 1 1",
+																"Tags": [],
+																"Variables": {}
+															},
+															"children": [
+																{
+																	"attributes": {
+																		"Is Enabled": true,
+																		"Name": "Joint27",
+																		"Position": "0 -0.00017411 0.0761888",
+																		"Rotation": "1 -0 -0 0",
+																		"Scale": "1 1 1",
+																		"Tags": [],
+																		"Variables": {}
+																	},
+																	"children": [],
+																	"components": [],
+																	"id": 34
+																}
+															],
+															"components": [],
+															"id": 33
+														}
+													],
+													"components": [],
+													"id": 32
+												}
+											],
+											"components": [],
+											"id": 31
+										}
+									],
+									"components": [],
+									"id": 30
+								}
+							],
+							"components": [],
+							"id": 8
+						}
+					],
+					"components": [],
+					"id": 7
+				}
+			],
+			"components": [
+				{
+					"attributes": {
+						"Bone Animation Enabled": [
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							}
+						],
+						"Cast Shadows": true,
+						"Material": "Material;Materials/Ninja.xml;Materials/Ninja.xml",
+						"Model": "Model;Models/Ninja.mdl"
+					},
+					"id": 7,
+					"type": "AnimatedModel"
+				},
+				{
+					"attributes": {
+						"Animations": [
+							{
+								"type": "Int",
+								"value": 1
+							},
+							{
+								"type": "ResourceRef",
+								"value": "Animation;Models/Ninja_Attack3.ani"
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Bool",
+								"value": true
+							},
+							{
+								"type": "Int",
+								"value": 0
+							},
+							{
+								"type": "Int",
+								"value": 0
+							},
+							{
+								"type": "String",
+								"value": ""
+							},
+							{
+								"type": "Float",
+								"value": 0.0
+							},
+							{
+								"type": "Float",
+								"value": 0.21580344438552857
+							},
+							{
+								"type": "Float",
+								"value": 0.0
+							},
+							{
+								"type": "Float",
+								"value": 0.6666669845581055
+							},
+							{
+								"type": "Float",
+								"value": 1.0
+							},
+							{
+								"type": "Bool",
+								"value": false
+							},
+							{
+								"type": "Float",
+								"value": 1.0
+							},
+							{
+								"type": "Float",
+								"value": 1.0
+							},
+							{
+								"type": "Float",
+								"value": 0.0
+							}
+						]
+					},
+					"id": 8,
+					"type": "AnimationController"
+				}
+			],
+			"id": 6
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "Terrain",
+				"Position": "0 0 0",
+				"Rotation": "1 0 0 0",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [],
+			"components": [
+				{
+					"attributes": {
+						"Height Map": "Image;Textures/HeightMap.png",
+						"Is Occluder": true,
+						"Material": "Material;Materials/Terrain.xml",
+						"Patch Size": 64,
+						"Smooth Height Map": true,
+						"Vertex Spacing": "3 0.1 3"
+					},
+					"id": 10,
+					"type": "Terrain"
+				},
+				{
+					"attributes": {
+						"Collision Layer": 2
+					},
+					"id": 267,
+					"type": "RigidBody"
+				},
+				{
+					"attributes": {
+						"Shape Type": "Terrain"
+					},
+					"id": 269,
+					"type": "CollisionShape"
+				}
+			],
+			"id": 35
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "trueck",
+				"Position": "4.66148 0.76715 0.667832",
+				"Rotation": "0.409754 -0.00645061 0.912171 0.00189533",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [
+				{
+					"attributes": {
+						"Is Enabled": true,
+						"Name": "CarBody",
+						"Position": "0 0 0",
+						"Rotation": "1 0 0 0",
+						"Scale": "0.01 0.01 0.01",
+						"Tags": [],
+						"Variables": {}
+					},
+					"children": [],
+					"components": [
+						{
+							"attributes": {
+								"Cast Shadows": true,
+								"Material": "Material;Models/truckBody/Materials/Material.xml;Models/truckBody/Materials/black.xml;Models/truckBody/Materials/iron.xml;Models/truckBody/Materials/front bulb.xml;Models/truckBody/Materials/Material.003.xml;Models/truckBody/Materials/glass.001.xml;Models/truckBody/Materials/nickel.xml;Models/truckBody/Materials/front bubl emmidion.xml;Models/truckBody/Materials/iron.xml;Models/truckBody/Materials/rubber.xml;Models/truckBody/Materials/iron.xml;Models/truckBody/Materials/rubber.xml;Models/truckBody/Materials/glass.xml;Models/truckBody/Materials/red bulkb.xml;Models/truckBody/Materials/yellow bulb.xml;Models/truckBody/Materials/glass.001.xml",
+								"Model": "Model;Models/truckBody/truckBody.mdl"
+							},
+							"id": 792,
+							"type": "StaticModel"
+						}
+					],
+					"id": 806
+				},
+				{
+					"attributes": {
+						"Is Enabled": true,
+						"Name": "FrontLeftWheel",
+						"Position": "-0.68 -0.301674 0.61",
+						"Rotation": "0.950435 -0.310925 4.48199e-08 7.45058e-09",
+						"Scale": "0.01 0.01 0.01",
+						"Tags": [],
+						"Variables": {}
+					},
+					"children": [],
+					"components": [
+						{
+							"attributes": {
+								"Axle": "-1 0 0",
+								"Connection Point": "-0.68 -0.12 0.61",
+								"Contact Normal": "-0.0166641 0.999842 -0.00624907",
+								"Contact Position": "5.57463 0.04776 0.775866",
+								"Damping Compression": 0.10000000149011612,
+								"Damping Relaxation": 0.10000000149011612,
+								"Engine Factor": 0.0,
+								"Friction Slip": 1000.0,
+								"Is In Contact": true,
+								"Max Suspension Travel": 0.20000000298023225,
+								"Radius": 0.4300000071525574,
+								"Roll Influence": 0.11999999731779099,
+								"Side Slip Speed": 0.013182774186134339,
+								"Steering": 1.401298464324817e-45,
+								"Steering Factor": 0.5,
+								"Suspension Stiffness": 140.0
+							},
+							"id": 793,
+							"type": "RaycastVehicleWheel"
+						},
+						{
+							"attributes": {
+								"Cast Shadows": true,
+								"Material": "Material;Models/tbl_1/Materials/tire1.xml;Models/tbl_1/Materials/iron.xml",
+								"Model": "Model;Models/tbl_1/tbl_1.mdl"
+							},
+							"id": 794,
+							"type": "StaticModel"
+						}
+					],
+					"id": 807
+				},
+				{
+					"attributes": {
+						"Is Enabled": true,
+						"Name": "FrontRightWheel",
+						"Position": "0.68 -0.301135 0.61",
+						"Rotation": "0.951304 -0.308255 -2.45636e-08 7.45058e-09",
+						"Scale": "0.01 0.01 0.01",
+						"Tags": [],
+						"Variables": {}
+					},
+					"children": [],
+					"components": [
+						{
+							"attributes": {
+								"Axle": "-1 0 0",
+								"Connection Point": "0.68 -0.12 0.61",
+								"Contact Normal": "-0.012499 0.999913 0.00416624",
+								"Contact Position": "4.67142 0.0343952 -0.240818",
+								"Damping Compression": 0.10000000149011612,
+								"Damping Relaxation": 0.10000000149011612,
+								"Engine Factor": 0.0,
+								"Friction Slip": 1000.0,
+								"Is In Contact": true,
+								"Max Suspension Travel": 0.20000000298023225,
+								"Radius": 0.4300000071525574,
+								"Roll Influence": 0.11999999731779099,
+								"Side Slip Speed": 0.013182774186134339,
+								"Steering": 1.401298464324817e-45,
+								"Steering Factor": 0.5,
+								"Suspension Stiffness": 140.0
+							},
+							"id": 796,
+							"type": "RaycastVehicleWheel"
+						},
+						{
+							"attributes": {
+								"Cast Shadows": true,
+								"Material": "Material;Models/tbr_1/Materials/tire1.xml;Models/tbr_1/Materials/iron.xml",
+								"Model": "Model;Models/tbr_1/tbr_1.mdl"
+							},
+							"id": 797,
+							"type": "StaticModel"
+						}
+					],
+					"id": 809
+				},
+				{
+					"attributes": {
+						"Is Enabled": true,
+						"Name": "BackLeftWheel",
+						"Position": "-0.68 -0.301174 -0.61",
+						"Rotation": "0.948333 -0.317277 1.16415e-10 2.23517e-08",
+						"Scale": "0.01 0.01 0.01",
+						"Tags": [],
+						"Variables": {}
+					},
+					"children": [],
+					"components": [
+						{
+							"attributes": {
+								"Axle": "-1 0 0",
+								"Connection Point": "-0.68 -0.12 -0.61",
+								"Contact Normal": "-0.0166641 0.999842 -0.00624907",
+								"Contact Position": "4.66265 0.0376245 1.58618",
+								"Damping Compression": 0.10000000149011612,
+								"Damping Relaxation": 0.10000000149011612,
+								"Friction Slip": 1000.0,
+								"Is In Contact": true,
+								"Max Suspension Travel": 0.20000000298023225,
+								"Radius": 0.4300000071525574,
+								"Roll Influence": 0.11999999731779099,
+								"Side Slip Speed": 0.013182774186134339,
+								"Suspension Stiffness": 140.0
+							},
+							"id": 799,
+							"type": "RaycastVehicleWheel"
+						},
+						{
+							"attributes": {
+								"Cast Shadows": true,
+								"Material": "Material;Models/tbl_1/Materials/tire1.xml;Models/tbl_1/Materials/iron.xml",
+								"Model": "Model;Models/tbl_1/tbl_1.mdl"
+							},
+							"id": 800,
+							"type": "StaticModel"
+						}
+					],
+					"id": 811
+				},
+				{
+					"attributes": {
+						"Is Enabled": true,
+						"Name": "BackRightWheel",
+						"Position": "0.68 -0.301714 -0.61",
+						"Rotation": "0.948853 -0.315717 7.68341e-09 1.49012e-08",
+						"Scale": "0.01 0.01 0.01",
+						"Tags": [],
+						"Variables": {}
+					},
+					"children": [],
+					"components": [
+						{
+							"attributes": {
+								"Axle": "-1 0 0",
+								"Connection Point": "0.68 -0.12 -0.61",
+								"Contact Normal": "-0.0124991 0.99992 -0.00208329",
+								"Contact Position": "3.75947 0.0231806 0.569496",
+								"Damping Compression": 0.10000000149011612,
+								"Damping Relaxation": 0.10000000149011612,
+								"Friction Slip": 1000.0,
+								"Is In Contact": true,
+								"Max Suspension Travel": 0.20000000298023225,
+								"Radius": 0.4300000071525574,
+								"Roll Influence": 0.11999999731779099,
+								"Side Slip Speed": 0.013182774186134339,
+								"Suspension Stiffness": 140.0
+							},
+							"id": 802,
+							"type": "RaycastVehicleWheel"
+						},
+						{
+							"attributes": {
+								"Cast Shadows": true,
+								"Material": "Material;Models/tbr_1/Materials/tire1.xml;Models/tbr_1/Materials/iron.xml",
+								"Model": "Model;Models/tbr_1/tbr_1.mdl"
+							},
+							"id": 803,
+							"type": "StaticModel"
+						}
+					],
+					"id": 813
+				}
+			],
+			"components": [
+				{
+					"attributes": {
+						"Control Camera Node": "FreeCamera",
+						"Controls Pitch": 13.678500175476075,
+						"Controls Yaw": -357.17529296875,
+						"Have Create": true,
+						"Input Map": "InputMap;Input/FmMoveAndOrbit.inputmap",
+						"Steering": 2.802596928649634e-45
+					},
+					"id": 786,
+					"type": "FmVehicle"
+				},
+				{
+					"attributes": {
+						"Input Map": "InputMap;Input/FmMoveAndOrbit.inputmap"
+					},
+					"id": 788,
+					"type": "FmMoveAndOrbitController"
+				},
+				{
+					"attributes": null,
+					"id": 789,
+					"type": "RaycastVehicle"
+				},
+				{
+					"attributes": {
+						"Angular Damping": 0.5,
+						"Angular Rest Threshold": 0.10000000149011612,
+						"Angular Velocity": "-0.00187552 -0.00070031 -0.00119197",
+						"Collision Layer": 2,
+						"Linear Damping": 0.20000000298023225,
+						"Linear Rest Threshold": 0.10000000149011612,
+						"Linear Velocity": "-0.391013 0.168535 0.327427",
+						"Mass": 1000.0,
+						"Physics Position": "4.65731 0.767098 0.671325",
+						"Physics Rotation": "0.409757 -0.00644925 0.91217 0.00188143"
+					},
+					"id": 790,
+					"type": "RigidBody"
+				},
+				{
+					"attributes": {
+						"Shape Type": "Capsule"
+					},
+					"id": 791,
+					"type": "CollisionShape"
+				}
+			],
+			"id": 804
+		},
+		{
+			"attributes": {
+				"Is Enabled": true,
+				"Name": "TopCamera",
+				"Position": "-1.42547 0.738716 -5.0608",
+				"Rotation": "0.992903 0 0.118929 0",
+				"Scale": "1 1 1",
+				"Tags": [],
+				"Variables": {}
+			},
+			"children": [],
+			"components": [
+				{
+					"attributes": null,
+					"id": 787,
+					"type": "Camera"
+				}
+			],
+			"id": 805
+		}
+	],
+	"components": [
+		{
+			"attributes": null,
+			"id": 1,
+			"type": "Octree"
+		},
+		{
+			"attributes": null,
+			"id": 268,
+			"type": "PhysicsWorld"
+		},
+		{
+			"attributes": null,
+			"id": 271,
+			"type": "RenderPipeline"
+		},
+		{
+			"attributes": null,
+			"id": 272,
+			"type": "ReflectionProbeManager"
+		}
+	],
+	"id": 1
+}

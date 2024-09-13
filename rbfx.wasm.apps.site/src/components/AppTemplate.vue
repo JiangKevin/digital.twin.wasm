@@ -1,7 +1,7 @@
 <!-- template -->
 <template>
     <v-layout full-height>
-        <v-navigation-drawer v-model="mainStore_menu.drawer" :rail="mainStore_menu.rail" permanent class="blur_div_80">
+        <v-navigation-drawer v-model="mainStore_menu.drawer" :rail="mainStore_menu.rail" permanent class="blur_div_80" style="user-select: none !important">
             <v-list>
                 <v-list-item :subtitle="mainStore_menu.user_info.email" :title="mainStore_menu.user_info.fullname">
                     <template v-slot:prepend>

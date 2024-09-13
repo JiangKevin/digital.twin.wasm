@@ -12,7 +12,7 @@
                             <v-text-field label="Admin User" variant="outlined" v-model="mainStore_menu.user_info.username" autocomplete="off" rounded="0" density="compact"></v-text-field>
                             <v-text-field label="Password" variant="outlined" v-model="mainStore_menu.user_info.password" autocomplete="off" type="password" rounded="0" density="compact"></v-text-field>
                             <div>
-                                <v-btn @click="login"> Sign in </v-btn>
+                                <v-btn @click="login" rounded="0" density="comfortable" color="fm_red"> Sign in </v-btn>
                                 <span>{{ mainStore_menu.login_log }}</span>
                             </div>
                         </div>

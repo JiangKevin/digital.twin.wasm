@@ -334,7 +334,13 @@ export function busy_div_control(div_name, is_view) {
         }
     }
 }
-
+//
+export function clear_busy_log(div_name) {
+    var select_div = document.getElementById(div_name);
+    if (select_div) {
+        select_div.value = "";
+    }
+}
 // --------------------------------------------------------------------------------
 
 export const loadFileAsync = (file) => {

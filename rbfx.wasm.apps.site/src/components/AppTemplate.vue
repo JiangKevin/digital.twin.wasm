@@ -101,7 +101,7 @@ FM_GLOBAL.TWEAKPANLE = new Pane({
     hidden: true,
 });
 //
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, clear_busy_log, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
 
 //
 function route_ck(item) {
@@ -116,6 +116,7 @@ function route_ck(item) {
         mainStore_menu.yn_show_code_btn = true;
         if (!is_load_cad_wasm) {
             busy_div_control("other_log", true);
+            clear_busy_log("other_log");
         }
         //
         if (FM_GLOBAL.TWEAKPANLE) {
@@ -129,6 +130,7 @@ function route_ck(item) {
         //
         if (!is_load_rbfx_wasm) {
             busy_div_control("other_log", true);
+            clear_busy_log("other_log");
         }
         //
         if (FM_GLOBAL.TWEAKPANLE) {

@@ -264,7 +264,7 @@ function open_dt_project(obj) {
     mainStore_project.project_selected_to_modify = obj;
     if (is_load_rbfx_wasm) {
         busy_div_control("other_log", true);
-        clear_busy_log("other_log");
+        clear_busy_log("story");
         mainStore_menu.reset_menu_status();
         mainStore_menu.menu_navigation_item = "Scene Editor";
         for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
@@ -277,7 +277,7 @@ function open_dt_project(obj) {
         FM_.OpenProject(obj.fileName);
     } else {
         busy_div_control("other_log", true);
-        clear_busy_log("other_log");
+        clear_busy_log("story");
         mainStore_menu.reset_menu_status();
         mainStore_menu.menu_navigation_item = "Scene Editor";
         for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
@@ -312,7 +312,7 @@ function open_dt_project(obj) {
                 if (FM_) {
                     if (obj.fileName != "") {
                         busy_div_control("other_log", true);
-                        clear_busy_log("other_log");
+                        clear_busy_log("story");
                         FM_.OpenProject(obj.fileName);
                     }
                 }

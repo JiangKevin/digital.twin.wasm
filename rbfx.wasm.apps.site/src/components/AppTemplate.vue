@@ -116,7 +116,7 @@ function route_ck(item) {
         mainStore_menu.yn_show_code_btn = true;
         if (!is_load_cad_wasm) {
             busy_div_control("other_log", true);
-            clear_busy_log("other_log");
+            clear_busy_log("story");
         }
         //
         if (FM_GLOBAL.TWEAKPANLE) {
@@ -130,7 +130,7 @@ function route_ck(item) {
         //
         if (!is_load_rbfx_wasm) {
             busy_div_control("other_log", true);
-            clear_busy_log("other_log");
+            clear_busy_log("story");
         }
         //
         if (FM_GLOBAL.TWEAKPANLE) {

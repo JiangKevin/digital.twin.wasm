@@ -70,6 +70,9 @@
                     <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'CAD Editor'">
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
+                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(2)"></i></button>
+                        <!--  -->
+                        <v-divider vertical class="divider_vertical"></v-divider>
                         <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(0)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
@@ -217,6 +220,14 @@ function code_editor_laout_ck(layout) {
             vs_code_contain.style.width = w + "px";
         } else if (layout == 1) {
             vs_code_contain.style.width = "600px";
+        } else if (layout == 2) {
+            var w;
+            if (mainStore_menu.rail) {
+                w = window.innerWidth / 2 - 55 - 1;
+            } else {
+                w = window.innerWidth / 2 - 255 - 1;
+            }
+            vs_code_contain.style.width = w + "px";
         }
     }
 }

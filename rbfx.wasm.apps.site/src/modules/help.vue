@@ -32,7 +32,7 @@ FM_GLOBAL.MARKDOWN = markdownit({
 onMounted(() => {
     if (mainStore_menu.is_logined) {
         busy_div_control("other_log", true);
-        clear_busy_log("other_log");
+        clear_busy_log("story");
         setTimeout(() => {
             var md = window.frames["mark_down_frame"];
             var md_view = window.frames["mark_down_view"];

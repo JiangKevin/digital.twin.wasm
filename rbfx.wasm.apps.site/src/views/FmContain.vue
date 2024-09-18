@@ -5,6 +5,9 @@
             <v-window-item value="Editor Help">
                 <help_view></help_view>
             </v-window-item>
+            <v-window-item value="Term Terminal">
+                <term_view></term_view>
+            </v-window-item>
             <v-window-item value="All Proejcts">
                 <project_view></project_view>
             </v-window-item>
@@ -110,6 +113,7 @@ import wasm_editor from "@/modules/wasm_editor";
 import help_view from "@/modules/help";
 import project_view from "@/modules/projectView";
 import file_view from "@/modules/fileView";
+import term_view from "@/modules/termView";
 //
 function code_div_class_select(is_view, rail, is_show_btn) {
     var rt = "";
@@ -251,6 +255,7 @@ function run_code_for_editor() {
     } catch (e) {
         log_span.innerText = "+-  " + e.message;
         FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From code editor: Run ok. " + e.message + "\n";
+        console.log(e.message);
     } finally {
         //
     }

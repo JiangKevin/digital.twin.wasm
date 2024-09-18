@@ -56,6 +56,18 @@ export const useStoreForMenu = defineStore("menu", () => {
                 },
             ],
         },
+        {
+            text: "Term Terminal",
+            icon: "mdi-console-network",
+            active: false,
+            disabled: false,
+            route: "/xterm",
+            sub: [
+                {
+                    icon: "mdi-crowd",
+                },
+            ],
+        },
     ];
     var menu_help_items = [{ text: "Editor Help", icon: "mdi-progress-question", active: false, disabled: false, route: "/help", sub: [] }];
     var menu_exit_items = [{ text: "Exit Application", icon: "mdi-exit-to-app", active: false, disabled: false, route: "/login", sub: [] }];

@@ -15,7 +15,6 @@ const mainStore_menu = useStoreForMenu();
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control } from "@/plugins/base.js";
 //
 onMounted(() => {
-    // console.log("+- From js: is_load_rbfx_wasm = " + is_load_rbfx_wasm);
     var log_span = document.getElementById("rbfx-output");
     //
     if (!is_load_rbfx_wasm) {
@@ -52,7 +51,6 @@ onMounted(() => {
     elem.addEventListener(
         "click",
         function () {
-            console.log("+- focus.");
             elem.focus();
         },
         false

@@ -60,12 +60,21 @@ onMounted(() => {
                 }
             });
             //
+            window.addEventListener(
+                "CASCAD_WRAP_LOADED",
+                (e) => {
+                    FM_GLOBAL.LOG.value = "+- From js: cascad_wrap loaded.";
+                    console.log("+- From js: cascad_wrap loaded.");
+                },
+                false
+            );
+            //
             fm_addScript("./runtime/basic/cascad_wrap.js", true, false);
             //
             is_load_cad_wasm = true;
             FM_GLOBAL.TWEAKPANLE.hidden = false;
         });
-    } 
+    }
 });
 </script>
 

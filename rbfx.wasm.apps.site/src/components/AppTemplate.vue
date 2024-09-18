@@ -156,7 +156,6 @@ function route_ck(item) {
     }
     //
     if (mainStore_menu.is_logined) {
-        console.log(item.text);
         mainStore_menu.menu_navigation_item = item.text;
     } else {
         router.push({ path: "login", replace: true });
@@ -226,10 +225,7 @@ onMounted(() => {
     var code_frame = document.getElementById("vs_code_frame");
     if (code_frame) {
         code_frame.onload = function () {
-            // console.log("+- From js: frame loaded.");
             FM_GLOBAL.MONACO_EDITOR = window.frames["vs_code_frame"].contentWindow.FM_GLOBAL.editor;
-            // console.log(FM_GLOBAL.MONACO_EDITOR);
-            //
             var log_span = document.getElementById("rbfx-output");
             open_rbfx_code_file(FM_GLOBAL.MONACO_EDITOR, log_span);
         };
@@ -251,8 +247,6 @@ onMounted(() => {
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /* background-size: cover; */
-    /* background-size:120% 100%; */
     background-size: 200% 180%;
 }
 .fm_main_log {

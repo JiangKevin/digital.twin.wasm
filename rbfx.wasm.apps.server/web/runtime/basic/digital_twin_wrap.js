@@ -1,12 +1,12 @@
 //
-const FM_ = {};
+const FMDT_ = {};
 //
-FM_.Clear = function () {
+FMDT_.Clear = function () {
     // call
     FM_GLOBAL.DTWIN_EDITOR._Clear();
 };
 //
-FM_.CreateChild = function (name) {
+FMDT_.CreateChild = function (name) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -17,7 +17,7 @@ FM_.CreateChild = function (name) {
     _free(string_on_wasm_heap_for_name);
 };
 //
-FM_.RemoveChild = function (name) {
+FMDT_.RemoveChild = function (name) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -28,7 +28,7 @@ FM_.RemoveChild = function (name) {
     _free(string_on_wasm_heap_for_name);
 };
 //
-FM_.set_node_enbled = function (name, enble) {
+FMDT_.set_node_enbled = function (name, enble) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -39,7 +39,7 @@ FM_.set_node_enbled = function (name, enble) {
     _free(string_on_wasm_heap_for_name);
 };
 //
-FM_.set_node_position = function (name, x, y, z) {
+FMDT_.set_node_position = function (name, x, y, z) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -50,7 +50,7 @@ FM_.set_node_position = function (name, x, y, z) {
     _free(string_on_wasm_heap_for_name);
 };
 //
-FM_.set_node_direction = function (name, x, y, z) {
+FMDT_.set_node_direction = function (name, x, y, z) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -61,7 +61,7 @@ FM_.set_node_direction = function (name, x, y, z) {
     _free(string_on_wasm_heap_for_name);
 };
 //
-FM_.set_node_scale = function (name, x, y, z) {
+FMDT_.set_node_scale = function (name, x, y, z) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -72,7 +72,7 @@ FM_.set_node_scale = function (name, x, y, z) {
     _free(string_on_wasm_heap_for_name);
 };
 //
-FM_.create_child_by_node = function (node_name, child_name) {
+FMDT_.create_child_by_node = function (node_name, child_name) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -89,7 +89,7 @@ FM_.create_child_by_node = function (node_name, child_name) {
     _free(string_on_wasm_heap_for_child_name);
 };
 //
-FM_.remove_node_by_name = function (name) {
+FMDT_.remove_node_by_name = function (name) {
     // to wasm heap
     var lengthBytes_for_name = lengthBytesUTF8(name) + 1;
     var string_on_wasm_heap_for_name = _malloc(lengthBytes_for_name);
@@ -101,7 +101,7 @@ FM_.remove_node_by_name = function (name) {
 };
 
 //
-FM_.create_component_by_node = function (node_name, type_name) {
+FMDT_.create_component_by_node = function (node_name, type_name) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -118,7 +118,7 @@ FM_.create_component_by_node = function (node_name, type_name) {
     _free(string_on_wasm_heap_for_type_name);
 };
 //
-FM_.remove_component_by_node = function (node_name, type_name) {
+FMDT_.remove_component_by_node = function (node_name, type_name) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -136,7 +136,7 @@ FM_.remove_component_by_node = function (node_name, type_name) {
 };
 
 //
-FM_.set_component_attr_by_node = function (node_name, com_type_name, attr_type_name, attr_value) {
+FMDT_.set_component_attr_by_node = function (node_name, com_type_name, attr_type_name, attr_value) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -163,7 +163,7 @@ FM_.set_component_attr_by_node = function (node_name, com_type_name, attr_type_n
     _free(string_on_wasm_heap_for_attr_value);
 };
 //
-FM_.call_component_default_init_by_node = function (node_name, com_type_name) {
+FMDT_.call_component_default_init_by_node = function (node_name, com_type_name) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -180,7 +180,7 @@ FM_.call_component_default_init_by_node = function (node_name, com_type_name) {
     _free(string_on_wasm_heap_for_com_type_name);
 };
 //
-FM_.call_component_default_method_by_node = function (node_name, com_type_name) {
+FMDT_.call_component_default_method_by_node = function (node_name, com_type_name) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -198,7 +198,7 @@ FM_.call_component_default_method_by_node = function (node_name, com_type_name) 
 };
 
 //
-FM_.set_node_attr = function (node_name, attr_type_name, attr_value) {
+FMDT_.set_node_attr = function (node_name, attr_type_name, attr_value) {
     // to wasm heap
     var lengthBytes_for_node_name = lengthBytesUTF8(node_name) + 1;
     var string_on_wasm_heap_for_node_name = _malloc(lengthBytes_for_node_name);
@@ -220,7 +220,7 @@ FM_.set_node_attr = function (node_name, attr_type_name, attr_value) {
     _free(string_on_wasm_heap_for_attr_value);
 };
 //
-FM_.SetupViewport = function (camera_node_name) {
+FMDT_.SetupViewport = function (camera_node_name) {
     // to wasm heap
     var lengthBytes_for_camera_node_name = lengthBytesUTF8(camera_node_name) + 1;
     var string_on_wasm_heap_for_camera_node_name = _malloc(lengthBytes_for_camera_node_name);
@@ -231,7 +231,7 @@ FM_.SetupViewport = function (camera_node_name) {
     _free(string_on_wasm_heap_for_camera_node_name);
 };
 //
-FM_.LoadSceneFromFile = function (fileName) {
+FMDT_.LoadSceneFromFile = function (fileName) {
     // to wasm heap
     var lengthBytes_for_fileName = lengthBytesUTF8(fileName) + 1;
     var string_on_wasm_heap_for_fileName = _malloc(lengthBytes_for_fileName);
@@ -242,7 +242,7 @@ FM_.LoadSceneFromFile = function (fileName) {
     _free(string_on_wasm_heap_for_fileName);
 };
 //
-FM_.OpenProject = function (proeject_name) {
+FMDT_.OpenProject = function (proeject_name) {
     // to wasm heap
     var lengthBytes_for_proeject_name = lengthBytesUTF8(proeject_name) + 1;
     var string_on_wasm_heap_for_proeject_name = _malloc(lengthBytes_for_proeject_name);

@@ -1,154 +1,17 @@
 //
-const FMCAS_ = {};
-FMCAS_.iniPaneParams = false;
-//
-FMCAS_.visualize = function (openCascade, shape) {
-    let geometries = [];
-    const ExpFace = new openCascade.TopExp_Explorer_1();
-    for (ExpFace.Init(shape, openCascade.TopAbs_ShapeEnum.TopAbs_FACE, openCascade.TopAbs_ShapeEnum.TopAbs_SHAPE); ExpFace.More(); ExpFace.Next()) {
-        const myShape = ExpFace.Current();
-        const myFace = openCascade.TopoDS.Face_1(myShape);
-        let inc;
-        try {
-            //in case some of the faces can not been visualized
-            inc = new openCascade.BRepMesh_IncrementalMesh_2(myFace, 0.1, false, 0.5, false);
-        } catch (e) {
-            console.error("face visualizi<ng failed");
-            continue;
-        }
-
-        const aLocation = new openCascade.TopLoc_Location_1();
-        const myT = openCascade.BRep_Tool.Triangulation(myFace, aLocation, 0 /* == Poly_MeshPurpose_NONE */);
-        if (myT.IsNull()) {
-            continue;
-        }
-
-        const pc = new openCascade.Poly_Connect_2(myT);
-        const triangulation = myT.get();
-
-        let vertices = new Float32Array(triangulation.NbNodes() * 3);
-
-        // write vertex buffer
-        for (let i = 1; i <= triangulation.NbNodes(); i++) {
-            const t1 = aLocation.Transformation();
-            const p = triangulation.Node(i);
-            const p1 = p.Transformed(t1);
-            vertices[3 * (i - 1)] = p1.X();
-            vertices[3 * (i - 1) + 1] = p1.Y();
-            vertices[3 * (i - 1) + 2] = p1.Z();
-            p.delete();
-            t1.delete();
-            p1.delete();
-        }
-
-        // write normal buffer
-        const myNormal = new openCascade.TColgp_Array1OfDir_2(1, triangulation.NbNodes());
-        openCascade.StdPrs_ToolTriangulatedShape.Normal(myFace, pc, myNormal);
-
-        let normals = new Float32Array(myNormal.Length() * 3);
-        for (let i = myNormal.Lower(); i <= myNormal.Upper(); i++) {
-            const t1 = aLocation.Transformation();
-            const d1 = myNormal.Value(i);
-            const d = d1.Transformed(t1);
-
-            normals[3 * (i - 1)] = d.X();
-            normals[3 * (i - 1) + 1] = d.Y();
-            normals[3 * (i - 1) + 2] = d.Z();
-
-            t1.delete();
-            d1.delete();
-            d.delete();
-        }
-
-        myNormal.delete();
-
-        // write triangle buffer
-        const orient = myFace.Orientation_1();
-        const triangles = myT.get().Triangles();
-        let indices;
-        let triLength = triangles.Length() * 3;
-        if (triLength > 65535) {
-            indices = new Uint32Array(triLength);
-        } else {
-            indices = new Uint16Array(triLength);
-        }
-        for (let nt = 1; nt <= myT.get().NbTriangles(); nt++) {
-            const t = triangles.Value(nt);
-            let n1 = t.Value(1);
-            let n2 = t.Value(2);
-            let n3 = t.Value(3);
-            if (orient !== openCascade.TopAbs_Orientation.TopAbs_FORWARD) {
-                let tmp = n1;
-                n1 = n2;
-                n2 = tmp;
-            }
-
-            indices[3 * (nt - 1)] = n1 - 1;
-            indices[3 * (nt - 1) + 1] = n2 - 1;
-            indices[3 * (nt - 1) + 2] = n3 - 1;
-            t.delete();
-        }
-        triangles.delete();
-
-        let geometry = new FM_GLOBAL.THREE.BufferGeometry();
-        geometry.setAttribute("position", new FM_GLOBAL.THREE.BufferAttribute(vertices, 3));
-        geometry.setAttribute("normal", new FM_GLOBAL.THREE.BufferAttribute(normals, 3));
-
-        geometry.setIndex(new FM_GLOBAL.THREE.BufferAttribute(indices, 1));
-        geometries.push(geometry);
-
-        pc.delete();
-        aLocation.delete();
-        myT.delete();
-        inc.delete();
-        myFace.delete();
-        myShape.delete();
-    }
-    ExpFace.delete();
-    return geometries;
+const PARAMS = {
+    Width: 50,
+    Height: 70,
+    Thickness: 30
 };
 //
-FMCAS_.addVisulizeShapeToScene = async function (openCascade, shape, scene, shapeName) {
-    const objectMat = new FM_GLOBAL.THREE.MeshStandardMaterial({
-        color: new FM_GLOBAL.THREE.Color(0.9, 0.9, 0.9),
-    });
-
-    let geometries = FMCAS_.visualize(openCascade, shape);
-
-    let group = new FM_GLOBAL.THREE.Group();
-    geometries.forEach((geometry) => {
-        group.add(new FM_GLOBAL.THREE.Mesh(geometry, objectMat));
-    });
-
-    group.name = shapeName;
-    group.rotation.x = -Math.PI / 2;
-    scene.add(group);
-};
-//
-/////
-FMCAS_.makePolygon = function (openCascade) {
-    const builder = new openCascade.BRep_Builder();
-    const aComp = new openCascade.TopoDS_Compound();
-    builder.MakeCompound(aComp);
-    const path = [
-        [-50, 0, 0],
-        [50, 0, 0],
-        [50, 100, 0],
-    ].map(([x, y, z]) => new openCascade.gp_Pnt_3(x, y, z));
-    const newPolygon = new openCascade.BRepBuilderAPI_MakePolygon_3(path[0], path[1], path[2], true);
-    const wire = newPolygon.Wire();
-    const f = new openCascade.BRepBuilderAPI_MakeFace_15(wire, false);
-    builder.Add(aComp, f.Shape());
-    return aComp;
-};
-//////
-FMCAS_.makeBottle = function (openCascade, myWidth, myHeight, myThickness) {
+function makeBottle(openCascade) {
     // Profile : Define Support Points
-    const aPnt1 = new openCascade.gp_Pnt_3(-myWidth / 2, 0, 0);
-    const aPnt2 = new openCascade.gp_Pnt_3(-myWidth / 2, -myThickness / 4, 0);
-    const aPnt3 = new openCascade.gp_Pnt_3(0, -myThickness / 2, 0);
-    const aPnt4 = new openCascade.gp_Pnt_3(myWidth / 2, -myThickness / 4, 0);
-    const aPnt5 = new openCascade.gp_Pnt_3(myWidth / 2, 0, 0);
+    const aPnt1 = new openCascade.gp_Pnt_3(-PARAMS.Width / 2, 0, 0);
+    const aPnt2 = new openCascade.gp_Pnt_3(-PARAMS.Width / 2, -PARAMS.Thickness / 4, 0);
+    const aPnt3 = new openCascade.gp_Pnt_3(0, -PARAMS.Thickness / 2, 0);
+    const aPnt4 = new openCascade.gp_Pnt_3(PARAMS.Width / 2, -PARAMS.Thickness / 4, 0);
+    const aPnt5 = new openCascade.gp_Pnt_3(PARAMS.Width / 2, 0, 0);
 
     // Profile : Define the FM_GLOBAL.THREE .Geometry
     const anArcOfCircle = new openCascade.GC_MakeArcOfCircle_4(aPnt2, aPnt3, aPnt4);
@@ -176,7 +39,7 @@ FMCAS_.makeBottle = function (openCascade, myWidth, myHeight, myThickness) {
 
     // Body : Prism the Profile
     const myFaceProfile = new openCascade.BRepBuilderAPI_MakeFace_15(myWireProfile, false);
-    const aPrismVec = new openCascade.gp_Vec_4(0, 0, myHeight);
+    const aPrismVec = new openCascade.gp_Vec_4(0, 0, PARAMS.Height);
     let myBody = new openCascade.BRepPrimAPI_MakePrism_1(myFaceProfile.Face(), aPrismVec, false, true);
 
     // Body : Apply Fillets
@@ -185,18 +48,18 @@ FMCAS_.makeBottle = function (openCascade, myWidth, myHeight, myThickness) {
     while (anEdgeExplorer.More()) {
         const anEdge = openCascade.TopoDS.Edge_1(anEdgeExplorer.Current());
         // Add edge to fillet algorithm
-        mkFillet.Add_2(myThickness / 12, anEdge);
+        mkFillet.Add_2(PARAMS.Thickness / 12, anEdge);
         anEdgeExplorer.Next();
     }
     myBody = mkFillet.Shape();
 
     // Body : Add the Neck
-    const neckLocation = new openCascade.gp_Pnt_3(0, 0, myHeight);
+    const neckLocation = new openCascade.gp_Pnt_3(0, 0, PARAMS.Height);
     const neckAxis = openCascade.gp.DZ();
     const neckAx2 = new openCascade.gp_Ax2_3(neckLocation, neckAxis);
 
-    const myNeckRadius = myThickness / 4;
-    const myNeckHeight = myHeight / 10;
+    const myNeckRadius = PARAMS.Thickness / 4;
+    const myNeckHeight = PARAMS.Height / 10;
 
     const MKCylinder = new openCascade.BRepPrimAPI_MakeCylinder_3(neckAx2, myNeckRadius, myNeckHeight);
     const myNeck = MKCylinder.Shape();
@@ -226,7 +89,7 @@ FMCAS_.makeBottle = function (openCascade, myWidth, myHeight, myThickness) {
     facesToRemove.Append_1(faceToRemove);
     const s = myBody.Shape();
     myBody = new openCascade.BRepOffsetAPI_MakeThickSolid();
-    myBody.MakeThickSolidByJoin(s, facesToRemove, -myThickness / 50, 1e-3, openCascade.BRepOffset_Mode.BRepOffset_Skin, false, false, openCascade.GeomAbs_JoinType.GeomAbs_Arc, false, new openCascade.Message_ProgressRange_1());
+    myBody.MakeThickSolidByJoin(s, facesToRemove, -PARAMS.Thickness / 50, 1e-3, openCascade.BRepOffset_Mode.BRepOffset_Skin, false, false, openCascade.GeomAbs_JoinType.GeomAbs_Arc, false, new openCascade.Message_ProgressRange_1());
     // Threading : Create Surfaces
     const aCyl1 = new openCascade.Geom_CylindricalSurface_1(new openCascade.gp_Ax3_2(neckAx2), myNeckRadius * 0.99);
     const aCyl2 = new openCascade.Geom_CylindricalSurface_1(new openCascade.gp_Ax3_2(neckAx2), myNeckRadius * 1.05);
@@ -278,7 +141,30 @@ FMCAS_.makeBottle = function (openCascade, myWidth, myHeight, myThickness) {
 
     return aRes;
 };
-
 //
-const fm_cascad_wrap_load_ok_event = new Event("CASCAD_WRAP_LOADED");
-window.dispatchEvent(fm_cascad_wrap_load_ok_event);
+function testShape() {
+    FM_GLOBAL.CAD_SCENE.remove(FM_GLOBAL.CAD_SCENE.getObjectByName("shape"));
+    let polygon = makeBottle(FM_GLOBAL.OPENCASCADE);
+    FMCAS_.addVisulizeShapeToScene(FM_GLOBAL.OPENCASCADE, polygon, FM_GLOBAL.CAD_SCENE, "shape");
+}
+//
+function doChangeParams() {
+    if (!FMCAS_.iniParams) {
+        console.log(FMCAS_.iniParams)
+        const basicPane = FM_GLOBAL.TWEAKPANLE.addFolder({
+            title: 'Basic',
+        });
+        //
+        basicPane.addBinding(PARAMS, 'Width');
+        basicPane.addBinding(PARAMS, 'Height');
+        basicPane.addBinding(PARAMS, 'Thickness');
+        basicPane.on('change', (ev) => {
+            testShape();
+        });
+        //
+        testShape();
+        FMCAS_.iniParams = true
+    }
+}
+//
+doChangeParams();

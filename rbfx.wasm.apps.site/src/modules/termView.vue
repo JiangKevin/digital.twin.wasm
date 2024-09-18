@@ -56,6 +56,8 @@ onMounted(() => {
     FM_GLOBAL.TERMINAL.prompt = (_) => {
         FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$\x1b[0m ");
     };
+    // FM_GLOBAL.TERMINAL.writeln('This is Web Terminal of Modb; Good Good Study, Day Day Up.')
+    FM_GLOBAL.TERMINAL.prompt();
     //
     window.addEventListener("resize", resizeScreen);
     function resizeScreen() {
@@ -73,7 +75,6 @@ onMounted(() => {
     var xterm_screen = document.querySelector(".xterm-screen");
     if (xterm_screen) {
         if (mainStore_menu.rail) {
-            console.log("adsfasdf");
             xterm_screen.style.width = window.innerWidth - 55 - 16 + "px";
             xterm_screen.style.height = window.innerHeight - 56 + "px";
         } else {
@@ -85,14 +86,32 @@ onMounted(() => {
 
 //
 function runFakeTerminal() {
-    if (FM_GLOBAL.TERMINAL._initialized) return;
+    if (FM_GLOBAL.TERMINAL._initialized) {
+        return;
+    }
     // 初始化
     FM_GLOBAL.TERMINAL._initialized = true;
-    FM_GLOBAL.TERMINAL.writeln("-------------------------------------------------");
-    FM_GLOBAL.TERMINAL.writeln("-------------------------------------------------");
-    FM_GLOBAL.TERMINAL.writeln("-------------------------------------------------");
+    // FM_GLOBAL.TERMINAL.writeln("                .+*   .");
+    // FM_GLOBAL.TERMINAL.writeln("               =##*  .#=.");
+    // FM_GLOBAL.TERMINAL.writeln("             =####*  .*+*=.");
+    // FM_GLOBAL.TERMINAL.writeln("           =######*  .*+++*.");
+    // FM_GLOBAL.TERMINAL.writeln("         -*#######*  .*++++* ");
+    // FM_GLOBAL.TERMINAL.writeln("       -*##########  .*+++++++*-");
+    // FM_GLOBAL.TERMINAL.writeln("     .*####*-.#**#*  .*+++++**++*-");
+    // FM_GLOBAL.TERMINAL.writeln("   : .#*##*          .*++++++++++*+ ");
+    // FM_GLOBAL.TERMINAL.writeln(" :*% .####*-------:  .*+++#*++++++* .-");
+    // FM_GLOBAL.TERMINAL.writeln("*#*# .#############  .*++++++#*+++* -*+:");
+    // FM_GLOBAL.TERMINAL.writeln(".=#% .#####+++++++=  .*++++ =-*+++* -++#- ");
+    // FM_GLOBAL.TERMINAL.writeln("   = .#*##*          .*++++  .*+++* -#=.");
+    // FM_GLOBAL.TERMINAL.writeln("     .####*          .*++++  :*+++* ..");
+    // FM_GLOBAL.TERMINAL.writeln("      .+##*          .*++++  :*++*=");
+    // FM_GLOBAL.TERMINAL.writeln("        .+*          .*++++  :**+:");
+    // FM_GLOBAL.TERMINAL.writeln("                     .*++++  .+:");
+    // FM_GLOBAL.TERMINAL.writeln("                     .*+++* ");
+    // FM_GLOBAL.TERMINAL.writeln("                     .*++*+");
+    // FM_GLOBAL.TERMINAL.writeln("                     .*++-");
+    // FM_GLOBAL.TERMINAL.writeln("                     .#-");
 
-    FM_GLOBAL.TERMINAL.prompt();
     // 添加事件监听器，支持输入方法
     FM_GLOBAL.TERMINAL.onKey((e) => {
         const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
@@ -106,7 +125,7 @@ function runFakeTerminal() {
         } else if (printable) {
             FM_GLOBAL.TERMINAL.write(e.key);
         }
-        console.log(1, "print", e.key);
+        // console.log(1, "print", e.key);
     });
     FM_GLOBAL.TERMINAL.onData((key) => {
         // 粘贴的情况

@@ -75,10 +75,10 @@ onMounted(() => {
         if (mainStore_menu.rail) {
             console.log("adsfasdf");
             xterm_screen.style.width = window.innerWidth - 55 - 16 + "px";
-            xterm_screen.style.height = window.innerHeight - 16 + "px";
+            xterm_screen.style.height = window.innerHeight - 56 + "px";
         } else {
             xterm_screen.style.width = window.innerWidth - 255 - 16 + "px";
-            xterm_screen.style.height = window.innerHeight - 16 + "px";
+            xterm_screen.style.height = window.innerHeight - 56 + "px";
         }
     }
 });

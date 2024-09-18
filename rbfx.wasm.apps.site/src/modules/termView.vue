@@ -18,8 +18,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
-import { useStoreForFiles } from "@/stores/globle.js";
-const mainStore_files = useStoreForFiles();
+import { useStoreForMenu } from "@/stores/globle.js";
+const mainStore_menu = useStoreForMenu();
 import "@/assets/js/xterm/xterm.css";
 import "@/assets/js/xterm/xterm.js";
 // import { Terminal } from "@xterm/xterm";
@@ -30,32 +30,33 @@ import { FitAddon } from "@xterm/addon-fit";
 //
 onMounted(() => {
     //
-    let terminal = new Terminal({
+    FM_GLOBAL.TERMINAL = new Terminal({
         rendererType: "canvas", //渲染类型
         rows: 40, //行数
         cols: 100, // 不指定行数，自动回车后光标从下一行开始
         convertEol: true, //启用时，光标将设置为下一行的开头
         // scrollback: 50, //终端中的回滚量
         disableStdin: false, //是否应禁用输入
-        // cursorStyle: "underline", //光标样式
+        cursorStyle: "underline", //光标样式
         cursorBlink: true, //光标闪烁
         theme: {
             foreground: "#ECECEC", //字体
             background: "#000000", //背景色
             cursor: "help", //设置光标
-            lineHeight: 20,
+            lineHeight: 14,
         },
     });
-    terminal.open(document.getElementById("terminal"));
-    // 换行并输入起始符 $
-    terminal.prompt = (_) => {
-        terminal.write("\r\n\x1b[33m$\x1b[0m ");
-    };
-    terminal.prompt();
     // canvas背景全屏
     const fitAddon = new FitAddon();
-    terminal.loadAddon(fitAddon);
+    FM_GLOBAL.TERMINAL.loadAddon(fitAddon);
     fitAddon.fit();
+    //
+    FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
+    // 换行并输入起始符 $
+    FM_GLOBAL.TERMINAL.prompt = (_) => {
+        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$\x1b[0m ");
+    };
+    //
     window.addEventListener("resize", resizeScreen);
     function resizeScreen() {
         try {
@@ -67,36 +68,51 @@ onMounted(() => {
     }
 
     //
-    FM_GLOBAL.TERMINAL = terminal;
     runFakeTerminal();
+    //
+    var xterm_screen = document.querySelector(".xterm-screen");
+    if (xterm_screen) {
+        if (mainStore_menu.rail) {
+            console.log("adsfasdf");
+            xterm_screen.style.width = window.innerWidth - 55 - 16 + "px";
+            xterm_screen.style.height = window.innerHeight - 16 + "px";
+        } else {
+            xterm_screen.style.width = window.innerWidth - 255 - 16 + "px";
+            xterm_screen.style.height = window.innerHeight - 16 + "px";
+        }
+    }
 });
 
 //
 function runFakeTerminal() {
-    let terminal = FM_GLOBAL.TERMINAL;
-    if (terminal._initialized) return;
+    if (FM_GLOBAL.TERMINAL._initialized) return;
     // 初始化
-    terminal._initialized = true;
-    terminal.writeln("This is Web Terminal of Modb; Good Good Study, Day Day Up.");
-    terminal.prompt();
+    FM_GLOBAL.TERMINAL._initialized = true;
+    FM_GLOBAL.TERMINAL.writeln("-------------------------------------------------");
+    FM_GLOBAL.TERMINAL.writeln("-------------------------------------------------");
+    FM_GLOBAL.TERMINAL.writeln("-------------------------------------------------");
+
+    FM_GLOBAL.TERMINAL.prompt();
     // 添加事件监听器，支持输入方法
-    terminal.onKey((e) => {
+    FM_GLOBAL.TERMINAL.onKey((e) => {
         const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
         if (e.domEvent.keyCode === 13) {
-            terminal.prompt();
+            FM_GLOBAL.TERMINAL.prompt();
         } else if (e.domEvent.keyCode === 8) {
             // back 删除的情况
-            if (terminal._core.buffer.x > 2) {
-                terminal.write("\b \b");
+            if (FM_GLOBAL.TERMINAL._core.buffer.x > 2) {
+                FM_GLOBAL.TERMINAL.write("\b \b");
             }
         } else if (printable) {
-            terminal.write(e.key);
+            FM_GLOBAL.TERMINAL.write(e.key);
         }
         console.log(1, "print", e.key);
     });
-    terminal.onData((key) => {
+    FM_GLOBAL.TERMINAL.onData((key) => {
         // 粘贴的情况
-        if (key.length > 1) terminal.write(key);
+        if (key.length > 1) {
+            FM_GLOBAL.TERMINAL.write(key);
+        }
     });
 }
 </script>
@@ -108,5 +124,6 @@ function runFakeTerminal() {
     width: 100%;
     height: 100%;
 }
+
 /*  */
 </style>

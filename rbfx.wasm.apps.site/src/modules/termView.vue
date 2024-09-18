@@ -66,7 +66,6 @@ onMounted(() => {
         }
     }
 
-    terminal.write("\x1B[1;3;31mxterm.js\x1B[0m $ ");
     //
     FM_GLOBAL.TERMINAL = terminal;
     runFakeTerminal();
@@ -74,31 +73,30 @@ onMounted(() => {
 
 //
 function runFakeTerminal() {
-    let term = FM_GLOBAL.TERMINAL;
-    if (term._initialized) return;
+    let terminal = FM_GLOBAL.TERMINAL;
+    if (terminal._initialized) return;
     // 初始化
-    term._initialized = true;
-    term.writeln("Welcome to \x1b[1;32m墨天轮\x1b[0m.");
-    term.writeln("This is Web Terminal of Modb; Good Good Study, Day Day Up.");
-    term.prompt();
+    terminal._initialized = true;
+    terminal.writeln("This is Web Terminal of Modb; Good Good Study, Day Day Up.");
+    terminal.prompt();
     // 添加事件监听器，支持输入方法
-    term.onKey((e) => {
+    terminal.onKey((e) => {
         const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
         if (e.domEvent.keyCode === 13) {
-            term.prompt();
+            terminal.prompt();
         } else if (e.domEvent.keyCode === 8) {
             // back 删除的情况
-            if (term._core.buffer.x > 2) {
-                term.write("\b \b");
+            if (terminal._core.buffer.x > 2) {
+                terminal.write("\b \b");
             }
         } else if (printable) {
-            term.write(e.key);
+            terminal.write(e.key);
         }
         console.log(1, "print", e.key);
     });
-    term.onData((key) => {
+    terminal.onData((key) => {
         // 粘贴的情况
-        if (key.length > 1) term.write(key);
+        if (key.length > 1) terminal.write(key);
     });
 }
 </script>

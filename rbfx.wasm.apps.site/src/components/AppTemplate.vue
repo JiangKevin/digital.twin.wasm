@@ -112,6 +112,8 @@ function route_ck(item) {
     if (item.text == "Exit Application") {
         logout_ck();
     } else if (item.text == "CAD Editor") {
+        var vs_code_contain = document.getElementById("vs_code_contain");
+        vs_code_contain.style.width = "600px";
         //
         mainStore_menu.yn_show_code_btn = true;
         if (!is_load_cad_wasm) {
@@ -125,6 +127,8 @@ function route_ck(item) {
             }
         }
     } else if (item.text == "Scene Editor") {
+        var vs_code_contain = document.getElementById("vs_code_contain");
+        vs_code_contain.style.width = "600px";
         //
         mainStore_menu.yn_show_code_btn = true;
         //

@@ -167,7 +167,7 @@ function busy_div_class_select(rail) {
 //
 function code_editor_laout_ck(layout) {
     var vs_code_contain = document.getElementById("vs_code_contain");
-
+    //
     if (mainStore_menu.menu_navigation_item == "Scene Editor") {
         //
         if (layout == 0) {

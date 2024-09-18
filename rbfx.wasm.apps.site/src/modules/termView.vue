@@ -32,7 +32,7 @@ onMounted(() => {
     //
     FM_GLOBAL.TERMINAL = new Terminal({
         rendererType: "canvas", //渲染类型
-        rows: 40, //行数
+        rows: 4000, //行数
         cols: 100, // 不指定行数，自动回车后光标从下一行开始
         convertEol: true, //启用时，光标将设置为下一行的开头
         // scrollback: 50, //终端中的回滚量
@@ -76,10 +76,10 @@ onMounted(() => {
     if (xterm_screen) {
         if (mainStore_menu.rail) {
             xterm_screen.style.width = window.innerWidth - 55 - 16 + "px";
-            xterm_screen.style.height = window.innerHeight - 56 + "px";
+            xterm_screen.style.height = window.innerHeight - 58 + "px";
         } else {
             xterm_screen.style.width = window.innerWidth - 255 - 16 + "px";
-            xterm_screen.style.height = window.innerHeight - 56 + "px";
+            xterm_screen.style.height = window.innerHeight - 58 + "px";
         }
     }
 });

@@ -1,7 +1,7 @@
 //
 const FMCAS_ = {};
 //
-FMCAS_.visualize=function (openCascade, shape) {
+FMCAS_.visualize = function (openCascade, shape) {
     let geometries = [];
     const ExpFace = new openCascade.TopExp_Explorer_1();
     for (ExpFace.Init(shape, openCascade.TopAbs_ShapeEnum.TopAbs_FACE, openCascade.TopAbs_ShapeEnum.TopAbs_SHAPE); ExpFace.More(); ExpFace.Next()) {
@@ -105,15 +105,15 @@ FMCAS_.visualize=function (openCascade, shape) {
     }
     ExpFace.delete();
     return geometries;
-}
+};
 
 //
-FMCAS_.addVisulizeShapeToScene = async function (openCascade, shape, scene, shapeName) => {
+FMCAS_.addVisulizeShapeToScene = async function (openCascade, shape, scene, shapeName) {
     const objectMat = new FM_GLOBAL.THREE.MeshStandardMaterial({
         color: new FM_GLOBAL.THREE.Color(0.9, 0.9, 0.9),
     });
 
-    let geometries = visualize(openCascade, shape);
+    let geometries = FMCAS_.visualize(openCascade, shape);
 
     let group = new FM_GLOBAL.THREE.Group();
     geometries.forEach((geometry) => {
@@ -126,7 +126,7 @@ FMCAS_.addVisulizeShapeToScene = async function (openCascade, shape, scene, shap
 };
 //
 /////
-FMCAS_.makePolygon = function(openCascade) => {
+FMCAS_.makePolygon = function (openCascade) {
     const builder = new openCascade.BRep_Builder();
     const aComp = new openCascade.TopoDS_Compound();
     builder.MakeCompound(aComp);
@@ -142,7 +142,7 @@ FMCAS_.makePolygon = function(openCascade) => {
     return aComp;
 };
 //////
-FMCAS_.makeBottle =function (openCascade, myWidth, myHeight, myThickness) => {
+FMCAS_.makeBottle = function (openCascade, myWidth, myHeight, myThickness) {
     // Profile : Define Support Points
     const aPnt1 = new openCascade.gp_Pnt_3(-myWidth / 2, 0, 0);
     const aPnt2 = new openCascade.gp_Pnt_3(-myWidth / 2, -myThickness / 4, 0);

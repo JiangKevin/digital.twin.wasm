@@ -41,7 +41,6 @@ onMounted(() => {
         FM_GLOBAL.CAD_RENDERER = fm_cad_core.renderer;
         //
         FM_GLOBAL.INITOPENCASCADE().then((openCascade) => {
-            busy_div_control("other_log", false);
             //
             FM_GLOBAL.OPENCASCADE = openCascade;
             //
@@ -63,8 +62,9 @@ onMounted(() => {
             window.addEventListener(
                 "CASCAD_WRAP_LOADED",
                 (e) => {
-                    FM_GLOBAL.LOG.value = "+- From js: cascad_wrap loaded.";
-                    console.log("+- From js: cascad_wrap loaded.");
+                    FM_GLOBAL.LOG.value = "+- From js: CASCAD wrap loaded.";
+                    console.log("+- From js&c++: CASCAD wrap loaded.");
+                    busy_div_control("other_log", false);
                 },
                 false
             );

@@ -19,8 +19,8 @@ function testShape() {
     let width = 50,
         height = 70,
         thickness = 30;
-    let bottle = makeBottle(FM_GLOBAL.OPENCASCADE, width, height, thickness);
-    addVisulizeShapeToScene(FM_GLOBAL.OPENCASCADE, bottle, FM_GLOBAL.CAD_SCENE, "shape");
+    let bottle =FMCAS_. makeBottle(FM_GLOBAL.OPENCASCADE, width, height, thickness);
+    FMCAS_.addVisulizeShapeToScene(FM_GLOBAL.OPENCASCADE, bottle, FM_GLOBAL.CAD_SCENE, "shape");
     //
     FM_GLOBAL.TWEAKPANLE.addBinding(PARAMS, 'background');
 }

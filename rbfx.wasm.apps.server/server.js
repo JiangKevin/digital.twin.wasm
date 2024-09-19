@@ -12,6 +12,7 @@ const multer = require("multer");
 const project = require("./node-mid/project.js");
 const sqlite3 = require("sqlite3").verbose();
 const wasm_importer = require("./web/rbfxImporter/rbfxImporter.js");
+// const Server = require("socket.io");
 // const ai = AssetImporter();
 //////////////////////////////////////
 app.use(function (req, res, next) {
@@ -78,10 +79,10 @@ app.post("/login", (req, res) => {
             if (row.length > 0) {
                 if (username == row[0].NAME && password == row[0].PASSWORD) {
                     const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
-                    user_info.token=token;
-                    user_info.image=row[0].IMAGE;
-                    user_info.email=row[0].EMAIL;
-                    user_info.fullname=row[0].FULL_NAME;
+                    user_info.token = token;
+                    user_info.image = row[0].IMAGE;
+                    user_info.email = row[0].EMAIL;
+                    user_info.fullname = row[0].FULL_NAME;
                     return res.status(200).json({ user_info });
                 }
             } else {
@@ -433,17 +434,29 @@ app.route("/test").get(function (req, res) {
 //
 //
 //////////////////////////////////////
-// app.listen(port, () => {
-//     console.log(`Server listening on port ${port}`);
-// });
-http.createServer(app).listen(port);
-https
-    .createServer(
-        {
-            key: fs.readFileSync(path.join(__dirname, `${PEM_PREFIX}-key.pem`), "utf8"),
-            cert: fs.readFileSync(path.join(__dirname, `${PEM_PREFIX}.pem`), "utf8"),
-        },
-        app
-    )
-    .listen(httpsPort);
+//
+function ws_do(socket) {
+    socket.emit("hello", "world");
+}
+//
+
+const http_server = http.createServer(app);
+const https_server = https.createServer(
+    {
+        key: fs.readFileSync(path.join(__dirname, `${PEM_PREFIX}-key.pem`), "utf8"),
+        cert: fs.readFileSync(path.join(__dirname, `${PEM_PREFIX}.pem`), "utf8"),
+    },
+    app
+);
+const http_io = require("socket.io")(http_server);
+const https_io = require("socket.io")(https_server);
+https_io.on("connection", (socket) => {
+    ws_do(socket);
+});
+http_io.on("connection", (socket) => {
+    ws_do(socket);
+});
+http_server.listen(port);
+https_server.listen(httpsPort);
+
 console.log(`---- Starting Web Server with http port [${port}] and https port [${httpsPort}] ----`);

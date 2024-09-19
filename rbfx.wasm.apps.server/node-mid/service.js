@@ -224,7 +224,6 @@ function create_new_folder(req, res) {
         res.send("Create new folder success.");
     }
 }
-//
 
 //////////////////////////////////////
 //

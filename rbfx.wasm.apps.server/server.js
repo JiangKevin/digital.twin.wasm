@@ -12,6 +12,11 @@ const multer = require("multer");
 const project = require("./node-mid/project.js");
 const sqlite3 = require("sqlite3").verbose();
 const wasm_importer = require("./web/rbfxImporter/rbfxImporter.js");
+var os = require("os");
+var pty = require("node-pty");
+//
+const expressWs = require("express-ws");
+expressWs(app);
 // const Server = require("socket.io");
 // const ai = AssetImporter();
 //////////////////////////////////////
@@ -427,6 +432,43 @@ app.route("/create_new_folder").post(function (req, res) {
 app.route("/test").get(function (req, res) {
     sevice.test(req, res);
 });
+app.post("/terminals", (req, res) => {
+    const env = {};
+    for (const k of Object.keys(process.env)) {
+        const v = process.env[k];
+        if (v) {
+            env[k] = v;
+        }
+    }
+    // const env = Object.assign({}, process.env);
+    env["COLORTERM"] = "truecolor";
+    if (typeof req.query.cols !== "string" || typeof req.query.rows !== "string") {
+        console.error({ req });
+        throw new Error("Unexpected query args");
+    }
+    const cols = parseInt(req.query.cols);
+    const rows = parseInt(req.query.rows);
+    const isWindows = process.platform === "win32";
+    const term = pty.spawn(isWindows ? "pwsh.exe" : "zsh", [], {
+        name: "xterm-256color",
+        cols: cols ?? 80,
+        rows: rows ?? 24,
+        cwd: isWindows ? undefined : env.PWD,
+        env,
+        encoding: USE_BINARY ? null : "utf8",
+        useConpty: isWindows,
+        useConptyDll: isWindows,
+    });
+
+    console.log("Created terminal with PID: " + term.pid);
+    terminals[term.pid] = term;
+    unsentOutput[term.pid] = "";
+    temporaryDisposable[term.pid] = term.onData(function (data) {
+        unsentOutput[term.pid] += data;
+    });
+    res.send(term.pid.toString());
+    res.end();
+});
 //
 //////////////////////////////////////
 //
@@ -439,7 +481,6 @@ function ws_do(socket) {
     socket.emit("hello", "world");
 }
 //
-
 const http_server = http.createServer(app);
 const https_server = https.createServer(
     {
@@ -448,15 +489,33 @@ const https_server = https.createServer(
     },
     app
 );
-const http_io = require("socket.io")(http_server);
-const https_io = require("socket.io")(https_server);
-https_io.on("connection", (socket) => {
-    ws_do(socket);
-});
-http_io.on("connection", (socket) => {
-    ws_do(socket);
-});
+// const http_io = require("socket.io")(http_server);
+// const https_io = require("socket.io")(https_server);
+// https_io.on("connection", (socket) => {
+//     ws_do(socket);
+// });
+// http_io.on("connection", (socket) => {
+//     ws_do(socket);
+// });
 http_server.listen(port);
 https_server.listen(httpsPort);
-
+//
 console.log(`---- Starting Web Server with http port [${port}] and https port [${httpsPort}] ----`);
+// //
+// var fm_term = os.platform() === "win32" ? "powershell.exe" : "zsh";
+
+// var ptyProcess = pty.spawn(fm_term, [], {
+//     name: "xterm-color",
+//     cols: 80,
+//     rows: 30,
+//     cwd: process.env.HOME,
+//     env: process.env,
+// });
+
+// ptyProcess.onData((data) => {
+//     process.stdout.write(data);
+// });
+
+// ptyProcess.write("ls\r");
+// ptyProcess.resize(100, 40);
+// ptyProcess.write("ls\r");

@@ -243,7 +243,7 @@ function initSocketShell(socket) {
             name: "xterm-color",
             cols: 200,
             rows: 30,
-            cwd: process.env.HOME,
+            cwd: "./Data",
             env: process.env,
         });
         //

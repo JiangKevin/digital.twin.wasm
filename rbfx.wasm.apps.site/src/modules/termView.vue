@@ -202,8 +202,8 @@ function initSocket() {
     FM_GLOBAL.SOCKET.on("connect", () => {
         console.log("+- From js: socket ok.");
         // initXterm("");
-        console.log("+- From js: new FM_GLOBAL.SOCKET=");
-        console.log(FM_GLOBAL.SOCKET);
+        // console.log("+- From js: new FM_GLOBAL.SOCKET=");
+        // console.log(FM_GLOBAL.SOCKET);
     });
     //
     FM_GLOBAL.SOCKET.on("DICTAT RESULT", (arg) => {
@@ -211,6 +211,7 @@ function initSocket() {
             FM_GLOBAL.TERMINAL.write("\r\n");
             FM_GLOBAL.TERMINAL.write(arg);
             FM_GLOBAL.TERMINAL.prompt();
+            console.log(arg)
         }
     });
 }

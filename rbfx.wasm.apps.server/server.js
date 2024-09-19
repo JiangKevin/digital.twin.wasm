@@ -15,8 +15,8 @@ const wasm_importer = require("./web/rbfxImporter/rbfxImporter.js");
 var os = require("os");
 var pty = require("node-pty");
 //
-const expressWs = require("express-ws");
-expressWs(app);
+// const expressWs = require("express-ws");
+// expressWs(app);
 // const Server = require("socket.io");
 // const ai = AssetImporter();
 //////////////////////////////////////
@@ -36,6 +36,7 @@ app.use(bodyParser.json({ type: "application/json", limit: "25mb" }));
 app.use(bodyParser.text({ type: "text/*", limit: "25mb" }));
 app.use(bodyParser.raw({ type: "application/octet-stream", limit: "500mb" }));
 app.use(express.json());
+
 //
 const db_file = "./web/db/Digital.db"; //这里写的就是数据库文件的路径
 const db = new sqlite3.Database(db_file);
@@ -432,43 +433,19 @@ app.route("/create_new_folder").post(function (req, res) {
 app.route("/test").get(function (req, res) {
     sevice.test(req, res);
 });
-app.post("/terminals", (req, res) => {
-    const env = {};
-    for (const k of Object.keys(process.env)) {
-        const v = process.env[k];
-        if (v) {
-            env[k] = v;
-        }
-    }
-    // const env = Object.assign({}, process.env);
-    env["COLORTERM"] = "truecolor";
-    if (typeof req.query.cols !== "string" || typeof req.query.rows !== "string") {
-        console.error({ req });
-        throw new Error("Unexpected query args");
-    }
-    const cols = parseInt(req.query.cols);
-    const rows = parseInt(req.query.rows);
-    const isWindows = process.platform === "win32";
-    const term = pty.spawn(isWindows ? "pwsh.exe" : "zsh", [], {
-        name: "xterm-256color",
-        cols: cols ?? 80,
-        rows: rows ?? 24,
-        cwd: isWindows ? undefined : env.PWD,
-        env,
-        encoding: USE_BINARY ? null : "utf8",
-        useConpty: isWindows,
-        useConptyDll: isWindows,
-    });
+// //
+// app.ws("/socket", (ws, req) => {
+//     // term.on("data", function (data) {
+//     //     ws.send(data);
+//     // });
+//     ws.on("message", (data) => {
+//         // term.write(data);
+//     });
+//     ws.on("close", function () {
+//         // term.kill();
+//     });
+// });
 
-    console.log("Created terminal with PID: " + term.pid);
-    terminals[term.pid] = term;
-    unsentOutput[term.pid] = "";
-    temporaryDisposable[term.pid] = term.onData(function (data) {
-        unsentOutput[term.pid] += data;
-    });
-    res.send(term.pid.toString());
-    res.end();
-});
 //
 //////////////////////////////////////
 //
@@ -477,9 +454,6 @@ app.post("/terminals", (req, res) => {
 //
 //////////////////////////////////////
 //
-function ws_do(socket) {
-    socket.emit("hello", "world");
-}
 //
 const http_server = http.createServer(app);
 const https_server = https.createServer(
@@ -489,14 +463,14 @@ const https_server = https.createServer(
     },
     app
 );
-// const http_io = require("socket.io")(http_server);
-// const https_io = require("socket.io")(https_server);
-// https_io.on("connection", (socket) => {
-//     ws_do(socket);
-// });
-// http_io.on("connection", (socket) => {
-//     ws_do(socket);
-// });
+const http_io = require("socket.io")(http_server);
+const https_io = require("socket.io")(https_server);
+https_io.on("connection", (socket) => {
+    sevice.ws_do(socket);
+});
+http_io.on("connection", (socket) => {
+    sevice.ws_do(socket);
+});
 http_server.listen(port);
 https_server.listen(httpsPort);
 //

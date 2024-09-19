@@ -224,7 +224,12 @@ function create_new_folder(req, res) {
         res.send("Create new folder success.");
     }
 }
-
+//
+function ws_do(socket) {
+    socket.on("DICTATE", (arg) => {
+        socket.emit("DICTAT RESULT", "world");
+    });
+}
 //////////////////////////////////////
 //
 //
@@ -245,4 +250,5 @@ module.exports = {
     unzip_folder_or_file,
     paste_folder_or_file,
     create_new_folder,
+    ws_do,
 };

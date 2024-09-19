@@ -28,7 +28,7 @@ import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { AttachAddon } from "@xterm/addon-attach";
 import { io, Manager } from "socket.io-client";
-
+var cmd = "";
 //
 onMounted(() => {
     initSocket();
@@ -69,7 +69,17 @@ function runFakeTerminal() {
     FM_GLOBAL.TERMINAL.onKey((e) => {
         const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
         if (e.domEvent.keyCode === 13) {
-            FM_GLOBAL.TERMINAL.prompt();
+            //
+            if (FM_GLOBAL.SOCKET) {
+                if (cmd != "") {
+                    FM_GLOBAL.SOCKET.emit("DICTATE", cmd);
+                }
+            }
+            //
+            if (cmd == "") {
+                FM_GLOBAL.TERMINAL.prompt();
+            }
+            cmd = "";
         } else if (e.domEvent.keyCode === 8) {
             // back 删除的情况
             if (FM_GLOBAL.TERMINAL._core.buffer.x > 2) {
@@ -77,6 +87,7 @@ function runFakeTerminal() {
             }
         } else if (printable) {
             FM_GLOBAL.TERMINAL.write(e.key);
+            cmd += e.key;
         }
     });
     FM_GLOBAL.TERMINAL.onData((key) => {
@@ -121,9 +132,10 @@ function initXterm(webSocket) {
     const fitAddon = new FitAddon();
     FM_GLOBAL.TERMINAL.loadAddon(fitAddon);
     fitAddon.fit();
-
-    const attachAddon = new AttachAddon(webSocket);
-    FM_GLOBAL.TERMINAL.loadAddon(attachAddon);
+    if ((webSocket = "")) {
+        const attachAddon = new AttachAddon(webSocket);
+        FM_GLOBAL.TERMINAL.loadAddon(attachAddon);
+    }
     //
     FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
     // 换行并输入起始符 $
@@ -163,7 +175,7 @@ function term_fit(space) {
 }
 //
 function initSocket() {
-    var newType = false;
+    var newType = true;
     //
     var protocol_ = window.location.protocol;
     var host_ = window.location.host;
@@ -174,39 +186,24 @@ function initSocket() {
         endpoint_ = "ws://" + host_;
     }
     //
-    if (newType) {
-        //
-        FM_GLOBAL.SOCKET = io(endpoint_, {
-            autoConnect: true,
-        });
-        //
-        FM_GLOBAL.SOCKET.on("connect", () => {
-            console.log("+- From js: socket ok.");
-            initXterm(FM_GLOBAL.SOCKET);
-            console.log("+- From js: new FM_GLOBAL.SOCKET=");
-            console.log(FM_GLOBAL.SOCKET);
-        });
-        //
-        FM_GLOBAL.SOCKET.on("hello", (arg) => {
-            console.log(arg);
-        });
-    } else {
-        //
-        setTimeout(async () => {
-            initXterm({});
-            const res = await fetch("/terminals?cols=" + FM_GLOBAL.TERMINAL.cols + "&rows=" + FM_GLOBAL.TERMINAL.rows, { method: "POST" });
-            const processId = await res.text();
-            pid = processId;
-            endpoint_ += "/terminals/" + processId;
-            FM_GLOBAL.SOCKET = new WebSocket(endpoint_);
-            FM_GLOBAL.SOCKET.onopen = runRealTerminal;
-        }, 0);
-
-        // FM_GLOBAL.SOCKET = new WebSocket(endpoint_ + "/terminals/");
-        // FM_GLOBAL.SOCKET.onopen = runRealTerminal;
-        // socket.onclose = runFakeTerminal;
-        // socket.onerror = runFakeTerminal;
-    }
+    FM_GLOBAL.SOCKET = io(endpoint_, {
+        autoConnect: true,
+    });
+    //
+    FM_GLOBAL.SOCKET.on("connect", () => {
+        console.log("+- From js: socket ok.");
+        initXterm("");
+        console.log("+- From js: new FM_GLOBAL.SOCKET=");
+        console.log(FM_GLOBAL.SOCKET);
+    });
+    //
+    FM_GLOBAL.SOCKET.on("DICTAT RESULT", (arg) => {
+        if (FM_GLOBAL.TERMINAL) {
+            FM_GLOBAL.TERMINAL.write("\r\n");
+            FM_GLOBAL.TERMINAL.write(arg);
+            FM_GLOBAL.TERMINAL.prompt();
+        }
+    });
 }
 //
 function runRealTerminal() {

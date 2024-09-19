@@ -433,18 +433,6 @@ app.route("/create_new_folder").post(function (req, res) {
 app.route("/test").get(function (req, res) {
     sevice.test(req, res);
 });
-// //
-// app.ws("/socket", (ws, req) => {
-//     // term.on("data", function (data) {
-//     //     ws.send(data);
-//     // });
-//     ws.on("message", (data) => {
-//         // term.write(data);
-//     });
-//     ws.on("close", function () {
-//         // term.kill();
-//     });
-// });
 
 //
 //////////////////////////////////////
@@ -466,13 +454,17 @@ const https_server = https.createServer(
 const http_io = require("socket.io")(http_server);
 const https_io = require("socket.io")(https_server);
 https_io.on("connection", (socket) => {
+    sevice.initSocketShell(socket);
     sevice.ws_do(socket);
 });
 http_io.on("connection", (socket) => {
+    sevice.initSocketShell(socket);
     sevice.ws_do(socket);
 });
 http_server.listen(port);
 https_server.listen(httpsPort);
+//
+
 //
 console.log(`---- Starting Web Server with http port [${port}] and https port [${httpsPort}] ----`);
 // //

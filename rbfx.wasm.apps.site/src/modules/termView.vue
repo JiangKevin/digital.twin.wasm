@@ -54,7 +54,7 @@ function runFakeTerminal() {
             //
             if (FM_GLOBAL.SOCKET) {
                 if (cmd != "") {
-                    if (cmd == "clear") {
+                    if (cmd == "clear" || cmd == "reset") {
                         FM_GLOBAL.TERMINAL.clear();
                         FM_GLOBAL.TERMINAL.prompt();
                     } else {
@@ -125,6 +125,7 @@ function initXterm(webSocket) {
         cursorBlink: true, //光标闪烁
         lineHeight: 1.0,
         fontSize: 13,
+        altClickMovesCursor: false,
         theme: {
             foreground: "#ff6300", //字体
             background: "#00000000", //背景色
@@ -139,7 +140,7 @@ function initXterm(webSocket) {
         fitAddon.fit();
     }, "1000");
 
-    if ((webSocket = "")) {
+    if ((webSocket != "")) {
         const attachAddon = new AttachAddon(webSocket);
         FM_GLOBAL.TERMINAL.loadAddon(attachAddon);
     }

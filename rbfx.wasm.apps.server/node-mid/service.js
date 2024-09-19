@@ -1,8 +1,11 @@
 const fs = require("fs");
 const _ = require("lodash");
 const project = require("./project.js");
+var os = require("os");
+var pty = require("node-pty");
 //////////////////////////////////////
-
+const FM_ = {};
+FM_.inited = false;
 ///
 function save_project(req, res) {
     if (req.query.Name) {
@@ -227,8 +230,41 @@ function create_new_folder(req, res) {
 //
 function ws_do(socket) {
     socket.on("DICTATE", (arg) => {
+        //
+        console.log(arg);
+
+        // FM_.ptyProcess.write("clear\r");
+        FM_.ptyProcess.write(arg + "\r");
+
         socket.emit("DICTAT RESULT", "world");
     });
+}
+//
+function initSocketShell(socket) {
+    FM_.SOCKET = socket;
+    //
+    if (FM_.inited == false) {
+        var shell = os.platform() === "win32" ? "powershell.exe" : "zsh";
+        FM_.ptyProcess = pty.spawn(shell, [], {
+            name: "xterm-color",
+            cols: 200,
+            rows: 30,
+            cwd: process.env.HOME,
+            env: process.env,
+        });
+        //
+        // console.log(FM_.ptyProcess);
+        //
+        FM_.ptyProcess.onData((data) => {
+            // process.stdout.write(data);
+            // console.log(data);
+            if (FM_.SOCKET) {
+                FM_.SOCKET.emit("DICTAT RESULT", data);
+            }
+        });
+        //
+        FM_.inited = true;
+    }
 }
 //////////////////////////////////////
 //
@@ -251,4 +287,5 @@ module.exports = {
     paste_folder_or_file,
     create_new_folder,
     ws_do,
+    initSocketShell,
 };

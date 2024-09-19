@@ -40,31 +40,12 @@ function runFakeTerminal() {
     }
     // 初始化
     FM_GLOBAL.TERMINAL._initialized = true;
-    // FM_GLOBAL.TERMINAL.writeln("                .+*   .");
-    // FM_GLOBAL.TERMINAL.writeln("               =##*  .#=.");
-    // FM_GLOBAL.TERMINAL.writeln("             =####*  .*+*=.");
-    // FM_GLOBAL.TERMINAL.writeln("           =######*  .*+++*.");
-    // FM_GLOBAL.TERMINAL.writeln("         -*#######*  .*++++* ");
-    // FM_GLOBAL.TERMINAL.writeln("       -*##########  .*+++++++*-");
-    // FM_GLOBAL.TERMINAL.writeln("     .*####*-.#**#*  .*+++++**++*-");
-    // FM_GLOBAL.TERMINAL.writeln("   : .#*##*          .*++++++++++*+ ");
-    // FM_GLOBAL.TERMINAL.writeln(" :*% .####*-------:  .*+++#*++++++* .-");
-    // FM_GLOBAL.TERMINAL.writeln("*#*# .#############  .*++++++#*+++* -*+:");
-    // FM_GLOBAL.TERMINAL.writeln(".=#% .#####+++++++=  .*++++ =-*+++* -++#- ");
-    // FM_GLOBAL.TERMINAL.writeln("   = .#*##*          .*++++  .*+++* -#=.");
-    // FM_GLOBAL.TERMINAL.writeln("     .####*          .*++++  :*+++* ..");
-    // FM_GLOBAL.TERMINAL.writeln("      .+##*          .*++++  :*++*=");
-    // FM_GLOBAL.TERMINAL.writeln("        .+*          .*++++  :**+:");
-    // FM_GLOBAL.TERMINAL.writeln("                     .*++++  .+:");
-    // FM_GLOBAL.TERMINAL.writeln("                     .*+++* ");
-    // FM_GLOBAL.TERMINAL.writeln("                     .*++*+");
-    // FM_GLOBAL.TERMINAL.writeln("                     .*++-");
-    // FM_GLOBAL.TERMINAL.writeln("                     .#-");
-    // FM_GLOBAL.TERMINAL.writeln("Welcome to xterm.js");
-    // FM_GLOBAL.TERMINAL.writeln("This is a local terminal emulation, without a real terminal in the back-end.");
-    // FM_GLOBAL.TERMINAL.writeln("Type some keys and commands to play around.");
-    // FM_GLOBAL.TERMINAL.writeln("");
-    // FM_GLOBAL.TERMINAL.prompt();
+    //
+    setTimeout(() => {
+        FM_GLOBAL.TERMINAL.clear();
+        FM_GLOBAL.TERMINAL.prompt();
+    }, "1000");
+
     // 添加事件监听器，支持输入方法
     FM_GLOBAL.TERMINAL.onKey((e) => {
         const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
@@ -72,7 +53,11 @@ function runFakeTerminal() {
             //
             if (FM_GLOBAL.SOCKET) {
                 if (cmd != "") {
-                    FM_GLOBAL.SOCKET.emit("DICTATE", cmd);
+                    if (cmd == "clear") {
+                        FM_GLOBAL.TERMINAL.clear();
+                    } else {
+                        FM_GLOBAL.SOCKET.emit("DICTATE", cmd);
+                    }
                 }
             }
             //
@@ -96,6 +81,18 @@ function runFakeTerminal() {
             FM_GLOBAL.TERMINAL.write(key);
         }
     });
+}
+function format_now() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ('0' + (now.getMonth() + 1)).slice(-2);
+    const day = ('0' + now.getDate()).slice(-2);
+    const hours = ('0' + now.getHours()).slice(-2);
+    const minutes = ('0' + now.getMinutes()).slice(-2);
+    const seconds = ('0' + now.getSeconds()).slice(-2);
+    const formattedTime = year + month + day + hours + minutes + seconds;
+    //
+    return formattedTime;
 }
 //
 function initXterm(webSocket) {
@@ -140,9 +137,10 @@ function initXterm(webSocket) {
     FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
     // 换行并输入起始符 $
     FM_GLOBAL.TERMINAL.prompt = (_) => {
-        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$\x1b[0m ");
+        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$\x1b[0m[" + format_now() + "] ");
     };
-    // FM_GLOBAL.TERMINAL.writeln('This is Web Terminal of Modb; Good Good Study, Day Day Up.')
+    //
+    FM_GLOBAL.TERMINAL.clear();
     FM_GLOBAL.TERMINAL.prompt();
     //
     window.addEventListener("resize", resizeScreen);
@@ -224,10 +222,11 @@ function runRealTerminal() {
     width: 100%;
     height: 100%;
 }
+
 .main_contain_term {
     padding: 0px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     margin-left: 8px;
     margin-right: 8px;
     width: 100%;

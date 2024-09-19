@@ -32,6 +32,7 @@ var cmd = "";
 //
 onMounted(() => {
     initSocket();
+    initXterm("");
 });
 //
 function runFakeTerminal() {
@@ -90,7 +91,8 @@ function format_now() {
     const hours = ('0' + now.getHours()).slice(-2);
     const minutes = ('0' + now.getMinutes()).slice(-2);
     const seconds = ('0' + now.getSeconds()).slice(-2);
-    const formattedTime = year + month + day + hours + minutes + seconds;
+    // const formattedTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+    const formattedTime = hours + ":" + minutes + ":" + seconds;
     //
     return formattedTime;
 }
@@ -137,7 +139,7 @@ function initXterm(webSocket) {
     FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
     // 换行并输入起始符 $
     FM_GLOBAL.TERMINAL.prompt = (_) => {
-        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$\x1b[0m[" + format_now() + "] ");
+        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$↮[" + format_now() + "]\x1b[0m: ");
     };
     //
     FM_GLOBAL.TERMINAL.clear();
@@ -190,7 +192,7 @@ function initSocket() {
     //
     FM_GLOBAL.SOCKET.on("connect", () => {
         console.log("+- From js: socket ok.");
-        initXterm("");
+        // initXterm("");
         console.log("+- From js: new FM_GLOBAL.SOCKET=");
         console.log(FM_GLOBAL.SOCKET);
     });

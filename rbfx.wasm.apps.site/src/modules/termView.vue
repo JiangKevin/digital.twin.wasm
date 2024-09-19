@@ -56,6 +56,7 @@ function runFakeTerminal() {
                 if (cmd != "") {
                     if (cmd == "clear") {
                         FM_GLOBAL.TERMINAL.clear();
+                        FM_GLOBAL.TERMINAL.prompt();
                     } else {
                         FM_GLOBAL.SOCKET.emit("DICTATE", cmd);
                     }
@@ -121,16 +122,21 @@ function initXterm(webSocket) {
         cursorStyle: "underline", //光标样式
         cursorBlink: true, //光标闪烁
         theme: {
-            foreground: "#ECECEC", //字体
+            foreground: "#ff6300", //字体
             background: "#00000000", //背景色
+            selectionForeground: "#ff00aa",
+            selectionBackgroundTransparent: "#4558ff",
             cursor: "help", //设置光标
-            lineHeight: 12,
+            lineHeight: 10,
         },
     });
     // canvas背景全屏
     const fitAddon = new FitAddon();
     FM_GLOBAL.TERMINAL.loadAddon(fitAddon);
-    fitAddon.fit();
+    setTimeout(() => {
+        fitAddon.fit();
+    }, "1000");
+
     if ((webSocket = "")) {
         const attachAddon = new AttachAddon(webSocket);
         FM_GLOBAL.TERMINAL.loadAddon(attachAddon);
@@ -139,7 +145,7 @@ function initXterm(webSocket) {
     FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
     // 换行并输入起始符 $
     FM_GLOBAL.TERMINAL.prompt = (_) => {
-        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$↮[" + format_now() + "]\x1b[0m: ");
+        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$↯[" + format_now() + "]\x1b[0m: ");
     };
     //
     FM_GLOBAL.TERMINAL.clear();

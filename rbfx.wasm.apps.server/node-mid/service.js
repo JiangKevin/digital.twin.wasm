@@ -230,13 +230,7 @@ function create_new_folder(req, res) {
 //
 function ws_do(socket) {
     socket.on("DICTATE", (arg) => {
-        //
-        console.log(arg);
-
-        // FM_.ptyProcess.write("clear\r");
         FM_.ptyProcess.write(arg + "\r");
-
-        socket.emit("DICTAT RESULT", "world");
     });
 }
 //

@@ -100,16 +100,18 @@ function format_now() {
 //
 function initXterm(webSocket) {
     var space = 56;
+    var lineHeight = 15;
+    var w_space = 8;
     var row_count;
     var col_count;
     if (mainStore_menu.rail) {
-        col_count = parseInt((window.innerWidth - 55 - 16) / 17);
+        col_count = parseInt((window.innerWidth - 55 - w_space) / lineHeight);
     } else {
-        col_count = parseInt((window.innerWidth - 255 - 16) / 17);
+        col_count = parseInt((window.innerWidth - 255 - w_space) / lineHeight);
     }
-    row_count = parseInt((window.innerHeight - space) / 17);
-    console.log(row_count);
-    console.log(col_count);
+    row_count = parseInt((window.innerHeight - space) / lineHeight);
+    // console.log(row_count);
+    // console.log(col_count);
 
     //
     FM_GLOBAL.TERMINAL = new Terminal({
@@ -121,13 +123,13 @@ function initXterm(webSocket) {
         disableStdin: false, //是否应禁用输入
         cursorStyle: "underline", //光标样式
         cursorBlink: true, //光标闪烁
+        lineHeight: 1.0,
+        fontSize: 13,
         theme: {
             foreground: "#ff6300", //字体
             background: "#00000000", //背景色
             selectionForeground: "#ff00aa",
             selectionBackgroundTransparent: "#4558ff",
-            cursor: "help", //设置光标
-            lineHeight: 10,
         },
     });
     // canvas背景全屏
@@ -156,7 +158,7 @@ function initXterm(webSocket) {
         try {
             // 窗口大小改变时，触发xterm的resize方法使自适应
             fitAddon.fit(space);
-            term_fit();
+            term_fit(space, w_space);
         } catch (e) {
             console.log("e", e.message);
         }
@@ -164,17 +166,17 @@ function initXterm(webSocket) {
     //
     runFakeTerminal();
     //
-    term_fit();
+    term_fit(space, w_space);
 }
 //
-function term_fit(space) {
+function term_fit(space, w_space) {
     var xterm_screen = document.querySelector(".xterm-screen");
     if (xterm_screen) {
         if (mainStore_menu.rail) {
-            xterm_screen.style.width = window.innerWidth - 55 - 16 + "px";
+            xterm_screen.style.width = window.innerWidth - 55 - w_space + "px";
             xterm_screen.style.height = window.innerHeight - space + "px";
         } else {
-            xterm_screen.style.width = window.innerWidth - 255 - 16 + "px";
+            xterm_screen.style.width = window.innerWidth - 255 - w_space + "px";
             xterm_screen.style.height = window.innerHeight - space + "px";
         }
     }
@@ -238,6 +240,6 @@ function runRealTerminal() {
     margin-left: 8px;
     margin-right: 8px;
     width: 100%;
-    height: calc(100% - 16px);
+    height: calc(100% - 8px);
 }
 </style>

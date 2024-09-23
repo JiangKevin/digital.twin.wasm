@@ -449,11 +449,11 @@ const https_server = https.createServer(
 const http_io = require("socket.io")(http_server);
 const https_io = require("socket.io")(https_server);
 https_io.on("connection", (socket) => {
-    sevice.initSocketShell(socket);
+    // sevice.initSocketShell(socket);
     sevice.ws_do(socket);
 });
 http_io.on("connection", (socket) => {
-    sevice.initSocketShell(socket);
+    // sevice.initSocketShell(socket);
     sevice.ws_do(socket);
 });
 http_server.listen(port);

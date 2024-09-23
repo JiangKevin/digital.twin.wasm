@@ -230,12 +230,12 @@ function create_new_folder(req, res) {
 }
 //
 function ws_do(socket) {
+    FM_.SOCKET = socket;
     socket.on("DICTATE", (arg) => {
         FM_.cmd = arg;
         FM_.cmd_array = arg.split(" ");
-        if (arg != "zsh") {
-            FM_.ptyProcess.write(arg + "\r\n");
-        }
+        //
+        socket.emit("DICTAT RESULT", "world");
     });
 }
 //
@@ -251,8 +251,8 @@ function initSocketShell(socket) {
             cwd: "./Data",
             env: process.env,
         });
-        // 
-        console.log(FM_.ptyProcess )
+        //
+        console.log(FM_.ptyProcess);
         //
         FM_.ptyProcess.onData((data) => {
             if (FM_.SOCKET) {
@@ -270,11 +270,6 @@ function initSocketShell(socket) {
 //
 function valid_cmd_data(data) {
     var isInvalid = false;
-    // //
-    // console.log("data: " + data);
-    // console.log("cmd: " + FM_.cmd);
-    // console.log(FM_.cmd_array);
-
     //
     for (var i = 0; i < FM_.cmd_array.length; i++) {
         if (data == FM_.cmd_array[i]) {

@@ -449,11 +449,9 @@ const https_server = https.createServer(
 const http_io = require("socket.io")(http_server);
 const https_io = require("socket.io")(https_server);
 https_io.on("connection", (socket) => {
-    // sevice.initSocketShell(socket);
     sevice.ws_do(socket);
 });
 http_io.on("connection", (socket) => {
-    // sevice.initSocketShell(socket);
     sevice.ws_do(socket);
 });
 http_server.listen(port);
@@ -462,21 +460,3 @@ https_server.listen(httpsPort);
 
 //
 console.log(`---- Starting Web Server with http port [${port}] and https port [${httpsPort}] ----`);
-// //
-// var fm_term = os.platform() === "win32" ? "powershell.exe" : "zsh";
-
-// var ptyProcess = pty.spawn(fm_term, [], {
-//     name: "xterm-color",
-//     cols: 80,
-//     rows: 30,
-//     cwd: process.env.HOME,
-//     env: process.env,
-// });
-
-// ptyProcess.onData((data) => {
-//     process.stdout.write(data);
-// });
-
-// ptyProcess.write("ls\r");
-// ptyProcess.resize(100, 40);
-// ptyProcess.write("ls\r");

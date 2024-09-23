@@ -28,8 +28,10 @@ import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { AttachAddon } from "@xterm/addon-attach";
 import { io, Manager } from "socket.io-client";
+import { WebglAddon } from '@xterm/addon-webgl';
 var cmd = "";
 var dictate_cmd = ""
+var dictate_path = "./Data"
 //
 onMounted(() => {
     initSocket();
@@ -55,7 +57,7 @@ function runFakeTerminal() {
             //
             if (FM_GLOBAL.SOCKET) {
                 if (cmd != "") {
-                    console.log(cmd)
+                    // console.log(cmd)
                     if (cmd == "clear" || cmd == "reset") {
                         FM_GLOBAL.TERMINAL.clear();
                         FM_GLOBAL.TERMINAL.prompt();
@@ -89,6 +91,7 @@ function runFakeTerminal() {
         }
     });
 }
+// 
 function format_now() {
     const now = new Date();
     const year = now.getFullYear();
@@ -101,6 +104,9 @@ function format_now() {
     const formattedTime = hours + ":" + minutes + ":" + seconds;
     //
     return formattedTime;
+}
+function format_path() {
+    return dictate_path;
 }
 //
 function initXterm(webSocket) {
@@ -141,10 +147,14 @@ function initXterm(webSocket) {
     // canvas背景全屏
     const fitAddon = new FitAddon();
     FM_GLOBAL.TERMINAL.loadAddon(fitAddon);
+
+    // 
     setTimeout(() => {
         fitAddon.fit();
     }, "1000");
-
+    // 
+    FM_GLOBAL.TERMINAL.loadAddon(new WebglAddon());
+    // 
     if ((webSocket != "")) {
         const attachAddon = new AttachAddon(webSocket);
         FM_GLOBAL.TERMINAL.loadAddon(attachAddon);
@@ -153,7 +163,7 @@ function initXterm(webSocket) {
     FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
     // 换行并输入起始符 $
     FM_GLOBAL.TERMINAL.prompt = (_) => {
-        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$↯[" + format_now() + "]\x1b[0m: ");
+        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$↯[" + format_now() + "]" + format_path() + "\x1b[0m: ");
     };
     //
     FM_GLOBAL.TERMINAL.clear();
@@ -205,16 +215,27 @@ function initSocket() {
     });
     //
     FM_GLOBAL.SOCKET.on("connect", () => {
-        console.log("+- From js: socket ok.");
+        console.log("+- From js: Socket ok.");
     });
     //
     FM_GLOBAL.SOCKET.on("DICTAT RESULT", (arg) => {
-        // 
-        // if (FM_GLOBAL.TERMINAL && (dictate_cmd + "\r\n") != arg && (!(arg.startsWith(dictate_cmd + " "))) && (!(arg.endsWith("$ ")))) {
-        FM_GLOBAL.TERMINAL.write("\r\n");
-        FM_GLOBAL.TERMINAL.write(arg.replace(/\r\n/g, ""));
-        FM_GLOBAL.TERMINAL.prompt();
-        // }
+        console.log(arg)
+        if (arg != "") {
+            if (arg.startsWith("path") != -1) {
+                var paths = arg.split(":");
+                console.log(paths)
+                dictate_path = paths[1]
+                FM_GLOBAL.TERMINAL.prompt();
+            }
+            else {
+                FM_GLOBAL.TERMINAL.write("\r\n");
+                FM_GLOBAL.TERMINAL.write(arg.replace(/\r\n/g, ""));
+                FM_GLOBAL.TERMINAL.prompt();
+            }
+        }
+        else {
+            FM_GLOBAL.TERMINAL.prompt();
+        }
     });
 }
 //

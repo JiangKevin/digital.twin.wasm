@@ -8,6 +8,8 @@ const FM_ = {};
 FM_.inited = false;
 FM_.cmd = "";
 FM_.cmd_array = [];
+FM_.dictates = ["ls"];
+FM_.path = "./Data";
 ///
 function save_project(req, res) {
     if (req.query.Name) {
@@ -235,58 +237,45 @@ function ws_do(socket) {
         FM_.cmd = arg;
         FM_.cmd_array = arg.split(" ");
         //
-        socket.emit("DICTAT RESULT", "world");
+        if (verifyDictate(arg)) {
+            dictate_run(arg);
+        }
     });
 }
 //
-function initSocketShell(socket) {
-    FM_.SOCKET = socket;
-    //
-    if (FM_.inited == false) {
-        var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
-        FM_.ptyProcess = pty.spawn(shell, [], {
-            name: "xterm-color",
-            cols: 200,
-            rows: 30,
-            cwd: "./Data",
-            env: process.env,
-        });
-        //
-        console.log(FM_.ptyProcess);
-        //
-        FM_.ptyProcess.onData((data) => {
-            if (FM_.SOCKET) {
-                if (!valid_cmd_data(data)) {
-                    FM_.SOCKET.emit("DICTAT RESULT", data);
-                } else {
-                    data = "";
-                }
-            }
-        });
-        //
-        FM_.inited = true;
-    }
-}
-//
-function valid_cmd_data(data) {
-    var isInvalid = false;
-    //
-    for (var i = 0; i < FM_.cmd_array.length; i++) {
-        if (data == FM_.cmd_array[i]) {
-            isInvalid = true;
-            FM_.cmd_array = [];
-            return isInvalid;
+function verifyDictate(dictate) {
+    for (var i = 0; i < FM_.dictates.length; i++) {
+        if ((FM_.dictates[i] = dictate)) {
+            return true;
         }
     }
-    // 等于命令
-    if (FM_.cmd + "\r\n" == data) {
-        isInvalid = true;
-        return isInvalid;
-    }
-    // 等于命令
-    if (data.endsWith("$ ")) {
-        isInvalid = true;
-        return isInvalid;
+    //
+    return false;
+}
+//
+function dictate_run(dictate) {
+    if (dictate.indexOf(" ") != -1) {
+        var dictates = dictate.split(" ");
+        // console.log(dictates);
+        if (dictates[0] == "cd") {
+            FM_.path = FM_.path + "/" + dictates[1];
+            FM_.SOCKET.emit("DICTAT RESULT", "path:" + FM_.path);
+        }
+        //
+    } else {
+        if (dictate == "ls") {
+            let tree_data = project.getFilesAndFoldersInDir_for_tree(FM_.path, 10000);
+            var data = ""; // "name\tuptime\tpath\n";
+            for (var i = 0; i < tree_data.length; i++) {
+                data += tree_data[i].name + "\t";
+            }
+            //
+            FM_.SOCKET.emit("DICTAT RESULT", data);
+        } else if (dictate == "dir") {
+            FM_.SOCKET.emit("DICTAT RESULT", "world");
+        } else {
+            FM_.SOCKET.emit("DICTAT RESULT", "Invalid command");
+        }
     }
 }
 //////////////////////////////////////
@@ -310,5 +299,4 @@ module.exports = {
     paste_folder_or_file,
     create_new_folder,
     ws_do,
-    initSocketShell,
 };

@@ -384,25 +384,20 @@ app.get("/assetImport", (req, res) => {
 });
 // 资源格式转换
 app.get("/wasm_assetImport", (req, res) => {
-    // console.log("+- ");
     var ret = -1;
     var ai = wasm_importer();
-    // console.log(ai);
     ai.then((asset) => {
         var importer = asset;
         // console.log(importer);
         var command_str = "model " + "/working/tmp/data/jeep1.fbx" + " " + "/working/tmp/data/ty.mdl" + " -l";
         const r1 = importer.ccall("DoImport", "int", ["int", "string"], [4, command_str]);
         //
-        // var command_txt2bin = "-i " + "/working/tmp/data/ty.txt " + " -o " + "/working/tmp/data/ty1.txt -b";
-        // const r2 = importer.ccall("txt2bin", "int", ["int", "string"], [5, command_txt2bin]);
         console.log("ret= " + r1);
         res.send("ret= " + r1);
     });
 });
 // 获取可操作文件夹下所有文件
 app.route("/all_folder_and_files").get(function (req, res) {
-    // console.log("path= " + req.query.path);
     if (req.query.path == "./") {
         sevice.all_folder_and_files(req, res);
     } else {

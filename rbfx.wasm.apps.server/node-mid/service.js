@@ -220,7 +220,6 @@ function paste_folder_or_file(req, res) {
 //
 function create_new_folder(req, res) {
     if (req.query.path.length > 0) {
-        // console.log(req.body);
         var newTempPath = req.query.path + "/" + req.query.name;
         fs.mkdirSync(newTempPath, { recursive: true });
         //
@@ -230,7 +229,9 @@ function create_new_folder(req, res) {
 //
 function ws_do(socket) {
     socket.on("DICTATE", (arg) => {
-        FM_.ptyProcess.write(arg + "\r");
+        if (arg != "zsh") {
+            FM_.ptyProcess.write(arg + "\r");
+        }
     });
 }
 //
@@ -238,7 +239,7 @@ function initSocketShell(socket) {
     FM_.SOCKET = socket;
     //
     if (FM_.inited == false) {
-        var shell = os.platform() === "win32" ? "powershell.exe" : "zsh";
+        var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
         FM_.ptyProcess = pty.spawn(shell, [], {
             name: "xterm-color",
             cols: 200,
@@ -247,11 +248,7 @@ function initSocketShell(socket) {
             env: process.env,
         });
         //
-        // console.log(FM_.ptyProcess);
-        //
         FM_.ptyProcess.onData((data) => {
-            // process.stdout.write(data);
-            // console.log(data);
             if (FM_.SOCKET) {
                 FM_.SOCKET.emit("DICTAT RESULT", data);
             }

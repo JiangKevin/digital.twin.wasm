@@ -29,6 +29,7 @@ import { FitAddon } from "@xterm/addon-fit";
 import { AttachAddon } from "@xterm/addon-attach";
 import { io, Manager } from "socket.io-client";
 var cmd = "";
+var dictate_cmd = ""
 //
 onMounted(() => {
     initSocket();
@@ -66,7 +67,10 @@ function runFakeTerminal() {
             if (cmd == "") {
                 FM_GLOBAL.TERMINAL.prompt();
             }
+            //
+            dictate_cmd = cmd + "\r\n"
             cmd = "";
+
         } else if (e.domEvent.keyCode === 8) {
             // back 删除的情况
             if (FM_GLOBAL.TERMINAL._core.buffer.x > 2) {
@@ -201,26 +205,19 @@ function initSocket() {
     //
     FM_GLOBAL.SOCKET.on("connect", () => {
         console.log("+- From js: socket ok.");
-        // initXterm("");
-        // console.log("+- From js: new FM_GLOBAL.SOCKET=");
-        // console.log(FM_GLOBAL.SOCKET);
     });
     //
     FM_GLOBAL.SOCKET.on("DICTAT RESULT", (arg) => {
-        if (FM_GLOBAL.TERMINAL) {
+        // 
+        if (FM_GLOBAL.TERMINAL && dictate_cmd != arg && (!(arg.endsWith("$ ")))) {
             FM_GLOBAL.TERMINAL.write("\r\n");
-            FM_GLOBAL.TERMINAL.write(arg);
+            FM_GLOBAL.TERMINAL.write(arg.replace(/\r\n/g, ""));
             FM_GLOBAL.TERMINAL.prompt();
-            console.log(arg)
         }
     });
 }
 //
 function runRealTerminal() {
-    // addons.attach.instance = new AttachAddon(socket);
-    // term.loadAddon(addons.attach.instance);
-    // term._initialized = true;
-    // initAddons(term);
     console.log("+- From js: old FM_GLOBAL.SOCKET=");
     console.log(FM_GLOBAL.SOCKET);
 }

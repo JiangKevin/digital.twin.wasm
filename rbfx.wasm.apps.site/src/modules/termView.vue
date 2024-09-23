@@ -55,6 +55,7 @@ function runFakeTerminal() {
             //
             if (FM_GLOBAL.SOCKET) {
                 if (cmd != "") {
+                    console.log(cmd)
                     if (cmd == "clear" || cmd == "reset") {
                         FM_GLOBAL.TERMINAL.clear();
                         FM_GLOBAL.TERMINAL.prompt();
@@ -68,7 +69,7 @@ function runFakeTerminal() {
                 FM_GLOBAL.TERMINAL.prompt();
             }
             //
-            dictate_cmd = cmd + "\r\n"
+            dictate_cmd = cmd;
             cmd = "";
 
         } else if (e.domEvent.keyCode === 8) {
@@ -209,11 +210,11 @@ function initSocket() {
     //
     FM_GLOBAL.SOCKET.on("DICTAT RESULT", (arg) => {
         // 
-        if (FM_GLOBAL.TERMINAL && dictate_cmd != arg && (!(arg.endsWith("$ ")))) {
-            FM_GLOBAL.TERMINAL.write("\r\n");
-            FM_GLOBAL.TERMINAL.write(arg.replace(/\r\n/g, ""));
-            FM_GLOBAL.TERMINAL.prompt();
-        }
+        // if (FM_GLOBAL.TERMINAL && (dictate_cmd + "\r\n") != arg && (!(arg.startsWith(dictate_cmd + " "))) && (!(arg.endsWith("$ ")))) {
+        FM_GLOBAL.TERMINAL.write("\r\n");
+        FM_GLOBAL.TERMINAL.write(arg.replace(/\r\n/g, ""));
+        FM_GLOBAL.TERMINAL.prompt();
+        // }
     });
 }
 //

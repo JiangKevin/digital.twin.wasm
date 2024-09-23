@@ -6,6 +6,8 @@ var pty = require("node-pty");
 //////////////////////////////////////
 const FM_ = {};
 FM_.inited = false;
+FM_.cmd = "";
+FM_.cmd_array = [];
 ///
 function save_project(req, res) {
     if (req.query.Name) {
@@ -229,8 +231,10 @@ function create_new_folder(req, res) {
 //
 function ws_do(socket) {
     socket.on("DICTATE", (arg) => {
+        FM_.cmd = arg;
+        FM_.cmd_array = arg.split(" ");
         if (arg != "zsh") {
-            FM_.ptyProcess.write(arg + "\r");
+            FM_.ptyProcess.write(arg + "\r\n");
         }
     });
 }
@@ -247,14 +251,47 @@ function initSocketShell(socket) {
             cwd: "./Data",
             env: process.env,
         });
+        // 
+        console.log(FM_.ptyProcess )
         //
         FM_.ptyProcess.onData((data) => {
             if (FM_.SOCKET) {
-                FM_.SOCKET.emit("DICTAT RESULT", data);
+                if (!valid_cmd_data(data)) {
+                    FM_.SOCKET.emit("DICTAT RESULT", data);
+                } else {
+                    data = "";
+                }
             }
         });
         //
         FM_.inited = true;
+    }
+}
+//
+function valid_cmd_data(data) {
+    var isInvalid = false;
+    // //
+    // console.log("data: " + data);
+    // console.log("cmd: " + FM_.cmd);
+    // console.log(FM_.cmd_array);
+
+    //
+    for (var i = 0; i < FM_.cmd_array.length; i++) {
+        if (data == FM_.cmd_array[i]) {
+            isInvalid = true;
+            FM_.cmd_array = [];
+            return isInvalid;
+        }
+    }
+    // 等于命令
+    if (FM_.cmd + "\r\n" == data) {
+        isInvalid = true;
+        return isInvalid;
+    }
+    // 等于命令
+    if (data.endsWith("$ ")) {
+        isInvalid = true;
+        return isInvalid;
     }
 }
 //////////////////////////////////////

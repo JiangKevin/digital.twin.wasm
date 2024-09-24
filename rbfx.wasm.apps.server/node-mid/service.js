@@ -264,13 +264,13 @@ function dictate_run(dictate) {
         //
         FM_.SOCKET.emit("DICTAT RESULT", dictate);
     } else if (dictate.dictate == "cd") {
-        FM_.path = dictate.path + "/" + dictate.parameter.trim();
+        var tmp_path = dictate.path + "/" + dictate.parameter.trim();
         //
-        if (fs.existsSync(FM_.path)) {
-            const stat = fs.statSync(FM_.path);
+        if (fs.existsSync(tmp_path)) {
+            const stat = fs.statSync(tmp_path);
             //
             if (stat.isDirectory()) {
-                path_protection();
+                path_protection(tmp_path);
                 //
                 dictate.path = FM_.path;
                 dictate.result = "";
@@ -294,8 +294,9 @@ function dictate_run(dictate) {
     }
 }
 // 保护路径，只能在./Data及其子路径下进行操作
-function path_protection() {
-    var new_path = path.resolve(FM_.path);
+function path_protection(path_to_be_verified) {
+    var new_path = path.resolve(path_to_be_verified);
+    // 
     if (new_path.length <= FM_.basePath.length) {
         FM_.path = "./Data";
     } else {

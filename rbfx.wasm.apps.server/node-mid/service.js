@@ -328,29 +328,31 @@ function dictate_run(dictate) {
                     var tmp_path = dictate.path + "/" + paras[i].trim();
                     var del_path = path_protection_fix(tmp_path);
                     //
-                    if (del_path == "1") {
+                    if (del_path == -1) {
                         del_ok = false;
                         dictate.result = "The files were deleted error: " + tmp_path + "\n";
                         dictate.result += "Content protection in non-user folders.";
+                        FM_.SOCKET.emit("DICTAT RESULT", dictate);
+
                         break;
                     }
-                    if (del_path == "2") {
+                    if (del_path == -2) {
                         del_ok = false;
                         dictate.result = "The files were deleted error: " + tmp_path + "\n";
                         dictate.result += "The target object is not a folder.";
+                        FM_.SOCKET.emit("DICTAT RESULT", dictate);
+
                         break;
                     }
-                    if (del_path == "3") {
+                    if (del_path == -3) {
                         del_ok = false;
                         dictate.result = "The files were deleted error: " + tmp_path + "\n";
                         dictate.result += "The target object does not exist.";
+                        FM_.SOCKET.emit("DICTAT RESULT", dictate);
+
                         break;
-                    } else if (del_path != "1" && del_path != "2" && del_path != "3") {
-                        del_paths.push(del_path);
-                        fs.rmSync(del_path, { recursive: true, force: true });
                     } else {
-                        del_ok = false;
-                        break;
+                        del_paths.push(del_path);
                     }
                 }
                 //
@@ -358,8 +360,10 @@ function dictate_run(dictate) {
                     dictate.result = "The files were deleted successfully: \n";
                     for (var i = 0; i < del_paths.length; i++) {
                         dictate.result += del_paths[i] + "\r\n";
+                        fs.rmSync(del_paths[i], { recursive: true, force: true });
                     }
                     FM_.SOCKET.emit("DICTAT RESULT", dictate);
+                    del_paths = [];
                 }
             } else {
                 //
@@ -396,7 +400,7 @@ function path_protection_fix(path_to_be_verified) {
     var new_path = path.resolve(path_to_be_verified);
     //
     if (new_path.length <= FM_.basePath.length) {
-        return "1";
+        return -1;
     } else {
         var del_path = new_path.replace(FM_.basePath, "./Data");
         //
@@ -408,11 +412,11 @@ function path_protection_fix(path_to_be_verified) {
                 return del_path;
             } else {
                 // return "The target object is not a folder.";
-                return "2";
+                return -2;
             }
         } else {
             // return "The target object does not exist.";
-            return "3";
+            return -3;
         }
     }
 }

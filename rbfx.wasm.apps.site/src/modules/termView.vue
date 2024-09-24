@@ -246,8 +246,6 @@ function dictate_result(arg) {
         mainStore_menu.instruction = arg;
         FM_GLOBAL.TERMINAL.prompt();
     }
-    // 
-    console.log(mainStore_menu.instruction);
 }
 </script>
 

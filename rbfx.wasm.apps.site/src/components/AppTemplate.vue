@@ -35,7 +35,7 @@
             <!--  -->
             <v-divider></v-divider>
             <v-container class="menu_group_items_contain">
-                <v-item-group v-model="mainStore_menu.card_itemss_selection" multiple class="menu_group_items">
+                <v-item-group v-model="mainStore_menu.card_items_selection" multiple class="menu_group_items">
                     <v-row class="menu_group_items_row">
                         <v-col v-for="(item, i) in mainStore_menu.card_items" :key="i" class="menu_group_items_col">
                             <v-item v-slot="{ isSelected, toggle }">

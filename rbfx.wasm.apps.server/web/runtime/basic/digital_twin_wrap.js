@@ -242,13 +242,13 @@ FMDT_.LoadSceneFromFile = function (fileName) {
     _free(string_on_wasm_heap_for_fileName);
 };
 //
-FMDT_.OpenProject = function (proeject_name) {
+FMDT_.OpenProject = function (proeject_name, open) {
     // to wasm heap
     var lengthBytes_for_proeject_name = lengthBytesUTF8(proeject_name) + 1;
     var string_on_wasm_heap_for_proeject_name = _malloc(lengthBytes_for_proeject_name);
     stringToUTF8(proeject_name, string_on_wasm_heap_for_proeject_name, lengthBytes_for_proeject_name);
     // call
-    FM_GLOBAL.DTWIN_EDITOR._OpenProject(string_on_wasm_heap_for_proeject_name);
+    FM_GLOBAL.DTWIN_EDITOR._OpenProject(string_on_wasm_heap_for_proeject_name, open);
     // free
     _free(string_on_wasm_heap_for_proeject_name);
 };

@@ -39,11 +39,11 @@
                                                         :color="isHovering ? 'fm_orange' : 'fm_white'"
                                                         density="comfortable"></v-btn>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn icon="mdi-octagram-edit" @click="open_dt_project(n, false)"
+                                                    <v-btn icon="mdi-eye" @click="open_dt_project(n, false)"
                                                         size="small" :variant="isHovering ? 'flat' : 'text'"
                                                         :color="isHovering ? 'fm_red' : 'fm_white'"
                                                         density="comfortable"></v-btn>
-                                                    <v-btn icon="mdi-eye" @click="open_dt_project(n, true)" size="small"
+                                                    <v-btn icon="mdi-octagram-edit" @click="open_dt_project(n, true)" size="small"
                                                         :variant="isHovering ? 'flat' : 'text'"
                                                         :color="isHovering ? 'fm_red' : 'fm_white'"
                                                         density="comfortable"></v-btn>

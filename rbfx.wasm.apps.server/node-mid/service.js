@@ -7,7 +7,7 @@ var pty = require("node-pty");
 //////////////////////////////////////
 const FM_ = {};
 FM_.inited = false;
-FM_.dictates = ["ls"];
+FM_.dictates = ["ls", "cd"];
 FM_.path = "./Data";
 FM_.basePath = path.resolve(FM_.path);
 
@@ -237,6 +237,9 @@ function ws_do(socket) {
     socket.on("DICTATE", (arg) => {
         if (verifyDictate(arg)) {
             dictate_run(arg);
+        } else {
+            arg.result = "Invalid command.";
+            FM_.SOCKET.emit("DICTAT RESULT", arg);
         }
     });
 }
@@ -269,12 +272,19 @@ function dictate_run(dictate) {
             const stat = fs.statSync(tmp_path);
             //
             if (stat.isDirectory()) {
-                path_protection(tmp_path);
-                //
-                dictate.path = FM_.path;
-                dictate.result = "";
-                //
-                FM_.SOCKET.emit("DICTAT RESULT", dictate);
+                if (dictate.parameter.trim().length > 0) {
+                    path_protection(tmp_path);
+                    //
+                    dictate.path = FM_.path;
+                    dictate.result = "";
+                    //
+                    FM_.SOCKET.emit("DICTAT RESULT", dictate);
+                } else {
+                    FM_.path = "./Data";
+                    dictate.path = FM_.path;
+                    dictate.result = "";
+                    FM_.SOCKET.emit("DICTAT RESULT", dictate);
+                }
             } else {
                 dictate.result = "The target directory is the file.";
                 //

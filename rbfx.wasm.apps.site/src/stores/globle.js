@@ -82,6 +82,8 @@ export const useStoreForMenu = defineStore("menu", () => {
         path: "./Data",
         path_len: 2,
         dictate: "",
+        parameter: "",
+        result: "",
     };
     //
     function reset_menu_status() {

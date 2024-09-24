@@ -29,6 +29,8 @@ import { FitAddon } from "@xterm/addon-fit";
 import { AttachAddon } from "@xterm/addon-attach";
 import { io, Manager } from "socket.io-client";
 import { WebglAddon } from '@xterm/addon-webgl';
+// 
+var dictate_cmd = ""
 //
 onMounted(() => {
     initSocket();
@@ -53,32 +55,42 @@ function runFakeTerminal() {
         if (e.domEvent.keyCode === 13) {
             //
             if (FM_GLOBAL.SOCKET) {
-                if (mainStore_menu.instruction.dictate != "") {
-                    // console.log(mainStore_menu.instruction.dictate)
-                    if (mainStore_menu.instruction.dictate == "clear" || mainStore_menu.instruction.dictate == "reset") {
+                if (dictate_cmd != "") {
+                    if (dictate_cmd == "clear" || dictate_cmd == "reset") {
                         FM_GLOBAL.TERMINAL.clear();
                         FM_GLOBAL.TERMINAL.prompt();
                     } else {
-                        FM_GLOBAL.SOCKET.emit("DICTATE", mainStore_menu.instruction.dictate);
+                        // 将控制台输入进行格式化：命令+参数方式
+                        var dictates = dictate_cmd.split(" ");
+                        mainStore_menu.instruction.dictate = dictates[0];
+                        mainStore_menu.instruction.parameter = " ";
+                        for (var i = 1; i < dictates.length; i++) {
+                            mainStore_menu.instruction.parameter += dictates[i] + " "
+                        }
+                        // 
+                        FM_GLOBAL.SOCKET.emit("DICTATE", mainStore_menu.instruction);
                     }
                 }
             }
             //
-            if (mainStore_menu.instruction.dictate == "") {
+            if (dictate_cmd == "") {
                 FM_GLOBAL.TERMINAL.prompt();
             }
             //
-            mainStore_menu.instruction.dictate = "";
+            dictate_cmd = "";
 
         } else if (e.domEvent.keyCode === 8) {
+            // console.log(FM_GLOBAL.TERMINAL._core.buffer.x)
+            // console.log(mainStore_menu.instruction.path_len)
             // back 删除的情况
             if (FM_GLOBAL.TERMINAL._core.buffer.x > mainStore_menu.instruction.path_len) {
+                // 
                 FM_GLOBAL.TERMINAL.write("\b \b");
-                mainStore_menu.instruction.dictate = mainStore_menu.instruction.dictate.slice(0, -1);
+                dictate_cmd = dictate_cmd.slice(0, -1);
             }
         } else if (printable) {
             FM_GLOBAL.TERMINAL.write(e.key);
-            mainStore_menu.instruction.dictate += e.key;
+            dictate_cmd += e.key;
         }
     });
     FM_GLOBAL.TERMINAL.onData((key) => {
@@ -118,9 +130,6 @@ function initXterm(webSocket) {
         col_count = parseInt((window.innerWidth - 255 - w_space) / lineHeight);
     }
     row_count = parseInt((window.innerHeight - space) / lineHeight);
-    // console.log(row_count);
-    // console.log(col_count);
-
     //
     FM_GLOBAL.TERMINAL = new Terminal({
         rendererType: "canvas", //渲染类型
@@ -162,7 +171,7 @@ function initXterm(webSocket) {
     // 换行并输入起始符 $
     FM_GLOBAL.TERMINAL.prompt = (_) => {
         var prompt_str = "\r\n\x1b[33m⚡[" + format_now() + "][" + format_path() + "]$:\x1b[0m ";
-        mainStore_menu.instruction.path_len = prompt_str.length;
+        mainStore_menu.instruction.path_len = prompt_str.length - 11;
         FM_GLOBAL.TERMINAL.write(prompt_str);
     };
     //
@@ -220,24 +229,23 @@ function initSocket() {
     });
     //
     FM_GLOBAL.SOCKET.on("DICTAT RESULT", (arg) => {
-        console.log(arg)
-        if (arg != "") {
-            if (arg.startsWith("path") != -1) {
-                var paths = arg.split(":");
-                console.log(paths)
-                mainStore_menu.instruction.path = paths[1]
-                FM_GLOBAL.TERMINAL.prompt();
-            }
-            else {
-                FM_GLOBAL.TERMINAL.write("\r\n");
-                FM_GLOBAL.TERMINAL.write(arg.replace(/\r\n/g, ""));
-                FM_GLOBAL.TERMINAL.prompt();
-            }
-        }
-        else {
-            FM_GLOBAL.TERMINAL.prompt();
-        }
+        dictate_result(arg);
     });
+}
+
+//
+function dictate_result(arg) {
+    console.log(arg);
+    if (arg.result != "") {
+        mainStore_menu.instruction = arg;
+        // 
+        FM_GLOBAL.TERMINAL.write("\r\n")
+        FM_GLOBAL.TERMINAL.write(arg.result)
+        FM_GLOBAL.TERMINAL.prompt()
+    }
+    else {
+        FM_GLOBAL.TERMINAL.prompt();
+    }
 }
 </script>
 

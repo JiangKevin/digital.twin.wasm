@@ -315,20 +315,15 @@ function open_dt_project(obj) {
         busy_div_control("other_log", true);
         clear_busy_log("story");
         mainStore_menu.reset_menu_status();
+        // 
         mainStore_menu.menu_navigation_item = "Scene Editor";
         for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
             if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {
                 mainStore_menu.menu_editor_items[i].active = true;
-            }
-        }
-        mainStore_menu.yn_show_code_btn = true;
-        // 
-        for (var i = 0; i < mainStore_menu.menu_editor_items.length; i++) {
-            if (mainStore_menu.menu_editor_items[i].text == "Scene Editor") {
                 mainStore_menu.card_items = mainStore_menu.menu_editor_items[i].sub;
             }
         }
-
+        mainStore_menu.yn_show_code_btn = true;
         //
         FMDT_.OpenProject(obj.fileName);
     } else {

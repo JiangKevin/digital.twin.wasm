@@ -9,6 +9,8 @@ const FM_ = {};
 FM_.inited = false;
 FM_.dictates = ["ls"];
 FM_.path = "./Data";
+FM_.basePath = path.resolve(FM_.path);
+
 ///
 function save_project(req, res) {
     if (req.query.Name) {
@@ -251,12 +253,6 @@ function verifyDictate(dictate) {
 //
 function dictate_run(dictate) {
     console.log(dictate);
-    // //
-    // if (!fs.existsSync(dictate.path)) {
-    //     dictate.result = "Invalid command.";
-    //     //
-    //     FM_.SOCKET.emit("DICTAT RESULT", dictate);
-    // }
     //
     if (dictate.dictate == "ls") {
         let tree_data = project.getFilesAndFoldersInDir_for_tree(FM_.path, 10000);
@@ -274,6 +270,8 @@ function dictate_run(dictate) {
             const stat = fs.statSync(FM_.path);
             //
             if (stat.isDirectory()) {
+                path_protection();
+                //
                 dictate.path = FM_.path;
                 dictate.result = "";
                 //
@@ -293,6 +291,15 @@ function dictate_run(dictate) {
         dictate.result = "Invalid command.";
         //
         FM_.SOCKET.emit("DICTAT RESULT", dictate);
+    }
+}
+// 保护路径，只能在./Data及其子路径下进行操作
+function path_protection() {
+    var new_path = path.resolve(FM_.path);
+    if (new_path.length <= FM_.basePath.length) {
+        FM_.path = "./Data";
+    } else {
+        FM_.path = new_path.replace(FM_.basePath, "./Data");
     }
 }
 //////////////////////////////////////

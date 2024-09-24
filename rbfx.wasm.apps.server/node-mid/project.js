@@ -205,54 +205,10 @@ const getInfoProject = function (path, projectType, step = 0) {
                         Json_folder_stats.blocks = stats.blocks;
                         // Json_folder_stats.info = stats.info;
                         // console.log("+- info: " + stats.info);
-                        Json_folder_stats.atime =
-                            stats.atime.getFullYear() +
-                            "-" +
-                            stats.atime.getMonth() +
-                            "-" +
-                            stats.atime.getDate() +
-                            " " +
-                            stats.atime.getHours() +
-                            ":" +
-                            stats.atime.getMinutes() +
-                            ":" +
-                            stats.atime.getSeconds();
-                        Json_folder_stats.mtime =
-                            stats.mtime.getFullYear() +
-                            "-" +
-                            stats.mtime.getMonth() +
-                            "-" +
-                            stats.mtime.getDate() +
-                            " " +
-                            stats.mtime.getHours() +
-                            ":" +
-                            stats.mtime.getMinutes() +
-                            ":" +
-                            stats.mtime.getSeconds();
-                        Json_folder_stats.ctime =
-                            stats.ctime.getFullYear() +
-                            "-" +
-                            stats.ctime.getMonth() +
-                            "-" +
-                            stats.ctime.getDate() +
-                            " " +
-                            stats.ctime.getHours() +
-                            ":" +
-                            stats.ctime.getMinutes() +
-                            ":" +
-                            stats.ctime.getSeconds();
-                        Json_folder_stats.birthtime =
-                            stats.birthtime.getFullYear() +
-                            "-" +
-                            stats.birthtime.getMonth() +
-                            "-" +
-                            stats.birthtime.getDate() +
-                            " " +
-                            stats.birthtime.getHours() +
-                            ":" +
-                            stats.birthtime.getMinutes() +
-                            ":" +
-                            stats.birthtime.getSeconds();
+                        Json_folder_stats.atime = stats.atime.getFullYear() + "-" + stats.atime.getMonth() + "-" + stats.atime.getDate() + " " + stats.atime.getHours() + ":" + stats.atime.getMinutes() + ":" + stats.atime.getSeconds();
+                        Json_folder_stats.mtime = stats.mtime.getFullYear() + "-" + stats.mtime.getMonth() + "-" + stats.mtime.getDate() + " " + stats.mtime.getHours() + ":" + stats.mtime.getMinutes() + ":" + stats.mtime.getSeconds();
+                        Json_folder_stats.ctime = stats.ctime.getFullYear() + "-" + stats.ctime.getMonth() + "-" + stats.ctime.getDate() + " " + stats.ctime.getHours() + ":" + stats.ctime.getMinutes() + ":" + stats.ctime.getSeconds();
+                        Json_folder_stats.birthtime = stats.birthtime.getFullYear() + "-" + stats.birthtime.getMonth() + "-" + stats.birthtime.getDate() + " " + stats.birthtime.getHours() + ":" + stats.birthtime.getMinutes() + ":" + stats.birthtime.getSeconds();
 
                         //
                         Json_project_lists.ProjectType = projectType;
@@ -307,8 +263,14 @@ function timeFormat(obj) {
     return obj.getFullYear() + "-" + obj.getMonth() + "-" + obj.getDate() + " " + obj.getHours() + ":" + obj.getMinutes() + ":" + obj.getSeconds();
 }
 function getFilesAndFoldersInDir_for_tree(path, index) {
-    const items = fs.readdirSync(path);
     const result = [];
+    //
+    if (!fs.existsSync(path)) {
+        return result;
+    }
+    //
+    const items = fs.readdirSync(path);
+
     items.forEach((item) => {
         index = index + 1;
         const itemPath = `${path}/${item}`;

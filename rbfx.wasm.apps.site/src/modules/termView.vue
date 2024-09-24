@@ -235,17 +235,20 @@ function initSocket() {
 
 //
 function dictate_result(arg) {
-    console.log(arg);
     if (arg.result != "") {
         mainStore_menu.instruction = arg;
+
         // 
         FM_GLOBAL.TERMINAL.write("\r\n")
         FM_GLOBAL.TERMINAL.write(arg.result)
         FM_GLOBAL.TERMINAL.prompt()
     }
     else {
+        mainStore_menu.instruction = arg;
         FM_GLOBAL.TERMINAL.prompt();
     }
+    // 
+    console.log(mainStore_menu.instruction);
 }
 </script>
 

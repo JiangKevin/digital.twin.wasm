@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const _ = require("lodash");
 const project = require("./project.js");
 var os = require("os");
@@ -239,7 +240,6 @@ function ws_do(socket) {
 }
 //
 function verifyDictate(dictate) {
-    console.log(dictate);
     for (var i = 0; i < FM_.dictates.length; i++) {
         if ((FM_.dictates[i] = dictate.dictate)) {
             return true;
@@ -250,40 +250,50 @@ function verifyDictate(dictate) {
 }
 //
 function dictate_run(dictate) {
+    console.log(dictate);
+    // //
+    // if (!fs.existsSync(dictate.path)) {
+    //     dictate.result = "Invalid command.";
+    //     //
+    //     FM_.SOCKET.emit("DICTAT RESULT", dictate);
+    // }
+    //
     if (dictate.dictate == "ls") {
         let tree_data = project.getFilesAndFoldersInDir_for_tree(FM_.path, 10000);
-        var data = ""; // "name\tuptime\tpath\n";
+        var data = "";
         for (var i = 0; i < tree_data.length; i++) {
             data += tree_data[i].name + "\t";
         }
         dictate.result = data;
         //
         FM_.SOCKET.emit("DICTAT RESULT", dictate);
+    } else if (dictate.dictate == "cd") {
+        FM_.path = dictate.path + "/" + dictate.parameter.trim();
+        //
+        if (fs.existsSync(FM_.path)) {
+            const stat = fs.statSync(FM_.path);
+            //
+            if (stat.isDirectory()) {
+                dictate.path = FM_.path;
+                dictate.result = "";
+                //
+                console.log(dictate);
+                FM_.SOCKET.emit("DICTAT RESULT", dictate);
+            } else {
+                dictate.result = "The target directory is the file.";
+                //
+                FM_.SOCKET.emit("DICTAT RESULT", dictate);
+            }
+        } else {
+            dictate.result = "Invalid command.";
+            //
+            FM_.SOCKET.emit("DICTAT RESULT", dictate);
+        }
+    } else {
+        dictate.result = "Invalid command.";
+        //
+        FM_.SOCKET.emit("DICTAT RESULT", dictate);
     }
-
-    // if (dictate.indexOf(" ") != -1) {
-    //     var dictates = dictate.split(" ");
-    //     // console.log(dictates);
-    //     if (dictates[0] == "cd") {
-    //         FM_.path = FM_.path + "/" + dictates[1];
-    //         FM_.SOCKET.emit("DICTAT RESULT", "path:" + FM_.path);
-    //     }
-    //     //
-    // } else {
-    //     if (dictate == "ls") {
-    //         let tree_data = project.getFilesAndFoldersInDir_for_tree(FM_.path, 10000);
-    //         var data = ""; // "name\tuptime\tpath\n";
-    //         for (var i = 0; i < tree_data.length; i++) {
-    //             data += tree_data[i].name + "\t";
-    //         }
-    //         //
-    //         FM_.SOCKET.emit("DICTAT RESULT", data);
-    //     } else if (dictate == "dir") {
-    //         FM_.SOCKET.emit("DICTAT RESULT", "world");
-    //     } else {
-    //         FM_.SOCKET.emit("DICTAT RESULT", "Invalid command");
-    //     }
-    // }
 }
 //////////////////////////////////////
 //

@@ -7,7 +7,20 @@ var pty = require("node-pty");
 //////////////////////////////////////
 const FM_ = {};
 FM_.inited = false;
-FM_.dictates = ["ls", "cd"];
+FM_.dictates = [
+    {
+        cmd: "ls",
+        directions: "List all files or directories in the current directory。",
+    },
+    {
+        cmd: "cd",
+        directions: "Directory Relocation。",
+    },
+    {
+        cmd: "help",
+        directions: "Description of supported console commands。",
+    },
+];
 FM_.path = "./Data";
 FM_.basePath = path.resolve(FM_.path);
 
@@ -246,7 +259,7 @@ function ws_do(socket) {
 //
 function verifyDictate(dictate) {
     for (var i = 0; i < FM_.dictates.length; i++) {
-        if (FM_.dictates[i] == dictate.dictate) {
+        if (FM_.dictates[i].cmd == dictate.dictate) {
             return true;
         }
     }
@@ -295,6 +308,13 @@ function dictate_run(dictate) {
             //
             FM_.SOCKET.emit("DICTAT RESULT", dictate);
         }
+    } else if (dictate.dictate == "help") {
+        var data = "";
+        for (var i = 0; i < FM_.dictates.length; i++) {
+            data += FM_.dictates[i].cmd + "\t--\t" + FM_.dictates[i].directions + "\r\n";
+        }
+        dictate.result = data;
+        FM_.SOCKET.emit("DICTAT RESULT", dictate);
     } else {
         dictate.result = "Invalid command.";
         //

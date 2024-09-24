@@ -22,7 +22,7 @@ FM_.dictates = [
     },
     {
         cmd: "rm",
-        directions: "The rm command allows you to remove a file or directory whose name you pass it.Note: Different from the Linux rm command",
+        directions: "The rm command allows you to remove a file or directory whose name you pass it.Note: Different from the Linux rm command.-d:del folder.",
     },
 ];
 FM_.path = "./Data";
@@ -315,14 +315,13 @@ function dictate_run(dictate) {
         }
     } else if (dictate.dictate == "rm") {
         //
-        console.log(dictate);
-        //
         if (dictate.parameter.trim().length > 0) {
             //  去掉两头的空格后，按照空格分割字符串
             var paras = dictate.parameter.replace(/^\s+|\s+$/g, "").split(" ");
-            var del_ok = true;
-            if ((paras[0] = "-d")) {
+            //
+            if (paras[0] == "-d") {
                 // 删除文件夹，不严重路径是否为空，全部删除下面的子文件夹与文件
+                var del_ok = true;
                 var del_paths = [];
                 for (var i = 1; i < paras.length; i++) {
                     var tmp_path = dictate.path + "/" + paras[i].trim();
@@ -330,7 +329,7 @@ function dictate_run(dictate) {
                     //
                     if (del_path == -1) {
                         del_ok = false;
-                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result = "The folders were deleted error: " + tmp_path + "\n";
                         dictate.result += "Content protection in non-user folders.";
                         FM_.SOCKET.emit("DICTAT RESULT", dictate);
 
@@ -338,7 +337,7 @@ function dictate_run(dictate) {
                     }
                     if (del_path == -2) {
                         del_ok = false;
-                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result = "The folders were deleted error: " + tmp_path + "\n";
                         dictate.result += "The target object is not a folder.";
                         FM_.SOCKET.emit("DICTAT RESULT", dictate);
 
@@ -346,7 +345,7 @@ function dictate_run(dictate) {
                     }
                     if (del_path == -3) {
                         del_ok = false;
-                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result = "The folders were deleted error: " + tmp_path + "\n";
                         dictate.result += "The target object does not exist.";
                         FM_.SOCKET.emit("DICTAT RESULT", dictate);
 
@@ -357,7 +356,7 @@ function dictate_run(dictate) {
                 }
                 //
                 if (del_ok == true) {
-                    dictate.result = "The files were deleted successfully: \n";
+                    dictate.result = "The folders were deleted successfully: \n";
                     for (var i = 0; i < del_paths.length; i++) {
                         dictate.result += del_paths[i] + "\r\n";
                         fs.rmSync(del_paths[i], { recursive: true, force: true });
@@ -366,7 +365,51 @@ function dictate_run(dictate) {
                     del_paths = [];
                 }
             } else {
+                // 删除文件
+                var del_ok = true;
+                var del_files = [];
                 //
+                for (var i = 0; i < paras.length; i++) {
+                    var tmp_path = dictate.path + "/" + paras[i].trim();
+                    var del_file = file_protection_fix(tmp_path);
+                    //
+                    if (del_file == -1) {
+                        del_ok = false;
+                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result += "Content protection in non-user folders.";
+                        FM_.SOCKET.emit("DICTAT RESULT", dictate);
+
+                        break;
+                    }
+                    if (del_file == -2) {
+                        del_ok = false;
+                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result += "The target object is not a file.";
+                        FM_.SOCKET.emit("DICTAT RESULT", dictate);
+
+                        break;
+                    }
+                    if (del_file == -3) {
+                        del_ok = false;
+                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result += "The target object does not exist.";
+                        FM_.SOCKET.emit("DICTAT RESULT", dictate);
+
+                        break;
+                    } else {
+                        del_files.push(del_file);
+                    }
+                }
+                //
+                if (del_ok == true) {
+                    dictate.result = "The files were deleted successfully: \n";
+                    for (var i = 0; i < del_files.length; i++) {
+                        dictate.result += del_files[i] + "\r\n";
+                        fs.rmSync(del_files[i], { recursive: true, force: true });
+                    }
+                    FM_.SOCKET.emit("DICTAT RESULT", dictate);
+                    del_files = [];
+                }
             }
         } else {
             dictate.result = "Command usage error, missing parameters or object to be deleted.";
@@ -389,17 +432,17 @@ function dictate_run(dictate) {
 function path_protection(path_to_be_verified) {
     var new_path = path.resolve(path_to_be_verified);
     //
-    if (new_path.length <= FM_.basePath.length) {
+    if (new_path.indexOf(FM_.basePath) == -1) {
         FM_.path = "./Data";
     } else {
         FM_.path = new_path.replace(FM_.basePath, "./Data");
     }
 }
-// 保护路径，只能在./Data及其子路径下进行操作，不影响当前目录
+//
 function path_protection_fix(path_to_be_verified) {
     var new_path = path.resolve(path_to_be_verified);
     //
-    if (new_path.length <= FM_.basePath.length) {
+    if (new_path.indexOf(FM_.basePath) == -1) {
         return -1;
     } else {
         var del_path = new_path.replace(FM_.basePath, "./Data");
@@ -408,14 +451,33 @@ function path_protection_fix(path_to_be_verified) {
             const stat = fs.statSync(del_path);
             //
             if (stat.isDirectory()) {
-                // del_path = del_path.replace(FM_.path + "/", "");
                 return del_path;
             } else {
-                // return "The target object is not a folder.";
                 return -2;
             }
         } else {
-            // return "The target object does not exist.";
+            return -3;
+        }
+    }
+}
+//
+function file_protection_fix(path_to_be_verified) {
+    var new_path = path.resolve(path_to_be_verified);
+    //
+    if (new_path.indexOf(FM_.basePath) == -1) {
+        return -1;
+    } else {
+        var del_path = new_path.replace(FM_.basePath, "./Data");
+        //
+        if (fs.existsSync(del_path)) {
+            const stat = fs.statSync(del_path);
+            //
+            if (stat.isFile()) {
+                return del_path;
+            } else {
+                return -2;
+            }
+        } else {
             return -3;
         }
     }

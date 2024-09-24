@@ -237,7 +237,6 @@ function initSocket() {
 function dictate_result(arg) {
     if (arg.result != "") {
         mainStore_menu.instruction = arg;
-
         // 
         FM_GLOBAL.TERMINAL.write("\r\n")
         FM_GLOBAL.TERMINAL.write(arg.result)

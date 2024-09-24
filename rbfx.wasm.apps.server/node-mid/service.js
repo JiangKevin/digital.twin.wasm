@@ -243,7 +243,7 @@ function ws_do(socket) {
 //
 function verifyDictate(dictate) {
     for (var i = 0; i < FM_.dictates.length; i++) {
-        if ((FM_.dictates[i] = dictate.dictate)) {
+        if (FM_.dictates[i] == dictate.dictate) {
             return true;
         }
     }
@@ -252,7 +252,6 @@ function verifyDictate(dictate) {
 }
 //
 function dictate_run(dictate) {
-    console.log(dictate);
     //
     if (dictate.dictate == "ls") {
         let tree_data = project.getFilesAndFoldersInDir_for_tree(FM_.path, 10000);
@@ -275,7 +274,6 @@ function dictate_run(dictate) {
                 dictate.path = FM_.path;
                 dictate.result = "";
                 //
-                console.log(dictate);
                 FM_.SOCKET.emit("DICTAT RESULT", dictate);
             } else {
                 dictate.result = "The target directory is the file.";
@@ -296,7 +294,7 @@ function dictate_run(dictate) {
 // 保护路径，只能在./Data及其子路径下进行操作
 function path_protection(path_to_be_verified) {
     var new_path = path.resolve(path_to_be_verified);
-    // 
+    //
     if (new_path.length <= FM_.basePath.length) {
         FM_.path = "./Data";
     } else {

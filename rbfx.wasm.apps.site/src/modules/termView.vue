@@ -29,9 +29,6 @@ import { FitAddon } from "@xterm/addon-fit";
 import { AttachAddon } from "@xterm/addon-attach";
 import { io, Manager } from "socket.io-client";
 import { WebglAddon } from '@xterm/addon-webgl';
-var cmd = "";
-var dictate_cmd = ""
-var dictate_path = "./Data"
 //
 onMounted(() => {
     initSocket();
@@ -56,32 +53,32 @@ function runFakeTerminal() {
         if (e.domEvent.keyCode === 13) {
             //
             if (FM_GLOBAL.SOCKET) {
-                if (cmd != "") {
-                    // console.log(cmd)
-                    if (cmd == "clear" || cmd == "reset") {
+                if (mainStore_menu.instruction.dictate != "") {
+                    // console.log(mainStore_menu.instruction.dictate)
+                    if (mainStore_menu.instruction.dictate == "clear" || mainStore_menu.instruction.dictate == "reset") {
                         FM_GLOBAL.TERMINAL.clear();
                         FM_GLOBAL.TERMINAL.prompt();
                     } else {
-                        FM_GLOBAL.SOCKET.emit("DICTATE", cmd);
+                        FM_GLOBAL.SOCKET.emit("DICTATE", mainStore_menu.instruction.dictate);
                     }
                 }
             }
             //
-            if (cmd == "") {
+            if (mainStore_menu.instruction.dictate == "") {
                 FM_GLOBAL.TERMINAL.prompt();
             }
             //
-            dictate_cmd = cmd;
-            cmd = "";
+            mainStore_menu.instruction.dictate = "";
 
         } else if (e.domEvent.keyCode === 8) {
             // back 删除的情况
-            if (FM_GLOBAL.TERMINAL._core.buffer.x > 2) {
+            if (FM_GLOBAL.TERMINAL._core.buffer.x > mainStore_menu.instruction.path_len) {
                 FM_GLOBAL.TERMINAL.write("\b \b");
+                mainStore_menu.instruction.dictate = mainStore_menu.instruction.dictate.slice(0, -1);
             }
         } else if (printable) {
             FM_GLOBAL.TERMINAL.write(e.key);
-            cmd += e.key;
+            mainStore_menu.instruction.dictate += e.key;
         }
     });
     FM_GLOBAL.TERMINAL.onData((key) => {
@@ -106,7 +103,7 @@ function format_now() {
     return formattedTime;
 }
 function format_path() {
-    return dictate_path;
+    return mainStore_menu.instruction.path;
 }
 //
 function initXterm(webSocket) {
@@ -131,12 +128,13 @@ function initXterm(webSocket) {
         cols: col_count, // 不指定行数，自动回车后光标从下一行开始
         convertEol: true, //启用时，光标将设置为下一行的开头
         // scrollback: 50, //终端中的回滚量
-        disableStdin: false, //是否应禁用输入
+        disableStdin: true, //是否应禁用输入
         cursorStyle: "underline", //光标样式
         cursorBlink: true, //光标闪烁
         lineHeight: 1.0,
         fontSize: 13,
         altClickMovesCursor: false,
+        // theme:"xtermjs",
         theme: {
             foreground: "#ff6300", //字体
             background: "#00000000", //背景色
@@ -163,7 +161,9 @@ function initXterm(webSocket) {
     FM_GLOBAL.TERMINAL.open(document.getElementById("terminal"));
     // 换行并输入起始符 $
     FM_GLOBAL.TERMINAL.prompt = (_) => {
-        FM_GLOBAL.TERMINAL.write("\r\n\x1b[33m$↯[" + format_now() + "]" + format_path() + "\x1b[0m: ");
+        var prompt_str = "\r\n\x1b[33m⚡[" + format_now() + "][" + format_path() + "]$:\x1b[0m ";
+        mainStore_menu.instruction.path_len = prompt_str.length;
+        FM_GLOBAL.TERMINAL.write(prompt_str);
     };
     //
     FM_GLOBAL.TERMINAL.clear();
@@ -175,6 +175,7 @@ function initXterm(webSocket) {
             // 窗口大小改变时，触发xterm的resize方法使自适应
             fitAddon.fit(space);
             term_fit(space, w_space);
+            FM_GLOBAL.TERMINAL.scrollToBottom();
         } catch (e) {
             console.log("e", e.message);
         }
@@ -224,7 +225,7 @@ function initSocket() {
             if (arg.startsWith("path") != -1) {
                 var paths = arg.split(":");
                 console.log(paths)
-                dictate_path = paths[1]
+                mainStore_menu.instruction.path = paths[1]
                 FM_GLOBAL.TERMINAL.prompt();
             }
             else {
@@ -237,11 +238,6 @@ function initSocket() {
             FM_GLOBAL.TERMINAL.prompt();
         }
     });
-}
-//
-function runRealTerminal() {
-    console.log("+- From js: old FM_GLOBAL.SOCKET=");
-    console.log(FM_GLOBAL.SOCKET);
 }
 </script>
 

@@ -9,6 +9,10 @@ const FM_ = {};
 FM_.inited = false;
 FM_.dictates = [
     {
+        cmd: "help",
+        directions: "Description of supported console commands。",
+    },
+    {
         cmd: "ls",
         directions: "List all files or directories in the current directory。",
     },
@@ -17,8 +21,8 @@ FM_.dictates = [
         directions: "Directory Relocation。",
     },
     {
-        cmd: "help",
-        directions: "Description of supported console commands。",
+        cmd: "rm",
+        directions: "The rm command allows you to remove a file or directory whose name you pass it.Note: Different from the Linux rm command",
     },
 ];
 FM_.path = "./Data";
@@ -270,6 +274,7 @@ function verifyDictate(dictate) {
 function dictate_run(dictate) {
     //
     if (dictate.dictate == "ls") {
+        FM_.path = dictate.path;
         let tree_data = project.getFilesAndFoldersInDir_for_tree(FM_.path, 10000);
         var data = "";
         for (var i = 0; i < tree_data.length; i++) {
@@ -308,6 +313,61 @@ function dictate_run(dictate) {
             //
             FM_.SOCKET.emit("DICTAT RESULT", dictate);
         }
+    } else if (dictate.dictate == "rm") {
+        //
+        console.log(dictate);
+        //
+        if (dictate.parameter.trim().length > 0) {
+            //  去掉两头的空格后，按照空格分割字符串
+            var paras = dictate.parameter.replace(/^\s+|\s+$/g, "").split(" ");
+            var del_ok = true;
+            if ((paras[0] = "-d")) {
+                // 删除文件夹，不严重路径是否为空，全部删除下面的子文件夹与文件
+                var del_paths = [];
+                for (var i = 1; i < paras.length; i++) {
+                    var tmp_path = dictate.path + "/" + paras[i].trim();
+                    var del_path = path_protection_fix(tmp_path);
+                    //
+                    if (del_path == "1") {
+                        del_ok = false;
+                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result += "Content protection in non-user folders.";
+                        break;
+                    }
+                    if (del_path == "2") {
+                        del_ok = false;
+                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result += "The target object is not a folder.";
+                        break;
+                    }
+                    if (del_path == "3") {
+                        del_ok = false;
+                        dictate.result = "The files were deleted error: " + tmp_path + "\n";
+                        dictate.result += "The target object does not exist.";
+                        break;
+                    } else if (del_path != "1" && del_path != "2" && del_path != "3") {
+                        del_paths.push(del_path);
+                        fs.rmSync(del_path, { recursive: true, force: true });
+                    } else {
+                        del_ok = false;
+                        break;
+                    }
+                }
+                //
+                if (del_ok == true) {
+                    dictate.result = "The files were deleted successfully: \n";
+                    for (var i = 0; i < del_paths.length; i++) {
+                        dictate.result += del_paths[i] + "\r\n";
+                    }
+                    FM_.SOCKET.emit("DICTAT RESULT", dictate);
+                }
+            } else {
+                //
+            }
+        } else {
+            dictate.result = "Command usage error, missing parameters or object to be deleted.";
+            FM_.SOCKET.emit("DICTAT RESULT", dictate);
+        }
     } else if (dictate.dictate == "help") {
         var data = "";
         for (var i = 0; i < FM_.dictates.length; i++) {
@@ -321,7 +381,7 @@ function dictate_run(dictate) {
         FM_.SOCKET.emit("DICTAT RESULT", dictate);
     }
 }
-// 保护路径，只能在./Data及其子路径下进行操作
+// 保护路径，只能在./Data及其子路径下进行操作,影响当前目录
 function path_protection(path_to_be_verified) {
     var new_path = path.resolve(path_to_be_verified);
     //
@@ -329,6 +389,31 @@ function path_protection(path_to_be_verified) {
         FM_.path = "./Data";
     } else {
         FM_.path = new_path.replace(FM_.basePath, "./Data");
+    }
+}
+// 保护路径，只能在./Data及其子路径下进行操作，不影响当前目录
+function path_protection_fix(path_to_be_verified) {
+    var new_path = path.resolve(path_to_be_verified);
+    //
+    if (new_path.length <= FM_.basePath.length) {
+        return "1";
+    } else {
+        var del_path = new_path.replace(FM_.basePath, "./Data");
+        //
+        if (fs.existsSync(del_path)) {
+            const stat = fs.statSync(del_path);
+            //
+            if (stat.isDirectory()) {
+                // del_path = del_path.replace(FM_.path + "/", "");
+                return del_path;
+            } else {
+                // return "The target object is not a folder.";
+                return "2";
+            }
+        } else {
+            // return "The target object does not exist.";
+            return "3";
+        }
     }
 }
 //////////////////////////////////////

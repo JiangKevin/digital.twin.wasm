@@ -1,5 +1,6 @@
 //
 const FMCAS_ = {};
+const FMREPLICAD_ = {};
 FMCAS_.iniPaneParams = false;
 //
 FMCAS_.visualize = function (openCascade, shape) {

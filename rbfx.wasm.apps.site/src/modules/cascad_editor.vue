@@ -3,6 +3,7 @@
     <div class="main_container_content_max blur_div_95">
         <!--  -->
         <div id="viewport"></div>
+        <div id="root"></div>
         <!--  -->
     </div>
 </template>
@@ -46,7 +47,7 @@ onMounted(() => {
             FM_GLOBAL.OPENCASCADE = openCascade;
             // 
             replicad.setOC(openCascade);
-            FMREPLICAD_=replicad;
+            FM_GLOBAL.REPLICAD = replicad;
             //
             const viewport = document.getElementById("viewport");
             if (viewport) {
@@ -88,6 +89,7 @@ onMounted(() => {
     width: 100%;
     height: 100%;
 }
+
 #viewport canvas {
     width: 100%;
     height: 100vh;

@@ -2,7 +2,10 @@
 <template>
     <div class="main_container_content_max blur_div_95">
         <!--  -->
-        <div id="viewport"></div>
+        <div class="SplitMid">
+            <div id="viewport"></div>
+            <model-viewer class="modelView" :src="mainStore_menu.modelUrl" camera-controls enable-pan />
+        </div>
         <div id="root"></div>
         <!--  -->
     </div>
@@ -22,6 +25,8 @@ import { OBJExporter } from "@/assets/js/three/OBJExporter.js";
 import { STLExporter } from "@/assets/js/three/STLExporter.js";
 import { GLTFExporter } from "@/assets/js/three/GLTFExporter.js";
 import * as replicad from "replicad";
+import "@google/model-viewer";
+
 //
 FM_GLOBAL.THREE = THREE;
 FM_GLOBAL.ORBITCONTROLS = OrbitControls;
@@ -30,7 +35,8 @@ FM_GLOBAL.OPENCASCADEHELPER = openCascadeHelper;
 FM_GLOBAL.THREE_OBJEXPORTER = OBJExporter;
 FM_GLOBAL.THREE_STLEXPORTER = STLExporter;
 FM_GLOBAL.THREE_GLTFEXPORTER = GLTFExporter;
-
+// 
+// var modelUrl = FM_GLOBAL.modelUrl
 //
 onMounted(() => {
     //
@@ -74,6 +80,7 @@ onMounted(() => {
                 false
             );
             //
+            fm_addScript("./runtime/js/math/math.js", true, false);
             fm_addScript("./runtime/basic/cascad_wrap.js", true, false);
             //
             is_load_cad_wasm = true;
@@ -86,12 +93,21 @@ onMounted(() => {
 <!--  style  -->
 <style scoped>
 #viewport {
-    width: 100%;
+    width: 50%;
     height: 100%;
 }
 
 #viewport canvas {
-    width: 100%;
+    width: 50%;
     height: 100vh;
+}
+
+.SplitMid {
+    display: flex;
+}
+
+.modelView {
+    height: 100vh;
+    width: 50%
 }
 </style>

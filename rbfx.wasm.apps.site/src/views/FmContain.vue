@@ -22,7 +22,9 @@
             </v-window-item>
         </v-window>
         <!-- code editor div -->
-        <div class="resizable blur_div_80" :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)" id="vs_code_contain">
+        <div class="resizable blur_div_80"
+            :class="code_div_class_select(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)"
+            id="vs_code_contain">
             <!--  -->
             <div class="main_container_toolbar_no_top_padding">
                 <!--  -->
@@ -34,8 +36,10 @@
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
                     <div class="toolbar_btn_label">
-                        <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js" style="display: none" />
-                        <label for="rbfx-code-file" title="Load code from File"><i class="mdi-folder-open mdi"></i></label>
+                        <input id="rbfx-code-file" name="rbfx-code-file" type="file" accept=".js"
+                            style="display: none" />
+                        <label for="rbfx-code-file" title="Load code from File"><i
+                                class="mdi-folder-open mdi"></i></label>
                     </div>
                     <v-divider vertical class="divider_vertical"></v-divider>
                     <!--  -->
@@ -46,12 +50,15 @@
                     <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'CAD Editor'">
                         <!--  -->
                         <div class="toolbar_btn_label">
-                            <input id="step-file" name="step-file" type="file" accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
-                            <label for="step-file" title="Load Model from File"><i class="mdi-cloud-upload mdi"></i></label>
+                            <input id="step-file" name="step-file" type="file"
+                                accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
+                            <label for="step-file" title="Load Model from File"><i
+                                    class="mdi-cloud-upload mdi"></i></label>
                         </div>
                         <v-divider vertical class="divider_vertical"></v-divider>
                         <!--  -->
-                        <button class="toolbar_btn" @click="down_load_modle_file"><i class="mdi-cloud-download mdi"></i></button>
+                        <button class="toolbar_btn" @click="down_load_modle_file"><i
+                                class="mdi-cloud-download mdi"></i></button>
                         <v-divider vertical class="divider_vertical"></v-divider>
                     </div>
                 </div>
@@ -59,27 +66,34 @@
                     <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'Scene Editor'">
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi" @click="code_editor_laout_ck(0)"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-arrow-collapse-horizontal mdi"
+                                @click="code_editor_laout_ck(0)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(1)"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi"
+                                @click="code_editor_laout_ck(1)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(2)"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi"
+                                @click="code_editor_laout_ck(2)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(3)"><i class="mdi-align-horizontal-distribute mdi"></i></button>
+                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(3)"><i
+                                class="mdi-align-horizontal-distribute mdi"></i></button>
                     </div>
                     <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'CAD Editor'">
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi" @click="code_editor_laout_ck(2)"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-arrow-expand-horizontal mdi"
+                                @click="code_editor_laout_ck(2)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi" @click="code_editor_laout_ck(0)"></i></button>
+                        <button class="toolbar_btn"><i class="mdi-stretch-to-page-outline mdi"
+                                @click="code_editor_laout_ck(0)"></i></button>
                         <!--  -->
                         <v-divider vertical class="divider_vertical"></v-divider>
-                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(1)"><i class="mdi-align-horizontal-distribute mdi"></i></button>
+                        <button class="toolbar_btn_m" @click="code_editor_laout_ck(1)"><i
+                                class="mdi-align-horizontal-distribute mdi"></i></button>
                     </div>
                 </div>
             </div>
@@ -90,12 +104,14 @@
                 <span id="rbfx-output"></span>
             </div>
         </div>
-        <div :class="code_div_class_select_noshow(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)">
+        <div
+            :class="code_div_class_select_noshow(mainStore_menu.yn_show_code_contain, mainStore_menu.rail, mainStore_menu.yn_show_code_btn)">
             <button class="toolbar_btn_wide" @click="code_div_show_ck"><i class="mdi-crowd mdi"></i></button>
         </div>
         <!-- busy div  -->
         <div id="other_log" :class="busy_div_class_select(mainStore_menu.rail)">
-            <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div" color="pink"></v-progress-circular>
+            <v-progress-circular indeterminate :size="128" :width="8" class="output_progress_div"
+                color="pink"></v-progress-circular>
             <textarea id="story" name="story" rows="8" class="output_wasm"></textarea>
         </div>
     </div>
@@ -250,6 +266,7 @@ function run_code_for_editor() {
     var log_span = document.getElementById("rbfx-output");
     try {
         run_code(FM_GLOBAL.MONACO_EDITOR.getValue());
+        mainStore_menu.modelUrl = FM_GLOBAL.modelUrl
         log_span.innerText = "+-  Run ok. ";
         FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From code editor: Run ok. " + "\n";
     } catch (e) {
@@ -281,6 +298,7 @@ onMounted(() => {
     resize: horizontal;
     min-width: 600px;
 }
+
 .output_wasm {
     background-color: rgba(0, 0, 255, 0);
     border: none;
@@ -296,10 +314,12 @@ onMounted(() => {
     top: 0px; */
     /* right: 6px; */
 }
+
 .output_wasm::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
+
 .output_progress_div {
     position: fixed;
     top: calc(50% - 64px);

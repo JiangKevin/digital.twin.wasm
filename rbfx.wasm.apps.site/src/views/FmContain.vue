@@ -256,9 +256,9 @@ function down_load_modle_file() {
     if (FM_GLOBAL.CAD_SCENE) {
         saveShapeSTL(FM_GLOBAL.CAD_SCENE);
     }
-    else {
-        saveShapeGLB(FM_GLOBAL.OPENCASCADE);
-    }
+    //
+    if (!mainStore_menu.is_show_viewport) { saveShapeGLB(FM_GLOBAL.OPENCASCADE); }
+
 }
 //
 function code_div_show_ck() {

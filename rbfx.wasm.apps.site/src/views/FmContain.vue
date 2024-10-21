@@ -273,6 +273,8 @@ function run_code_for_editor() {
         log_span.innerText = "+-  Run ok. ";
         FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From code editor: Run ok. " + "\n";
     } catch (e) {
+        // console.log(e);
+
         log_span.innerText = "+-  " + e.message;
         FM_GLOBAL.LOG.value = FM_GLOBAL.LOG.value + "+- From code editor: Run ok. " + e.message + "\n";
         console.log(e.message);

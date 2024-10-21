@@ -477,39 +477,40 @@ export const setupThreeJSViewport = () => {
     }
     return scene;
 };
-export const setupThreeJSCore = (rail) => {
+export const setupThreeJSCore = (rail, show) => {
     var cad_core = {};
-    //
-    var scene = new FM_GLOBAL.THREE.Scene();
-    var camera = new FM_GLOBAL.THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    var renderer = new FM_GLOBAL.THREE.WebGLRenderer({ antialias: true });
-    //
-    var renderer_w;
-    if (rail) {
-        renderer_w = (window.innerWidth - 55) / 2;
-    } else {
-        renderer_w = (window.innerWidth - 255) / 2;
+    if (show) {
+        var scene = new FM_GLOBAL.THREE.Scene();
+        var camera = new FM_GLOBAL.THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new FM_GLOBAL.THREE.WebGLRenderer({ antialias: true });
+        //
+        var renderer_w;
+        if (rail) {
+            renderer_w = (window.innerWidth - 55) / 2;
+        } else {
+            renderer_w = (window.innerWidth - 255) / 2;
+        }
+        //
+        renderer.setSize(renderer_w, window.innerHeight);
+        const light = new FM_GLOBAL.THREE.AmbientLight(0x404040);
+        scene.add(light);
+        const directionalLight = new FM_GLOBAL.THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(0.5, 0.5, 0.5);
+        scene.add(directionalLight);
+        camera.position.set(0, 50, 100);
+        const controls = new FM_GLOBAL.ORBITCONTROLS(camera, renderer.domElement);
+        controls.screenSpacePanning = true;
+        controls.target.set(0, 50, 0);
+        controls.update();
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+        //
+        cad_core.scene = scene;
+        cad_core.renderer = renderer;
     }
-    //
-    renderer.setSize(renderer_w, window.innerHeight);
-    const light = new FM_GLOBAL.THREE.AmbientLight(0x404040);
-    scene.add(light);
-    const directionalLight = new FM_GLOBAL.THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(0.5, 0.5, 0.5);
-    scene.add(directionalLight);
-    camera.position.set(0, 50, 100);
-    const controls = new FM_GLOBAL.ORBITCONTROLS(camera, renderer.domElement);
-    controls.screenSpacePanning = true;
-    controls.target.set(0, 50, 0);
-    controls.update();
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
-    animate();
-    //
-    cad_core.scene = scene;
-    cad_core.renderer = renderer;
     //
     return cad_core;
 };

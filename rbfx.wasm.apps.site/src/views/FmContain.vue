@@ -49,7 +49,7 @@
                 <div class="middl_toolbar_container">
                     <div class="flex_div" v-show="mainStore_menu.menu_navigation_item == 'CAD Editor'">
                         <!--  -->
-                        <div class="toolbar_btn_label">
+                        <div class="toolbar_btn_label" v-show="mainStore_menu.is_show_viewport">
                             <input id="step-file" name="step-file" type="file"
                                 accept=".iges,.step,.igs,.stp,.fbx,.obj,.stl" style="display: none" />
                             <label for="step-file" title="Load Model from File"><i
@@ -57,7 +57,7 @@
                         </div>
                         <v-divider vertical class="divider_vertical"></v-divider>
                         <!--  -->
-                        <button class="toolbar_btn" @click="down_load_modle_file"><i
+                        <button class="toolbar_btn" @click="down_load_modle_file" v-show="mainStore_menu.is_show_viewport"><i
                                 class="mdi-cloud-download mdi"></i></button>
                         <v-divider vertical class="divider_vertical"></v-divider>
                     </div>

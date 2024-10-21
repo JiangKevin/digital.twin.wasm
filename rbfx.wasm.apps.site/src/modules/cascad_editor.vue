@@ -25,7 +25,6 @@ import { openCascadeHelper } from "@/plugins/openCascadeHelper.js";
 import { OBJExporter } from "@/assets/js/three/OBJExporter.js";
 import { STLExporter } from "@/assets/js/three/STLExporter.js";
 import { GLTFExporter } from "@/assets/js/three/GLTFExporter.js";
-// import * as replicad from "replicad";
 import "@google/model-viewer";
 
 //
@@ -51,7 +50,7 @@ onMounted(() => {
     mainStore_menu.yn_show_code_btn = true;
     //
     if (!is_load_cad_wasm) {
-        var fm_cad_core = setupThreeJSCore(mainStore_menu.rail);
+        var fm_cad_core = setupThreeJSCore(mainStore_menu.rail, mainStore_menu.is_show_viewport);
         //
         FM_GLOBAL.CAD_SCENE = fm_cad_core.scene;
         FM_GLOBAL.CAD_RENDERER = fm_cad_core.renderer;
@@ -59,9 +58,6 @@ onMounted(() => {
         FM_GLOBAL.INITOPENCASCADE().then((openCascade) => {
             //
             FM_GLOBAL.OPENCASCADE = openCascade;
-            // // 
-            // replicad.setOC(openCascade);
-            // FM_GLOBAL.REPLICAD = replicad;
             //
             const viewport = document.getElementById("viewport");
             if (viewport) {

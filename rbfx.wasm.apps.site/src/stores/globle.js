@@ -78,6 +78,7 @@ export const useStoreForMenu = defineStore("menu", () => {
     //
     var user_info = { username: "admin", password: "", token: "", image: avatarImgUrl, email: "kevin.jiang@fmbj.com.cn", fullname: "Kevin Jiang" };
     var modelUrl = "";
+    var is_show_viewport = false;
     //
     var instruction = {
         path: "./Data",
@@ -102,7 +103,7 @@ export const useStoreForMenu = defineStore("menu", () => {
         }
     }
     //
-    return { instruction, menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, yn_show_code_btn, is_busy, card_items_selection, card_items, menu_exit_items,modelUrl };
+    return { instruction, menu_items, menu_editor_items, menu_help_items, drawer, rail, user_info, editor_log, login_log, reset_menu_status, menu_navigation_item, yn_show_code_contain, yn_show_code_btn, is_busy, card_items_selection, card_items, menu_exit_items, modelUrl, is_show_viewport };
 });
 //
 export const useStoreForProject = defineStore("project", () => {

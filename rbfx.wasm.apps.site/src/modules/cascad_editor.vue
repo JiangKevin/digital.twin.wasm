@@ -3,8 +3,9 @@
     <div class="main_container_content_max blur_div_95">
         <!--  -->
         <div class="SplitMid">
-            <div id="viewport"></div>
-            <model-viewer class="modelView" :src="mainStore_menu.modelUrl" camera-controls enable-pan />
+            <div id="viewport" v-if="mainStore_menu.is_show_viewport"></div>
+            <model-viewer :class="class_for_modelview(mainStore_menu.is_show_viewport)" :src="mainStore_menu.modelUrl"
+                camera-controls enable-pan />
         </div>
         <div id="root"></div>
         <!--  -->
@@ -35,8 +36,15 @@ FM_GLOBAL.OPENCASCADEHELPER = openCascadeHelper;
 FM_GLOBAL.THREE_OBJEXPORTER = OBJExporter;
 FM_GLOBAL.THREE_STLEXPORTER = STLExporter;
 FM_GLOBAL.THREE_GLTFEXPORTER = GLTFExporter;
+
 // 
-// var modelUrl = FM_GLOBAL.modelUrl
+function class_for_modelview(show) {
+    if (show) {
+        return "modelView"
+    } else {
+        return "modelView_full"
+    }
+}
 //
 onMounted(() => {
     //
@@ -109,5 +117,10 @@ onMounted(() => {
 .modelView {
     height: 100vh;
     width: 50%
+}
+
+.modelView_full {
+    height: 100vh;
+    width: 100%
 }
 </style>

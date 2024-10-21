@@ -57,7 +57,7 @@
                         </div>
                         <v-divider vertical class="divider_vertical"></v-divider>
                         <!--  -->
-                        <button class="toolbar_btn" @click="down_load_modle_file" v-show="mainStore_menu.is_show_viewport"><i
+                        <button class="toolbar_btn" @click="down_load_modle_file"><i
                                 class="mdi-cloud-download mdi"></i></button>
                         <v-divider vertical class="divider_vertical"></v-divider>
                     </div>

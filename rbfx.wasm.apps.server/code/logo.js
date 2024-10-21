@@ -1,6 +1,4 @@
-const shapeName = "shape";
 const oc = FM_GLOBAL.OPENCASCADE;
-var scene = FM_GLOBAL.CAD_SCENE;
 //
 const sphere = new FM_GLOBAL.OPENCASCADE.BRepPrimAPI_MakeSphere_1(1);
 // Take shape and subtract a translated and scaled sphere from it
@@ -64,31 +62,3 @@ for (const it1 = new oc.TopoDS_Iterator_2(result, true, true); it1.More(); it1.N
 }
 //
 FM_GLOBAL.modelUrl = FMCAS_.visualizeDoc(oc, doc);
-
-
-function makePolygon(oc) {
-    //
-    const aPnt1 = new oc.gp_Pnt_3(-50, 0, 0);
-    const aPnt2 = new oc.gp_Pnt_3(50, 0, 0);
-    const aPnt3 = new oc.gp_Pnt_3(50, 100, 0);
-    //
-    const builder = new oc.BRep_Builder();
-    const aComp = new oc.TopoDS_Compound();
-    builder.MakeCompound(aComp);
-    //
-    const newPolygon = new oc.BRepBuilderAPI_MakePolygon_3(aPnt1, aPnt2, aPnt3, true);
-    const wire = newPolygon.Wire();
-    const f = new oc.BRepBuilderAPI_MakeFace_15(wire, false);
-    //
-    builder.Add(aComp, f.Shape());
-    //
-    return aComp;
-}
-//
-function testShape() {
-    FM_GLOBAL.CAD_SCENE.remove(FM_GLOBAL.CAD_SCENE.getObjectByName(shapeName));
-    let polygon = makePolygon(FM_GLOBAL.OPENCASCADE);
-    FMCAS_.addVisulizeShapeToScene(FM_GLOBAL.OPENCASCADE, polygon, FM_GLOBAL.CAD_SCENE, shapeName);
-}
-//
-testShape();

@@ -303,7 +303,7 @@ FMCAS_.addVisualizeShapesToView = function (oc, shapes_) {
     }
 
     // Return our visualized document
-    return visualizeDoc(oc, doc);
+    return FMCAS_.visualizeDoc(oc, doc);
 };
 //
 const fm_cascad_wrap_load_ok_event = new Event("CASCAD_WRAP_LOADED");

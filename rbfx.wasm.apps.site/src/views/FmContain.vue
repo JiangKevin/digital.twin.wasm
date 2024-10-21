@@ -122,7 +122,7 @@ import { ref, onMounted, onUnmounted, onUpdated, onActivated } from "vue";
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
-import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES } from "@/plugins/base.js";
+import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file, saveCodeToFile, busy_div_control, saveShapeSTL, loadSTEPorIGES, saveShapeGLB } from "@/plugins/base.js";
 //
 import cascad_editor from "@/modules/cascad_editor";
 import wasm_editor from "@/modules/wasm_editor";
@@ -255,6 +255,9 @@ function code_editor_laout_ck(layout) {
 function down_load_modle_file() {
     if (FM_GLOBAL.CAD_SCENE) {
         saveShapeSTL(FM_GLOBAL.CAD_SCENE);
+    }
+    else {
+        saveShapeGLB(FM_GLOBAL.OPENCASCADE);
     }
 }
 //

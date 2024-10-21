@@ -514,23 +514,7 @@ export const setupThreeJSCore = (rail, show) => {
     //
     return cad_core;
 };
-// //
-// export const addVisulizeShapeToScene = async (openCascade, shape, scene, shapeName) => {
-//     const objectMat = new FM_GLOBAL.THREE.MeshStandardMaterial({
-//         color: new FM_GLOBAL.THREE.Color(0.9, 0.9, 0.9),
-//     });
 
-//     let geometries = visualize(openCascade, shape);
-
-//     let group = new FM_GLOBAL.THREE.Group();
-//     geometries.forEach((geometry) => {
-//         group.add(new FM_GLOBAL.THREE.Mesh(geometry, objectMat));
-//     });
-
-//     group.name = shapeName;
-//     group.rotation.x = -Math.PI / 2;
-//     scene.add(group);
-// };
 /**  Save the current shape to .obj */
 export const saveShapeOBJ = async (scene) => {
     var objExporter = new FM_GLOBAL.THREE_OBJEXPORTER();
@@ -595,5 +579,18 @@ export const saveCodeOfCad = async (code) => {
         });
     } else {
         await downloadFile(result, "Untitled", "model/txt", "txt");
+    }
+};
+//
+export const saveShapeGLB = async (oc) => {
+    const glbFile = oc.FS.readFile("./file.glb", { encoding: "binary" });
+    var result=new Blob([glbFile.buffer], { type: "model/gltf-binary" });
+    if (window.showSaveFilePicker) {
+        const fileHandle = await getNewFileHandle("GLB files", "text/plain", "glb");
+        writeFile(fileHandle, result).then(() => {
+            console.log("Saved GLB to " + fileHandle.name);
+        });
+    } else {
+        await downloadFile(result, "Untitled", "model/glB", "glB");
     }
 };

@@ -4,6 +4,9 @@ const _ = require("lodash");
 const project = require("./project.js");
 var os = require("os");
 var pty = require("node-pty");
+var vt2geojson = require("@mapbox/vt2geojson");
+var ServerConfig = JSON.parse(fs.readFileSync(path.join(__dirname, `../config.json`), "utf8"));
+
 //////////////////////////////////////
 const FM_ = {};
 FM_.inited = false;
@@ -482,6 +485,40 @@ function file_protection_fix(path_to_be_verified) {
         }
     }
 }
+//
+function pbfTogeojson(req, res) {
+    // console.log(req);
+    if (req.query.layer.length <= 0) {
+    }
+    if (req.query.zoom.length <= 0) {
+    }
+    if (req.query.lon.length <= 0) {
+    }
+    if (req.query.lat.length <= 0) {
+    }
+    //
+    // var base_url = "http://192.168.1.102:46598/data/";
+    var base_url = ServerConfig.config.CustomMapServer.ip + ":" + ServerConfig.config.CustomMapServer.port + "/data/";
+
+    var res_url = base_url + req.query.layer + "/" + req.query.zoom + "/" + req.query.lon + "/" + req.query.lat + ".pbf";
+    //
+    // console.log(res_url);
+    var res_layer;
+    // remote file
+    vt2geojson(
+        {
+            uri: res_url,
+            layer: res_layer,
+        },
+        function (err, result) {
+            if (err) {
+                res.send("PBF2Geojson error.");
+            }
+            // console.log(result); // => GeoJSON FeatureCollection
+            res.send(result);
+        }
+    );
+}
 //////////////////////////////////////
 //
 //
@@ -503,4 +540,5 @@ module.exports = {
     paste_folder_or_file,
     create_new_folder,
     ws_do,
+    pbfTogeojson,
 };

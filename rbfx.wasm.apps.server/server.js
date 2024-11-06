@@ -14,6 +14,7 @@ const sqlite3 = require("sqlite3").verbose();
 const wasm_importer = require("./web/rbfxImporter/rbfxImporter.js");
 var os = require("os");
 var pty = require("node-pty");
+// const mapnik = require("./node-mid/mapnik/mapnik.js");
 //
 // const expressWs = require("express-ws");
 // expressWs(app);
@@ -427,6 +428,10 @@ app.route("/create_new_folder").post(function (req, res) {
 //
 app.route("/test").get(function (req, res) {
     sevice.test(req, res);
+});
+//
+app.route("/pbf_map").get(function (req, res) {
+    sevice.pbfTogeojson(req, res);
 });
 
 //

@@ -434,7 +434,10 @@ app.route("/test").get(function (req, res) {
 app.route("/pbf_map").get(function (req, res) {
   sevice.pbfTogeojson(req, res);
 });
-
+//
+app.route("/ResourceConversionSevice_function").get(function (req, res) {
+  sevice.pbfTogeojsonForSevice(req, res);
+});
 //
 //////////////////////////////////////
 //

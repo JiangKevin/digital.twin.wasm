@@ -439,6 +439,10 @@ app.route("/ResourceConversionSevice_function").get(function (req, res) {
   sevice.pbfTogeojsonForSevice(req, res);
 });
 //
+app.route("/ResourceToMdl").get(function (req, res) {
+  sevice.ResourceToMdlSevice(req, res);
+});
+//
 //////////////////////////////////////
 //
 //

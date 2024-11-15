@@ -558,6 +558,27 @@ function pbfTogeojsonForSevice(req, res) {
     }
   );
 }
+//
+function ResourceToMdlSevice(req, res) {
+  //
+  var wrcs_ = wasm_rcs();
+  // ----------------------------------------------
+  wrcs_.then((asset) => {
+    var rcs_ = asset;
+    //
+    var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [4, req.query.zoom + "-" + req.query.lon + "-" + req.query.lat+"-"+"json2mdl"]);
+    if (ret != 0) {
+      console.log("pbfTogeojsonForSevice run error.");
+      res.send("pbfTogeojsonForSevice error.");
+    }
+    //
+    var mdl_file = "./tmp/" + req.query.zoom + "-" + req.query.lon + "-" + req.query.lat + ".mdl";
+    const data = fs.readFileSync(mdl_file);
+    res.send(data);
+  });
+  // ----------------------------------------------
+  return result;
+}
 //////////////////////////////////////
 //
 //
@@ -581,4 +602,5 @@ module.exports = {
   ws_do,
   pbfTogeojson,
   pbfTogeojsonForSevice,
+  ResourceToMdlSevice,
 };

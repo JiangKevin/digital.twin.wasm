@@ -546,7 +546,12 @@ function pbfTogeojsonForSevice(req, res) {
         var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [3, req.query.zoom + "-" + req.query.lon + "-" + req.query.lat]);
         if (ret != 0) {
           console.log("pbfTogeojsonForSevice run error.");
+          res.send("pbfTogeojsonForSevice error.");
         }
+        //
+        var mdl_file = "./tmp/" + req.query.zoom + "-" + req.query.lon + "-" + req.query.lat + ".mdl";
+        const data = fs.readFileSync(mdl_file);
+        res.send(data);
       });
       // ----------------------------------------------
       return result;

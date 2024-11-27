@@ -39,3 +39,6 @@ rbfx.wasm.apps.server/Upload/**
 rbfx.wasm.apps.server/tmp/**
 
 rbfx.wasm.apps.server/web/ResourceConversionSevice/ResourceConversionSevice.js
+bin/common.sevice
+build/**
+rbfx.wasm.apps.server/web/ResourceConversionSevice/**

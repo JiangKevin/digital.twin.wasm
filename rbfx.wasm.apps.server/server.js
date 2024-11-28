@@ -10,6 +10,7 @@ const http = require("http");
 const https = require("https");
 const multer = require("multer");
 const project = require("./node-mid/project.js");
+const dbCtrl = require("./node-mid/dbCtrl.js");
 const sqlite3 = require("sqlite3").verbose();
 const wasm_importer = require("./web/rbfxImporter/rbfxImporter.js");
 var os = require("os");
@@ -441,6 +442,10 @@ app.get("/ResourceConversionSevice_function", (req, res) => {
 //
 app.route("/ResourceToMdl").get(function (req, res) {
   sevice.ResourceToMdlSevice(req, res);
+});
+//
+app.route("/GetBuilding").get(function (req, res) {
+  dbCtrl.select_osm_polygon_of_building(req, res);
 });
 //
 //////////////////////////////////////

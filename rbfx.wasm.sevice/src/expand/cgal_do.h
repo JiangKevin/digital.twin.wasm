@@ -1,6 +1,10 @@
 #pragma once
 //
+#include "op/implicit_functions.h"
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
+#include <CGAL/IO/File_medit.h>
+#include <CGAL/IO/File_poly.h>
+#include <CGAL/Implicit_to_labeling_function_wrapper.h>
 #include <CGAL/Labeled_mesh_domain_3.h>
 #include <CGAL/Mesh_complex_3_in_triangulation_3.h>
 #include <CGAL/Mesh_criteria_3.h>
@@ -13,37 +17,50 @@
 //
 namespace FM
 {
+    using namespace CGAL::parameters;
+#ifdef CGAL_CONCURRENT_MESH_3
+    typedef CGAL::Parallel_tag Concurrency_tag;
+#else
+    typedef CGAL::Sequential_tag Concurrency_tag;
+#endif
     // Domain
-    typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
-    typedef K::FT                                               FT;
-    typedef K::Point_3                                          Point;
-    typedef FT( Function )( const Point& );
-    typedef CGAL::Labeled_mesh_domain_3< K > Mesh_domain;
-    typedef CGAL::Sequential_tag             Concurrency_tag;
+    typedef CGAL::Exact_predicates_inexact_constructions_kernel                  K;
+    typedef FT_to_point_function_wrapper< K::FT, K::Point_3 >                    Function;
+    typedef CGAL::Implicit_multi_domain_to_labeling_function_wrapper< Function > Function_wrapper;
+    typedef Function_wrapper::Function_vector                                    Function_vector;
+    typedef CGAL::Labeled_mesh_domain_3< K >                                     Mesh_domain;
     // Triangulation
     typedef CGAL::Mesh_triangulation_3< Mesh_domain, CGAL::Default, Concurrency_tag >::type Tr;
     typedef CGAL::Mesh_complex_3_in_triangulation_3< Tr >                                   C3t3;
-    // Criteria
-    typedef CGAL::Mesh_criteria_3< Tr > Mesh_criteria;
-    // To avoid verbose function and named parameters call
-    using namespace CGAL::parameters;
+    // Mesh Criteria
+    typedef CGAL::Mesh_criteria_3< Tr >   Mesh_criteria;
+    typedef Mesh_criteria::Facet_criteria Facet_criteria;
+    typedef Mesh_criteria::Cell_criteria  Cell_criteria;
     //
-    // Function
-    static FT sphere_function( const Point& p )
-    {
-        return CGAL::squared_distance( p, Point( CGAL::ORIGIN ) ) - 1;
-    }
     //
     static int test( std::string fileName )
     {
-        Mesh_domain domain = Mesh_domain::create_implicit_mesh_domain( sphere_function, K::Sphere_3( CGAL::ORIGIN, 2. ) );
-        // Mesh criteria
-        Mesh_criteria criteria( facet_angle = 30, facet_size = 0.1, facet_distance = 0.025, cell_radius_edge_ratio = 2, cell_size = 0.1 );
+        // Define functions
+        Function        f1( &torus_function );
+        Function        f2( &sphere_function< 3 > );
+        Function_vector v;
+        v.push_back( f1 );
+        v.push_back( f2 );
+        // Domain (Warning: Sphere_3 constructor uses square radius !)
+        Mesh_domain domain( Function_wrapper( v ), K::Sphere_3( CGAL::ORIGIN, 5. * 5. ), 1e-6 );
+        // Set mesh criteria
+        Facet_criteria facet_criteria( 30, 0.2, 0.02 );  // angle, size, approximation
+        Cell_criteria  cell_criteria( 2., 0.4 );         // radius-edge ratio, size
+        Mesh_criteria  criteria( facet_criteria, cell_criteria );
         // Mesh generation
-        C3t3 c3t3 = CGAL::make_mesh_3< C3t3 >( domain, criteria );
+        C3t3 c3t3 = CGAL::make_mesh_3< C3t3 >( domain, criteria, no_exude(), no_perturb() );
+        // Perturbation (maximum cpu time: 10s, targeted dihedral angle: default)
+        CGAL::perturb_mesh_3( c3t3, domain, time_limit = 10 );
+        // Exudation
+        CGAL::exude_mesh_3( c3t3, 12 );
         // Output
         std::ofstream medit_file( fileName );
-        c3t3.output_to_medit( medit_file );
+        CGAL::IO::output_to_medit( medit_file, c3t3 );
         //
         std::ofstream off_file( fileName.substr( 0, fileName.length() - 4 ) + "off" );
         // CGAL::IO::write_PLY( of_ply, c3t3 );

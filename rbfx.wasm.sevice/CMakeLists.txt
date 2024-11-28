@@ -26,6 +26,8 @@ find_package(glfw3 CONFIG REQUIRED)
 #
 file(GLOB app_src
     src/*.cpp
+    src/op/*.cpp
+    src/expand/*.cpp
 )
 
 #
@@ -35,7 +37,7 @@ add_executable(${app_name}
 )
 # 
 target_include_directories(${app_name} PUBLIC
-    ./libs
+    ./src
 )
 # 
 target_compile_definitions(${app_name} PUBLIC

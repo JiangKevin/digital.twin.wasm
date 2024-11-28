@@ -5,6 +5,10 @@
 #include <CGAL/Mesh_complex_3_in_triangulation_3.h>
 #include <CGAL/Mesh_criteria_3.h>
 #include <CGAL/Mesh_triangulation_3.h>
+#include <CGAL/draw_polygon_with_holes_2.h>
+#include <CGAL/draw_surface_mesh.h>
+#include <CGAL/draw_triangulation_2.h>
+#include <CGAL/draw_triangulation_3.h>
 #include <CGAL/make_mesh_3.h>
 //
 namespace FM
@@ -15,11 +19,7 @@ namespace FM
     typedef K::Point_3                                          Point;
     typedef FT( Function )( const Point& );
     typedef CGAL::Labeled_mesh_domain_3< K > Mesh_domain;
-    // #ifdef CGAL_CONCURRENT_MESH_3
-    //     typedef CGAL::Parallel_tag Concurrency_tag;
-    // #else
-    typedef CGAL::Sequential_tag Concurrency_tag;
-    // #endif
+    typedef CGAL::Sequential_tag             Concurrency_tag;
     // Triangulation
     typedef CGAL::Mesh_triangulation_3< Mesh_domain, CGAL::Default, Concurrency_tag >::type Tr;
     typedef CGAL::Mesh_complex_3_in_triangulation_3< Tr >                                   C3t3;
@@ -45,7 +45,11 @@ namespace FM
         std::ofstream medit_file( fileName );
         c3t3.output_to_medit( medit_file );
         //
+        std::ofstream off_file( fileName.substr( 0, fileName.length() - 4 ) + "off" );
+        // CGAL::IO::write_PLY( of_ply, c3t3 );
+        c3t3.output_boundary_to_off( off_file );
+        //
         return 0;
     }
 
-}
+}  // namespace FM

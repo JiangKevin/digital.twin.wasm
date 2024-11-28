@@ -12,14 +12,16 @@ function select_osm_polygon_of_building(req, res) {
   //
   var lat = req.query.lat;
   var lon = req.query.lon;
+  //
+  //
   var sql =
     "SELECT t.osm_id,t.name, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
     lon +
     " " +
     lat +
-    ")'),ST_Transform(t.way,4326),100);";
+    ")'),ST_Transform(t.way,4326),100) and building='yes';";
   //
-  //   console.log(sql);
+  console.log(sql);
   var json_name = "./tmp/" + req.query.lon + "-" + req.query.lat + ".json";
 
   // 读取记录
@@ -29,7 +31,6 @@ function select_osm_polygon_of_building(req, res) {
       //
       records.forEach((record) => {
         // console.log(record);
-        // fs.writeFileSync(json_name, JSON.stringify(record));
       });
     })
     .catch((error) => {

@@ -39,8 +39,8 @@ target_include_directories(${app_name} PUBLIC
 )
 # 
 target_compile_definitions(${app_name} PUBLIC
-   CGAL_USE_BASIC_VIEWER
-   QT_NO_KEYWORDS
+#    CGAL_USE_BASIC_VIEWER
+#    QT_NO_KEYWORDS
 )
 #
 target_link_libraries(${app_name} PRIVATE
@@ -48,4 +48,6 @@ target_link_libraries(${app_name} PRIVATE
     glfw
     httplib::httplib
     PkgConfig::gmpxx
+    # CGAL::CGAL_Basic_viewer
 )
+

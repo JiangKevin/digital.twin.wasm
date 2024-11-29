@@ -72,10 +72,10 @@ function select_osm_polygon_of_building(req, res) {
 //
 function select_value_of_coal_seam(req, res) {
   //
-  select_value_of_coal_seam_for_where("");
+  select_value_of_coal_seam_for_where(req, res, "");
 }
 //
-function select_value_of_coal_seam_for_where(where) {
+function select_value_of_coal_seam_for_where(req, res, where) {
   //
   var sql_prefix =
     "SELECT SIGN_UUID,SIGN_NAME,LOCATION_X,LOCATION_Y,LOCATION_Z,DIRECTION_X,DIRECTION_Y,DIRECTION_Z,GEO_TYPE,BIG_CATEGORY,MEDIUM_CATEGORY,SMALL_CATEGORIES,ST_AsEWKT(ZOON) FROM public.coal_seam t";
@@ -108,7 +108,7 @@ function select_value_of_coal_seam_for_where(where) {
     });
 }
 //
-function insert_to_coal_seam_of_test() {
+function insert_to_coal_seam_of_test(req, res) {
   //
   const date = new Date();
   const formattedDate = moment(date).format("YYYY-MM-DD HH:mm:ss");
@@ -147,7 +147,7 @@ function insert_to_coal_seam_of_test() {
 }
 //
 function insert_to_coal_seam(req, res) {
-  insert_to_coal_seam_of_test();
+  insert_to_coal_seam_of_test(req, res);
 }
 //////////////////////////////////////
 //

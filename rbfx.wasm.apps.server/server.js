@@ -448,6 +448,13 @@ app.route("/GetBuilding").get(function (req, res) {
   dbCtrl.select_osm_polygon_of_building(req, res);
 });
 //
+app.route("/new_coal_seam").get(function (req, res) {
+  dbCtrl.insert_to_coal_seam(req, res);
+});
+app.route("/get_coal_seam").get(function (req, res) {
+  dbCtrl.select_value_of_coal_seam(req, res);
+});
+//
 //////////////////////////////////////
 //
 //

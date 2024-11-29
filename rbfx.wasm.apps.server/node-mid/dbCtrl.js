@@ -3,12 +3,14 @@ const pgp = require("pg-promise")({ promiseLib: promise });
 const db = pgp("postgres://postgres:kevin@192.168.1.102:5432/SpaceDb");
 const fs = require("fs");
 const uuid = require("uuid-v4");
+const moment = require("moment");
 //////////////////////////////////////
 //
 //
 //
 //
 //////////////////////////////////////
+//
 function select_osm_polygon_of_building(req, res) {
   //
   var lat = req.query.lat;
@@ -70,6 +72,10 @@ function select_osm_polygon_of_building(req, res) {
 //
 function select_value_of_coal_seam(req, res) {
   //
+  select_value_of_coal_seam_for_where("");
+}
+//
+function select_value_of_coal_seam_for_where(where) {
   //
   var sql_prefix =
     "SELECT SIGN_UUID,SIGN_NAME,LOCATION_X,LOCATION_Y,LOCATION_Z,DIRECTION_X,DIRECTION_Y,DIRECTION_Z,GEO_TYPE,BIG_CATEGORY,MEDIUM_CATEGORY,SMALL_CATEGORIES,ST_AsEWKT(ZOON) FROM public.coal_seam t";
@@ -77,7 +83,7 @@ function select_value_of_coal_seam(req, res) {
   var sql_where = "";
   var sql = "";
   //
-  if (req.query.where != "") {
+  if (where != "") {
     sql_where = "where" + " " + req.query.where;
     sql = sql_prefix + " " + sql_where + " " + sql_suffix;
   } else {
@@ -100,6 +106,47 @@ function select_value_of_coal_seam(req, res) {
       console.error("Error reading records: " + error.message);
     });
 }
+//
+function insert_to_coal_seam_of_test() {
+  //
+  const date = new Date();
+  const formattedDate = moment(date).format("YYYY-MM-DD HH:mm:ss");
+  //
+  var sql =
+    "INSERT INTO public.coal_seam(	sign_uuid, sign_name, location_x, location_y, location_z, direction_x, direction_y, direction_z, efficient, geo_type, big_category, medium_category, small_categories, creation_time, update_time, zoon) VALUES (${sign_uuid}, ${sign_name}, ${location_x}, ${location_y}, ${location_z}, ${direction_x}, ${direction_y}, ${direction_z}, ${efficient}, ${geo_type}, ${big_category}, ${medium_category}, ${small_categories}, ${creation_time}, ${update_time}, ${zoon})";
+  // 创建记录
+  const createRecord = {
+    sign_uuid: uuid(),
+    sign_name: "test",
+    location_x: 0.0,
+    location_y: 0.0,
+    location_z: 0.0,
+    direction_x: 0.0,
+    direction_y: 0.0,
+    direction_z: 0.0,
+    efficient: true,
+    geo_type: "TIN",
+    big_category: "IDA",
+    medium_category: "MINE",
+    small_categories: "SURFACE",
+    creation_time: formattedDate,
+    update_time: formattedDate,
+    zoon: "TIN (((0 0 0, 0 0 1, 0 1 0, 0 0 0)), ((0 0 0, 0 1 0, 1 1 0, 0 0 0)))",
+  };
+
+  //
+  db.none(sql, createRecord)
+    .then(() => {
+      console.log("Record created successfully");
+    })
+    .catch((error) => {
+      console.error("Error creating record: " + error.message);
+    });
+}
+//
+function insert_to_coal_seam(req, res) {
+  insert_to_coal_seam_of_test();
+}
 //////////////////////////////////////
 //
 //
@@ -108,6 +155,6 @@ function select_value_of_coal_seam(req, res) {
 //////////////////////////////////////
 module.exports = {
   select_osm_polygon_of_building,
+  select_value_of_coal_seam,
+  insert_to_coal_seam,
 };
-
-// SELECT ST_AsText(ST_Transform(t.way,4326)), ST_X(ST_Transform(t.way,4326)), ST_Y(ST_Transform(t.way,4326))  FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(113.678425 34.796591666)'),ST_Transform(t.way,4326),1000) LIMIT 100;

@@ -91,7 +91,7 @@ function select_value_of_coal_seam(req, res) {
 function select_value_of_coal_seam_for_where(req, res, where) {
   //
   var sql_prefix =
-    "SELECT SIGN_UUID,SIGN_NAME,LOCATION_X,LOCATION_Y,LOCATION_Z,DIRECTION_X,DIRECTION_Y,DIRECTION_Z,GEO_TYPE,BIG_CATEGORY,MEDIUM_CATEGORY,SMALL_CATEGORIES,ST_AsEWKT(ZOON) FROM public.coal_seam t";
+    "SELECT SIGN_UUID,SIGN_NAME,LOCATION_X,LOCATION_Y,LOCATION_Z,DIRECTION_X,DIRECTION_Y,DIRECTION_Z,GEO_TYPE,BIG_CATEGORY,MEDIUM_CATEGORY,SMALL_CATEGORIES,ST_AsEWKT(ZOON) as zoon FROM public.coal_seam t";
   var sql_suffix = "ORDER BY sign_uuid ASC";
   var sql_where = "";
   var sql = "";

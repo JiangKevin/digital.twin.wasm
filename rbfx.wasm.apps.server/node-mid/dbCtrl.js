@@ -97,6 +97,7 @@ function select_value_of_coal_seam_for_where(where) {
   db.any(sql)
     .then((records) => {
       fs.writeFileSync(json_name, JSON.stringify(records));
+      res.send("get_coal_seam success.");
       //
       // records.forEach((record) => {
       //   // console.log(record);
@@ -137,7 +138,8 @@ function insert_to_coal_seam_of_test() {
   //
   db.none(sql, createRecord)
     .then(() => {
-      console.log("Record created successfully");
+      // console.log("Record created successfully");
+      res.send("new_coal_seam success.");
     })
     .catch((error) => {
       console.error("Error creating record: " + error.message);

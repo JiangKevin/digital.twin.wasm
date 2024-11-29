@@ -92,7 +92,7 @@ function select_value_of_coal_seam_for_where(where) {
   //
   console.log(sql);
   //
-  var json_name = uuid() + ".json";
+  var json_name = "./tmp/" + uuid() + ".json";
   // 读取记录
   db.any(sql)
     .then((records) => {

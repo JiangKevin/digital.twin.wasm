@@ -10,10 +10,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{FmDev}/bin)
 # --------------------------------------------------------------------------------------------------------------
 #
 find_package(httplib CONFIG REQUIRED)
-find_package(boost CONFIG REQUIRED)
+find_package(Boost CONFIG REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(gmpxx REQUIRED IMPORTED_TARGET gmpxx)
-
+find_package(nlohmann_json CONFIG REQUIRED)
 #
 find_package(CGAL CONFIG REQUIRED)
 find_package(CGAL REQUIRED COMPONENTS Core OPTIONAL_COMPONENTS Qt5)
@@ -49,7 +49,9 @@ target_link_libraries(${app_name} PRIVATE
     CGAL::CGAL
     glfw
     httplib::httplib
-    PkgConfig::gmpxx
+    nlohmann_json::nlohmann_json
+    # PkgConfig::gmpxx
+    Boost::boost
     # CGAL::CGAL_Basic_viewer
 )
 

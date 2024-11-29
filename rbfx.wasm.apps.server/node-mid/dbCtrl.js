@@ -2,6 +2,7 @@ const promise = require("bluebird");
 const pgp = require("pg-promise")({ promiseLib: promise });
 const db = pgp("postgres://postgres:kevin@192.168.1.102:5432/SpaceDb");
 const fs = require("fs");
+const uuid = require("uuid-v4");
 //////////////////////////////////////
 //
 //
@@ -37,7 +38,68 @@ function select_osm_polygon_of_building(req, res) {
       console.error("Error reading records: " + error.message);
     });
 }
+//
+// -- Table: public.coal_seam
+// -- DROP TABLE IF EXISTS public.coal_seam;
+// CREATE TABLE IF NOT EXISTS PUBLIC.COAL_SEAM (
+// 	SIGN_UUID UUID NOT NULL,
+// 	NAME TEXT COLLATE PG_CATALOG."default",
+// 	LOCATION_X NUMERIC,
+// 	LOCATION_Y NUMERIC,
+// 	LOCATION_Z NUMERIC,
+// 	DIRECTION_X NUMERIC,
+// 	DIRECTION_Y NUMERIC,
+// 	DIRECTION_Z NUMERIC,
+// 	EFFICIENT BOOLEAN,
+// 	GEO_TYPE TEXT COLLATE PG_CATALOG."default",
+// 	BIG_CATEGORY TEXT COLLATE PG_CATALOG."default",
+// 	MEDIUM_CATEGORY TEXT COLLATE PG_CATALOG."default",
+// 	SMALL_CATEGORIES TEXT COLLATE PG_CATALOG."default",
+// 	CREATION_TIME TIMESTAMP WITHOUT TIME ZONE,
+// 	UPDATE_TIME TIMESTAMP WITHOUT TIME ZONE,
+// 	ZOON GEOMETRY,
+// 	CONSTRAINT COAL_SEAM_PKEY PRIMARY KEY (SIGN_UUID)
+// ) TABLESPACE PG_DEFAULT;
 
+// ALTER TABLE IF EXISTS PUBLIC.COAL_SEAM OWNER TO POSTGRES;
+
+// TABLESPACE pg_default;
+
+// ALTER TABLE IF EXISTS public.coal_seam
+//     OWNER to postgres;
+//
+function select_value_of_coal_seam(req, res) {
+  //
+  //
+  var sql_prefix =
+    "SELECT SIGN_UUID,SIGN_NAME,LOCATION_X,LOCATION_Y,LOCATION_Z,DIRECTION_X,DIRECTION_Y,DIRECTION_Z,GEO_TYPE,BIG_CATEGORY,MEDIUM_CATEGORY,SMALL_CATEGORIES,ST_AsEWKT(ZOON) FROM public.coal_seam t";
+  var sql_suffix = "ORDER BY sign_uuid ASC";
+  var sql_where = "";
+  var sql = "";
+  //
+  if (req.query.where != "") {
+    sql_where = "where" + " " + req.query.where;
+    sql = sql_prefix + " " + sql_where + " " + sql_suffix;
+  } else {
+    sql = sql_prefix + " " + sql_suffix;
+  }
+  //
+  console.log(sql);
+  //
+  var json_name = uuid() + ".json";
+  // 读取记录
+  db.any(sql)
+    .then((records) => {
+      fs.writeFileSync(json_name, JSON.stringify(records));
+      //
+      // records.forEach((record) => {
+      //   // console.log(record);
+      // });
+    })
+    .catch((error) => {
+      console.error("Error reading records: " + error.message);
+    });
+}
 //////////////////////////////////////
 //
 //

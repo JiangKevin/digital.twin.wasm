@@ -1,6 +1,7 @@
 #include <httplib.h>
 //
 #include "expand/cgal_do.h"
+#include "expand/postgis_do.h"
 //
 int main( void )
 {
@@ -14,6 +15,7 @@ int main( void )
              [ &base_path ]( const Request& req, Response& res )
              {
                  FM::test( base_path + "out.mesh" );
+                 FM_DB::testDb();
                  //
                  res.set_content( "Hello World!", "text/plain" );
              } );

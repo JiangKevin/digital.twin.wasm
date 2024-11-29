@@ -1,5 +1,7 @@
 const promise = require("bluebird");
 const pgp = require("pg-promise")({ promiseLib: promise });
+const fs = require("fs");
+const path = require("path");
 var ServerConfig = JSON.parse(fs.readFileSync(path.join(__dirname, `../config.json`), "utf8"));
 const db = pgp(
   "postgres://" +
@@ -13,7 +15,6 @@ const db = pgp(
     "/" +
     ServerConfig.config.PostGisServer.db
 );
-const fs = require("fs");
 const uuid = require("uuid-v4");
 const moment = require("moment");
 //////////////////////////////////////

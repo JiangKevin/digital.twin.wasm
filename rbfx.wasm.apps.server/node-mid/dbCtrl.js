@@ -1,6 +1,18 @@
 const promise = require("bluebird");
 const pgp = require("pg-promise")({ promiseLib: promise });
-const db = pgp("postgres://postgres:kevin@192.168.1.102:5432/SpaceDb");
+var ServerConfig = JSON.parse(fs.readFileSync(path.join(__dirname, `../config.json`), "utf8"));
+const db = pgp(
+  "postgres://" +
+    ServerConfig.config.PostGisServer.user +
+    ":" +
+    ServerConfig.config.PostGisServer.password +
+    "@" +
+    ServerConfig.config.PostGisServer.ip +
+    ":" +
+    ServerConfig.config.PostGisServer.port +
+    "/" +
+    ServerConfig.config.PostGisServer.db
+);
 const fs = require("fs");
 const uuid = require("uuid-v4");
 const moment = require("moment");

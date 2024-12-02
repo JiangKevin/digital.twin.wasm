@@ -1,0 +1,1 @@
+ E:\2024\data\mapdata\osm2pgsql-latest-x64\osm2pgsql-bin\osm2pgsql -d SpaceDb -U postgres -W -P 5432 -S default.style china-latest.osm.pbf

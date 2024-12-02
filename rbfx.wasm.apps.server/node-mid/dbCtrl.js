@@ -1,3 +1,4 @@
+const axios = require("axios");
 const promise = require("bluebird");
 const pgp = require("pg-promise")({ promiseLib: promise });
 const fs = require("fs");
@@ -23,19 +24,32 @@ const moment = require("moment");
 //
 //
 //////////////////////////////////////
+function node_http_request_json(records) {
+  // GET request for remote image in node.js
+  axios({
+    method: "post",
+    url: "http://" + ServerConfig.config.WasmBackstageServer.ip + ":" + ServerConfig.config.WasmBackstageServer.port + "/test",
+    data: records,
+  }).then(function (response) {
+    console.log(response);
+  });
+}
 //
 function select_osm_polygon_of_building(req, res) {
   //
   var lat = req.query.lat;
   var lon = req.query.lon;
+  var radius = req.query.radius;
   //
   //
   var sql =
-    "SELECT t.osm_id,t.name, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
+    "SELECT t.osm_id,t.building,t.name,t.way_area,t.z_order, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
     lon +
     " " +
     lat +
-    ")'),ST_Transform(t.way,4326),100) and building='yes';";
+    ")'),ST_Transform(t.way,4326)," +
+    radius +
+    ") and building='yes';";
   //
   console.log(sql);
   var json_name = "./tmp/" + req.query.lon + "-" + req.query.lat + ".json";
@@ -45,9 +59,9 @@ function select_osm_polygon_of_building(req, res) {
     .then((records) => {
       fs.writeFileSync(json_name, JSON.stringify(records));
       //
-      records.forEach((record) => {
-        // console.log(record);
-      });
+      node_http_request_json(JSON.stringify(records));
+      //
+      res.send("GetBuilding success.");
     })
     .catch((error) => {
       console.error("Error reading records: " + error.message);

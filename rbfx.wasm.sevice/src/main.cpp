@@ -1,7 +1,7 @@
 #include <httplib.h>
 //
 #include "expand/cgal_do.h"
-#include "expand/postgis_do.h"
+// #include "expand/cgal_test.h"
 //
 int main( void )
 {
@@ -14,12 +14,46 @@ int main( void )
     svr.Get( "/hi",
              [ &base_path ]( const Request& req, Response& res )
              {
-                 FM::test( base_path + "out.mesh" );
-                 FM_DB::testDb();
-                 //
                  res.set_content( "Hello World!", "text/plain" );
              } );
+    // svr.Post( "/test",
+    //           [ &base_path ]( const Request& req, Response& res )
+    //           {
+    //               FM::osm_building_2_ply( "", base_path + "out.mesh" );
+    //               //
+    //               res.set_content( "Hello World!", "text/plain" );
+    //           } );
 
+    svr.Post( "/test",
+              [ & ]( const Request& req, Response& res, const ContentReader& content_reader )
+              {
+                  if ( req.is_multipart_form_data() )
+                  {
+                      // NOTE: `content_reader` is blocking until every form data field is read
+                      MultipartFormDataItems files;
+                      content_reader(
+                          [ & ]( const MultipartFormData& file )
+                          {
+                              files.push_back( file );
+                              return true;
+                          },
+                          [ & ]( const char* data, size_t data_length )
+                          {
+                              files.back().content.append( data, data_length );
+                              return true;
+                          } );
+                  }
+                  else
+                  {
+                      std::string body;
+                      content_reader(
+                          [ & ]( const char* data, size_t data_length )
+                          {
+                              body.append( data, data_length );
+                              return true;
+                          } );
+                  }
+              } );
     // Match the request path against a regular expression
     // and extract its captures
     svr.Get( R"(/numbers/(\d+))",

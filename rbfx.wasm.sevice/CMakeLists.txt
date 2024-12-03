@@ -13,7 +13,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{FmDev}/bin)
 find_package(httplib CONFIG REQUIRED)
 find_package(Boost CONFIG REQUIRED)
 find_package(PkgConfig REQUIRED)
-# find_package(Boost REQUIRED [COMPONENTS boost-geometry])
+find_package(openmesh REQUIRED)
 pkg_check_modules(gmpxx REQUIRED IMPORTED_TARGET gmpxx)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(OpenCASCADE CONFIG REQUIRED)
@@ -43,6 +43,7 @@ add_executable(${app_name}
 #
 target_include_directories(${app_name} PUBLIC
     ./src
+    ${OPENMESH_INCLUDE_DIRS}
 )
 
 #
@@ -61,7 +62,7 @@ target_link_libraries(${app_name} PRIVATE
     nlohmann_json::nlohmann_json
     # GEOS::geos
     Boost::boost
-    # Boost::boost-geometry
+    ${OPENMESH_LIBRARIES}
     TKBO TKBin TKCAF TKCDF
     # CGAL::CGAL_Basic_viewer
 )

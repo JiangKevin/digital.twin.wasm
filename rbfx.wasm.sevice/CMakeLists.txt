@@ -13,15 +13,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $ENV{FmDev}/bin)
 find_package(httplib CONFIG REQUIRED)
 find_package(Boost CONFIG REQUIRED)
 find_package(PkgConfig REQUIRED)
+# find_package(Boost REQUIRED [COMPONENTS boost-geometry])
 pkg_check_modules(gmpxx REQUIRED IMPORTED_TARGET gmpxx)
 find_package(nlohmann_json CONFIG REQUIRED)
-
+find_package(OpenCASCADE CONFIG REQUIRED)
 #
 find_package(CGAL CONFIG REQUIRED)
 find_package(CGAL REQUIRED COMPONENTS Core OPTIONAL_COMPONENTS Qt5)
 
 # add_definitions(-DCGAL_USE_BASIC_VIEWER -DQT_NO_KEYWORDS)
-find_package(GEOS CONFIG REQUIRED)
+# find_package(GEOS CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 
 # --------------------------------------------------------------------------------------------------------------
@@ -47,7 +48,7 @@ target_include_directories(${app_name} PUBLIC
 #
 target_compile_definitions(${app_name} PUBLIC
 
-    # CGAL_USE_BASIC_VIEWER
+    CGAL_USE_BASIC_VIEWER
     # QT_NO_KEYWORDS
     # CGAL_LINKED_WITH_TBB
 )
@@ -58,9 +59,9 @@ target_link_libraries(${app_name} PRIVATE
     glfw
     httplib::httplib
     nlohmann_json::nlohmann_json
-
-    # PkgConfig::gmpxx
+    # GEOS::geos
     Boost::boost
-
+    # Boost::boost-geometry
+    TKBO TKBin TKCAF TKCDF
     # CGAL::CGAL_Basic_viewer
 )

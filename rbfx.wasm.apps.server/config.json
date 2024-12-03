@@ -14,6 +14,7 @@
         "WasmBackstageServer": {
             "ip": "127.0.0.1",
             "port": 1234
-        }
+        },
+        "workFolder": "/Users/kevin.jiang/Dev/src/github-res/digital.twin.wasm/rbfx.wasm.apps.server/tmp"
     }
 }

@@ -24,14 +24,15 @@ const moment = require("moment");
 //
 //
 //////////////////////////////////////
-function node_http_request_json(records) {
-  // GET request for remote image in node.js
+function node_http_request_json(res, records_fle, name) {
   axios({
     method: "post",
-    url: "http://" + ServerConfig.config.WasmBackstageServer.ip + ":" + ServerConfig.config.WasmBackstageServer.port + "/test",
-    data: records,
+    url: "http://" + ServerConfig.config.WasmBackstageServer.ip + ":" + ServerConfig.config.WasmBackstageServer.port + "/" + name,
+    data: records_fle,
   }).then(function (response) {
-    console.log(response);
+    // console.log(response.data);
+    //
+    res.send(response.data);
   });
 }
 //
@@ -43,25 +44,23 @@ function select_osm_polygon_of_building(req, res) {
   //
   //
   var sql =
-    "SELECT t.osm_id,t.building,t.name,t.way_area,t.z_order, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
+    "SELECT t.osm_id,t.building,t.name,t.way_area,t.z_order,t.way, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
     lon +
     " " +
     lat +
     ")'),ST_Transform(t.way,4326)," +
     radius +
-    ") and building='yes';";
+    ") and building='yes' order by osm_id;";
   //
   console.log(sql);
   var json_name = "./tmp/" + req.query.lon + "-" + req.query.lat + ".json";
-
+  var work_file = ServerConfig.config.workFolder + "/" + req.query.lon + "-" + req.query.lat + ".json";
   // 读取记录
   db.any(sql)
     .then((records) => {
       fs.writeFileSync(json_name, JSON.stringify(records));
       //
-      node_http_request_json(JSON.stringify(records));
-      //
-      res.send("GetBuilding success.");
+      node_http_request_json(res, work_file, "osm_building_2_ply");
     })
     .catch((error) => {
       console.error("Error reading records: " + error.message);

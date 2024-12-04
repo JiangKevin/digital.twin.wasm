@@ -24,7 +24,10 @@ find_package(CGAL REQUIRED COMPONENTS Core OPTIONAL_COMPONENTS Qt5)
 # add_definitions(-DCGAL_USE_BASIC_VIEWER -DQT_NO_KEYWORDS)
 # find_package(GEOS CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
-
+# 
+MESSAGE(STATUS "OPENMESH_INCLUDE_DIRS IS:"
+    ${OPENMESH_INCLUDE_DIRS}
+)
 # --------------------------------------------------------------------------------------------------------------
 
 #

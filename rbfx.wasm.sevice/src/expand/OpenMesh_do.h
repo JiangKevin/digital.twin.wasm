@@ -10,11 +10,10 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <queue>
-
+#include <StlAPI_Writer.hxx>
 //
 namespace FM
 {
-
     namespace bg = boost::geometry;
     typedef bg::model::point< double, 2, bg::cs::cartesian > bg_point_t;
     typedef bg::model::polygon< bg_point_t >                 bg_polygon_t;
@@ -53,11 +52,14 @@ namespace FM
         //
         std::ifstream  f( json_file );
         nlohmann::json building_json = nlohmann::json::parse( f );
+        // 
+        PostGis_Mesh out_file_mesh;
+        out_file_mesh.
         //
         for ( int index_of_json = 0; index_of_json < building_json.size(); index_of_json++ )
         {
             std::string wkt_tmp( building_json[ index_of_json ][ "geom" ].get< std::string >() );
-            // 判断geom的类型
+            // 判断geom的类型为Polygon
             if ( include_str( wkt_tmp, "Polygon" ) )  //
             {
                 bg_polygon_t bg_geom;
@@ -108,7 +110,7 @@ namespace FM
                         fpm_.inside_vhandles.push_back( inside_vhandles_in );
                     }
                 }
-                else
+                else  // 没孔
                 {
                     //
                 }

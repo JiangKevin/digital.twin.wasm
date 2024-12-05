@@ -58,9 +58,9 @@ function select_osm_polygon_of_building(req, res) {
   // 读取记录
   db.any(sql)
     .then((records) => {
-      fs.writeFileSync(json_name, JSON.stringify(records));
+      // fs.writeFileSync(json_name, JSON.stringify(records));
       //
-      node_http_request_json(res, work_file, "osm_building_2_ply");
+      node_http_request_json(res, JSON.stringify(records), "osm_building_2_ply");
     })
     .catch((error) => {
       console.error("Error reading records: " + error.message);

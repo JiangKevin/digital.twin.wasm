@@ -3,6 +3,8 @@ const promise = require("bluebird");
 const pgp = require("pg-promise")({ promiseLib: promise });
 const fs = require("fs");
 const path = require("path");
+// const wasm_importer = require("../web/rbfxImporter/rbfxImporter.js");
+const wasm_rcs = require("../web/ResourceConversionSevice/ResourceConversionSevice.js");
 var ServerConfig = JSON.parse(fs.readFileSync(path.join(__dirname, `../config.json`), "utf8"));
 const db = pgp(
   "postgres://" +
@@ -30,9 +32,28 @@ function node_http_request_json(res, records_fle, name) {
     url: "http://" + ServerConfig.config.WasmBackstageServer.ip + ":" + ServerConfig.config.WasmBackstageServer.port + "/" + name,
     data: records_fle,
   }).then(function (response) {
-    // console.log(response.data);
+    var uuid_str = uuid();
+    var stl_file = "./tmp/" + uuid_str + ".stl";
     //
-    res.send(response.data);
+    fs.writeFileSync(stl_file, response.data);
+
+    //
+    var wrcs_ = wasm_rcs();
+    // ----------------------------------------------
+    wrcs_.then((asset) => {
+      var rcs_ = asset;
+      //
+      var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [2, "stl2mdl" + "|" + uuid_str]);
+      if (ret != 0) {
+        console.log("ResourceToMdlSevice run error.");
+        res.send("ResourceToMdlSevice error.");
+      }
+      //
+      var mdl_name = uuid_str + ".mdl";
+      var mdl_file = "./tmp/" + mdl_name;
+      const data = fs.readFileSync(mdl_file);
+      res.send(data);
+    });
   });
 }
 //

@@ -63,9 +63,12 @@ function select_osm_polygon_of_building(req, res) {
   var lon = req.query.lon;
   var radius = req.query.radius;
   //
-  //
+  var sql_origin = "ST_ASEWKT (ST_TRANSFORM (ST_GEOMFROMTEXT ('POINT(" + lon + " " + lat + ")', 4326),3857)) AS ORIGIN,";
+
   var sql =
-    "SELECT t.osm_id,t.building,t.name,t.way_area,t.z_order,t.way, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
+    "SELECT t.osm_id, " +
+    sql_origin +
+    " t.building,t.name,t.way_area,t.z_order,t.way, ST_AsText(t.way) as geom FROM public.planet_osm_polygon t where ST_DWithin(ST_GeographyFromText('SRID=4326;POINT(" +
     lon +
     " " +
     lat +
@@ -79,7 +82,7 @@ function select_osm_polygon_of_building(req, res) {
   // 读取记录
   db.any(sql)
     .then((records) => {
-      // fs.writeFileSync(json_name, JSON.stringify(records));
+      fs.writeFileSync(json_name, JSON.stringify(records));
       //
       node_http_request_json(res, JSON.stringify(records), "osm_building_2_ply");
     })

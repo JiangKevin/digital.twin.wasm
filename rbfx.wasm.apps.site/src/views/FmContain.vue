@@ -17,6 +17,9 @@
             <v-window-item value="CAD Editor">
                 <cascad_editor></cascad_editor>
             </v-window-item>
+            <v-window-item value="Model Editor">
+                <model_editor></model_editor>
+            </v-window-item>
             <v-window-item value="Scene Editor">
                 <wasm_editor></wasm_editor>
             </v-window-item>
@@ -130,6 +133,7 @@ import help_view from "@/modules/help";
 import project_view from "@/modules/projectView";
 import file_view from "@/modules/fileView";
 import term_view from "@/modules/termView";
+import model_editor from "@/modules/model_editor";
 //
 function code_div_class_select(is_view, rail, is_show_btn) {
     var rt = "";

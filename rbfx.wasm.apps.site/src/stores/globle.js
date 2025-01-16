@@ -45,6 +45,18 @@ export const useStoreForMenu = defineStore("menu", () => {
             ],
         },
         {
+            text: "Model Editor",
+            icon: "mdi-map-marker-distance",
+            active: false,
+            disabled: false,
+            route: "/cascad_editor",
+            sub: [
+                {
+                    icon: "mdi-crowd",
+                },
+            ],
+        },
+        {
             text: "Scene Editor",
             icon: "mdi-microsoft-xbox-controller",
             active: false,

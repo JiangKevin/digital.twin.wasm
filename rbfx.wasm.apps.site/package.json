@@ -23,6 +23,7 @@
     "pinia": "^2.2.2",
     "replicad": "^0.17.1",
     "socket.io-client": "^4.7.5",
+    "three": "^0.172.0",
     "vite-plugin-vuetify": "^2.0.4",
     "vue": "^3.4.37",
     "vue-router": "^4.4.3",

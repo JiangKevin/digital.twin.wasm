@@ -18,15 +18,25 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 import { useStoreForMenu } from "@/stores/globle.js";
 const mainStore_menu = useStoreForMenu();
 //
-import * as THREE from "@/assets/js/three/three.module.js";
-import { OrbitControls } from "@/assets/js/three/OrbitControls.js";
+// import * as THREE from "@/assets/js/three/three.module.js";
+// import { OrbitControls } from "@/assets/js/three/OrbitControls.js";
+// import { initOpenCascade } from "@/assets/js/opencascade/fm.opencascade.Instantiation.js";
+// import { openCascadeHelper } from "@/plugins/openCascadeHelper.js";
+// import { OBJExporter } from "@/assets/js/three/OBJExporter.js";
+// import { STLExporter } from "@/assets/js/three/STLExporter.js";
+// import { GLTFExporter } from "@/assets/js/three/GLTFExporter.js";
+// import "@google/model-viewer";
+// 
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+// import { OrbitControls } from "@/assets/js/three/OrbitControls.js";
 import { initOpenCascade } from "@/assets/js/opencascade/fm.opencascade.Instantiation.js";
 import { openCascadeHelper } from "@/plugins/openCascadeHelper.js";
 import { OBJExporter } from "@/assets/js/three/OBJExporter.js";
 import { STLExporter } from "@/assets/js/three/STLExporter.js";
 import { GLTFExporter } from "@/assets/js/three/GLTFExporter.js";
 import "@google/model-viewer";
-
+// 
 //
 FM_GLOBAL.THREE = THREE;
 FM_GLOBAL.ORBITCONTROLS = OrbitControls;

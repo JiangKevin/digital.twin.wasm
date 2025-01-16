@@ -54,7 +54,7 @@ const pointer = new THREE.Vector2();
 const onUpPosition = new THREE.Vector2();
 const onDownPosition = new THREE.Vector2();
 const geometry = new THREE.BoxGeometry(20, 20, 20);
-let transformControl;
+let controls, transformControl;
 const ARC_SEGMENTS = 200;
 const splines = {};
 const params = {
@@ -66,6 +66,9 @@ const params = {
     removePoint: removePoint,
     exportSpline: exportSpline,
 };
+//
+// function
+//
 // 期初renderer
 function init_renderer() {
     container = document.getElementById("container");
@@ -111,7 +114,7 @@ function init_scene() {
     scene.add(init_spot_light());
     scene.add(init_ambient_light());
     //
-    const planeGeometry = new THREE.PlaneGeometry(2000, 2000);
+    const planeGeometry = new THREE.PlaneGeometry(4000, 4000);
     planeGeometry.rotateX(-Math.PI / 2);
     const planeMaterial = new THREE.ShadowMaterial({
         color: 0x000000,
@@ -130,21 +133,14 @@ function init_scene() {
     scene.add(helper);
     //
     // Controls
-    const controls = new OrbitControls(camera, renderer.domElement);
+    controls = new OrbitControls(camera, renderer.domElement);
     controls.damping = 0.2;
     //
     transformControl = new TransformControls(camera, renderer.domElement);
     scene.add(transformControl.getHelper());
 }
 //
-// function
-//
-function init() {
-    init_renderer();
-    //
-    init_camera();
-    //
-    init_scene();
+function add_event_listener() {
     //
     controls.addEventListener("change", render);
     //
@@ -164,6 +160,16 @@ function init() {
     FM_GLOBAL.CONTAINER.on("CONTAINER SIZE CHANGE", (arg) => {
         onWindowResize(arg);
     });
+}
+// 
+function init() {
+    init_renderer();
+    //
+    init_camera();
+    //
+    init_scene();
+    //
+    add_event_listener();
     /*******
      * Curves
      *********/

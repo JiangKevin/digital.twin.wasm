@@ -49,19 +49,14 @@ const splineHelperObjects = [];
 let splinePointsLength = 4;
 const positions = [];
 const point = new THREE.Vector3();
-
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const onUpPosition = new THREE.Vector2();
 const onDownPosition = new THREE.Vector2();
-
 const geometry = new THREE.BoxGeometry(20, 20, 20);
 let transformControl;
-
 const ARC_SEGMENTS = 200;
-
 const splines = {};
-
 const params = {
     uniform: true,
     tension: 0.5,
@@ -71,18 +66,19 @@ const params = {
     removePoint: removePoint,
     exportSpline: exportSpline,
 };
-//
-function init() {
+// 期初renderer
+function init_renderer() {
     container = document.getElementById("container");
-
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf0f0f0);
-
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / container_height, 1, 10000);
-    camera.position.set(0, 250, 1000);
-    scene.add(camera);
-
-    scene.add(new THREE.AmbientLight(0xf0f0f0, 3));
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(container_width, container_height - 44);
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
+    FM_GLOBAL.MODEL_EDITOR_RENDER = renderer;
+    is_load_model_editor = true;
+}
+// 期初运动灯光
+function init_spot_light() {
     const light = new THREE.SpotLight(0xffffff, 4.5);
     light.position.set(0, 1500, 200);
     light.angle = Math.PI * 0.2;
@@ -93,8 +89,28 @@ function init() {
     light.shadow.bias = -0.000222;
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
-    scene.add(light);
-
+    return light;
+}
+// 期初环境灯光
+function init_ambient_light() {
+    const light = new THREE.AmbientLight(0xf0f0f0, 3);
+    return light;
+}
+//
+function init_camera() {
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / container_height, 1, 10000);
+    camera.position.set(0, 250, 1000);
+}
+//
+function init_scene() {
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf0f0f0);
+    //
+    scene.add(camera);
+    //
+    scene.add(init_spot_light());
+    scene.add(init_ambient_light());
+    //
     const planeGeometry = new THREE.PlaneGeometry(2000, 2000);
     planeGeometry.rotateX(-Math.PI / 2);
     const planeMaterial = new THREE.ShadowMaterial({
@@ -107,48 +123,35 @@ function init() {
     plane.receiveShadow = true;
     scene.add(plane);
 
-    const helper = new THREE.GridHelper(2000, 100);
+    const helper = new THREE.GridHelper(4000, 100);
     helper.position.y = -199;
     helper.material.opacity = 0.25;
     helper.material.transparent = true;
     scene.add(helper);
-
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(container_width, container_height - 44);
-    renderer.shadowMap.enabled = true;
-    container.appendChild(renderer.domElement);
-    FM_GLOBAL.MODEL_EDITOR_RENDER = renderer;
-    is_load_model_editor = true;
-    // const gui = new GUI();
-
-    // gui.add(params, "uniform").onChange(render);
-    // gui.add(params, "tension", 0, 1)
-    //     .step(0.01)
-    //     .onChange(function (value) {
-    //         splines.uniform.tension = value;
-    //         updateSplineOutline();
-    //         render();
-    //     });
-    // gui.add(params, "centripetal").onChange(render);
-    // gui.add(params, "chordal").onChange(render);
-    // gui.add(params, "addPoint");
-    // gui.add(params, "removePoint");
-    // gui.add(params, "exportSpline");
-    // gui.open();
-
+    //
     // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.damping = 0.2;
-    controls.addEventListener("change", render);
-
+    //
     transformControl = new TransformControls(camera, renderer.domElement);
+    scene.add(transformControl.getHelper());
+}
+//
+// function
+//
+function init() {
+    init_renderer();
+    //
+    init_camera();
+    //
+    init_scene();
+    //
+    controls.addEventListener("change", render);
+    //
     transformControl.addEventListener("change", render);
     transformControl.addEventListener("dragging-changed", function (event) {
         controls.enabled = !event.value;
     });
-    scene.add(transformControl.getHelper());
-
     transformControl.addEventListener("objectChange", function () {
         updateSplineOutline();
     });

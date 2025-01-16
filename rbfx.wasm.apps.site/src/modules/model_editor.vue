@@ -358,7 +358,6 @@ function onPointerMove(event) {
 }
 
 function onWindowResize() {
-    console.log("onWindowResize");
     if (!mainStore_menu.rail) {
         container_width = window.innerWidth - 263;
     } else {

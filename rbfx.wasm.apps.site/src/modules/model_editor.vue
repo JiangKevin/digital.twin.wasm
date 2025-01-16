@@ -42,6 +42,8 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { TransformControls } from "three/addons/controls/TransformControls.js";
 //
 let container;
+let container_width = window.innerWidth - 63,
+    container_height = window.innerHeight - 8;
 let camera, scene, renderer;
 const splineHelperObjects = [];
 let splinePointsLength = 4;
@@ -76,7 +78,7 @@ function init() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf0f0f0);
 
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / container_height, 1, 10000);
     camera.position.set(0, 250, 1000);
     scene.add(camera);
 
@@ -113,7 +115,7 @@ function init() {
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight - 44);
+    renderer.setSize(container_width, container_height - 44);
     renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
 
@@ -335,8 +337,8 @@ function onPointerUp(event) {
 }
 
 function onPointerMove(event) {
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    pointer.x = (event.clientX / container_width) * 2 - 1;
+    pointer.y = -(event.clientY / container_height) * 2 + 1;
 
     raycaster.setFromCamera(pointer, camera);
 
@@ -352,11 +354,15 @@ function onPointerMove(event) {
 }
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    if (mainStore_menu.drawer) {
+        container_width = window.innerWidth - 263;
+    } else {
+        container_width = window.innerWidth - 63;
+    }
+    //
+    camera.aspect = container_width / container_height;
     camera.updateProjectionMatrix();
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
+    renderer.setSize(container_width, container_height);
     render();
 }
 

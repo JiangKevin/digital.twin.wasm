@@ -5,8 +5,8 @@
         <link rel="icon" type="image/x-icon" href="/icon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>FM Digital Twin Manager</title>
-      <script type="module" crossorigin src="/assets/index-DQcf1rfT.js"></script>
-      <link rel="stylesheet" crossorigin href="/assets/index-Dbgd-hup.css">
+      <script type="module" crossorigin src="/assets/index-DJuEWKU2.js"></script>
+      <link rel="stylesheet" crossorigin href="/assets/index-DGwe9L29.css">
     </head>
     <body>
         <div id="app"></div>
@@ -20,12 +20,40 @@
             FM_GLOBAL.THREE = {};
             FM_GLOBAL.LOG = {};
             FM_GLOBAL.REPLICAD = {};
+            FM_GLOBAL.CONTAINER = {};
+            FM_GLOBAL.CONTAINER.list = {};
+            FM_GLOBAL.MODEL_EDITOR_RENDER={}
             //
             FM_GLOBAL.modelUrl = "";
             //
             var is_load_rbfx_wasm = false;
             var is_load_cad_wasm = false;
+            var is_load_model_editor = false;
             var reload = false;
+            // 订阅
+            FM_GLOBAL.CONTAINER.on = function (event, fn) {
+                let _this = this;
+                // 如果对象中没有对应的 event 值，也就是说明没有订阅过，就给 event 创建个缓存列表
+                // 如有对象中有相应的 event 值，把 fn 添加到对应 event 的缓存列表里
+                (_this.list[event] || (_this.list[event] = [])).push(fn);
+                return _this;
+            };
+            // 发布
+            FM_GLOBAL.CONTAINER.emit = function () {
+                let _this = this;
+                // 第一个参数是对应的 event 值，直接用数组的 shift 方法取出
+                let event = [].shift.call(arguments),
+                    fns = [..._this.list[event]];
+                // 如果缓存列表里没有 fn 就返回 false
+                if (!fns || fns.length === 0) {
+                    return false;
+                }
+                // 遍历 event 值对应的缓存列表，依次执行 fn
+                fns.forEach((fn) => {
+                    fn.apply(_this, arguments);
+                });
+                return _this;
+            };
             //
         </script>
     </body>

@@ -172,7 +172,17 @@ function view_manu_ck() {
             renderer_w = window.innerWidth - 255;
         }
         //
-        FM_GLOBAL.CAD_RENDERER.setSize(renderer_w, window.innerHeight);
+        if (FM_GLOBAL.CAD_RENDERER) {
+            FM_GLOBAL.CAD_RENDERER.setSize(renderer_w, window.innerHeight);
+        } //
+    }
+    //
+    if (is_load_model_editor) {
+        if (mainStore_menu.rail) {
+            FM_GLOBAL.MODEL_EDITOR_RENDER.setSize(window.innerWidth - 63, container_height - 8);
+        } else {
+            FM_GLOBAL.MODEL_EDITOR_RENDER.setSize(window.innerWidth - 363, container_height - 8);
+        }
     }
 }
 //

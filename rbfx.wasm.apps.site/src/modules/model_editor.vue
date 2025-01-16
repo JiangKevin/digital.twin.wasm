@@ -118,7 +118,8 @@ function init() {
     renderer.setSize(container_width, container_height - 44);
     renderer.shadowMap.enabled = true;
     container.appendChild(renderer.domElement);
-
+    FM_GLOBAL.MODEL_EDITOR_RENDER = renderer;
+    is_load_model_editor = true;
     // const gui = new GUI();
 
     // gui.add(params, "uniform").onChange(render);
@@ -156,7 +157,10 @@ function init() {
     document.addEventListener("pointerup", onPointerUp);
     document.addEventListener("pointermove", onPointerMove);
     window.addEventListener("resize", onWindowResize);
-
+    // //
+    // FM_GLOBAL.CONTAINER.on("CONTAINER SIZE CHANGE", (arg) => {
+    //     onContainerResize(arg);
+    // });
     /*******
      * Curves
      *********/
@@ -354,7 +358,8 @@ function onPointerMove(event) {
 }
 
 function onWindowResize() {
-    if (mainStore_menu.drawer) {
+    console.log("onWindowResize");
+    if (!mainStore_menu.rail) {
         container_width = window.innerWidth - 263;
     } else {
         container_width = window.innerWidth - 63;
@@ -365,6 +370,20 @@ function onWindowResize() {
     renderer.setSize(container_width, container_height);
     render();
 }
+
+// function onContainerResize() {
+//     console.log("onContainerResize");
+//     if (!mainStore_menu.rail) {
+//         container_width = window.innerWidth - 263;
+//     } else {
+//         container_width = window.innerWidth - 63;
+//     }
+//     //
+//     camera.aspect = container_width / container_height;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(container_width, container_height);
+//     render();
+// }
 
 //
 function view_toolbox() {

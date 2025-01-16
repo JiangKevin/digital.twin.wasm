@@ -157,10 +157,10 @@ function init() {
     document.addEventListener("pointerup", onPointerUp);
     document.addEventListener("pointermove", onPointerMove);
     window.addEventListener("resize", onWindowResize);
-    // //
-    // FM_GLOBAL.CONTAINER.on("CONTAINER SIZE CHANGE", (arg) => {
-    //     onContainerResize(arg);
-    // });
+    //
+    FM_GLOBAL.CONTAINER.on("CONTAINER SIZE CHANGE", (arg) => {
+        onWindowResize(arg);
+    });
     /*******
      * Curves
      *********/
@@ -370,21 +370,6 @@ function onWindowResize() {
     renderer.setSize(container_width, container_height);
     render();
 }
-
-// function onContainerResize() {
-//     console.log("onContainerResize");
-//     if (!mainStore_menu.rail) {
-//         container_width = window.innerWidth - 263;
-//     } else {
-//         container_width = window.innerWidth - 63;
-//     }
-//     //
-//     camera.aspect = container_width / container_height;
-//     camera.updateProjectionMatrix();
-//     renderer.setSize(container_width, container_height);
-//     render();
-// }
-
 //
 function view_toolbox() {
     mainStore_models.is_right_models_drawer = !mainStore_models.is_right_models_drawer;

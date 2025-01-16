@@ -179,9 +179,9 @@ function view_manu_ck() {
     //
     if (is_load_model_editor) {
         if (mainStore_menu.rail) {
-            FM_GLOBAL.MODEL_EDITOR_RENDER.setSize(window.innerWidth - 63, container_height - 8);
+            FM_GLOBAL.CONTAINER.emit("CONTAINER SIZE CHANGE", "Javascript 发布-订阅模式");
         } else {
-            FM_GLOBAL.MODEL_EDITOR_RENDER.setSize(window.innerWidth - 363, container_height - 8);
+            FM_GLOBAL.CONTAINER.emit("CONTAINER SIZE CHANGE", "Javascript 发布-订阅模式");
         }
     }
 }

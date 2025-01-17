@@ -68,18 +68,7 @@ export const useStoreForMenu = defineStore("menu", () => {
                 },
             ],
         },
-        {
-            text: "CASCADE Editor",
-            icon: "mdi-snowflake",
-            active: false,
-            disabled: false,
-            route: "/digital_twin_cascade_editor",
-            sub: [
-                {
-                    icon: "mdi-crowd",
-                },
-            ],
-        },
+
         {
             text: "Term Terminal",
             icon: "mdi-console-network",

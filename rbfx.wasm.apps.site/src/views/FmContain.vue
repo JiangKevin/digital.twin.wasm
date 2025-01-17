@@ -23,9 +23,6 @@
             <v-window-item value="Scene Editor">
                 <wasm_editor></wasm_editor>
             </v-window-item>
-            <v-window-item value="CASCADE Editor">
-                <cascade_wasm_editor></cascade_wasm_editor>
-            </v-window-item>
         </v-window>
         <!-- code editor div -->
         <div class="resizable blur_div_80"
@@ -137,7 +134,6 @@ import project_view from "@/modules/projectView";
 import file_view from "@/modules/fileView";
 import term_view from "@/modules/termView";
 import model_editor from "@/modules/model_editor";
-import cascade_wasm_editor from "@/modules/cascade_wasm_editor";
 
 //
 function code_div_class_select(is_view, rail, is_show_btn) {

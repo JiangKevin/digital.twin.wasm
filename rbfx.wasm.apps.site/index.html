@@ -13,6 +13,7 @@
             const FM_GLOBAL = {};
             FM_GLOBAL.MONACO_EDITOR = {};
             FM_GLOBAL.DTWIN_EDITOR = {};
+            FM_GLOBAL.DTWIN_CASCADE_EDITOR = {};
             FM_GLOBAL.OPENCASCADE = {};
             FM_GLOBAL.CAD_SCENE = {};
             FM_GLOBAL.THREE = {};
@@ -27,6 +28,7 @@
             var is_load_rbfx_wasm = false;
             var is_load_cad_wasm = false;
             var is_load_model_editor = false;
+            var is_load_cascade_wasm=false
             var reload = false;
             // 订阅
             FM_GLOBAL.CONTAINER.on = function (event, fn) {

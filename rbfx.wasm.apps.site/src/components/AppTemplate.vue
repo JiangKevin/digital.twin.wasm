@@ -201,8 +201,10 @@ function logout_ck() {
     is_load_rbfx_wasm = false;
     is_load_cad_wasm = false;
     //
-    fm_delScript("./data.js");
+    fm_delScript("./common.data.js");
     fm_delScript("./common.js");
+    fm_delScript("./CasCadEditor.data.js");
+    fm_delScript("./CasCadEditor.js");
     fm_delScript("./runtime/basic/cascad_wrap.js");
     fm_delScript("./runtime/basic/digital_twin_wrap.js");
     //

@@ -49,7 +49,7 @@ export const useStoreForMenu = defineStore("menu", () => {
             icon: "mdi-map-marker-distance",
             active: false,
             disabled: false,
-            route: "/cascad_editor",
+            route: "/cascad_threejs_editor",
             sub: [
                 {
                     icon: "mdi-crowd",
@@ -62,6 +62,18 @@ export const useStoreForMenu = defineStore("menu", () => {
             active: false,
             disabled: false,
             route: "/digital_twin_editor",
+            sub: [
+                {
+                    icon: "mdi-crowd",
+                },
+            ],
+        },
+        {
+            text: "CASCADE Editor",
+            icon: "mdi-snowflake",
+            active: false,
+            disabled: false,
+            route: "/digital_twin_cascade_editor",
             sub: [
                 {
                     icon: "mdi-crowd",
@@ -170,7 +182,6 @@ export const useStoreForModels = defineStore("models", () => {
     //
     var is_right_models_drawer = ref(false);
 
-
     //
-    return { models_log,is_right_models_drawer};
+    return { models_log, is_right_models_drawer };
 });

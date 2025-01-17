@@ -43,3 +43,7 @@ bin/common.sevice
 build/**
 rbfx.wasm.apps.server/web/ResourceConversionSevice/**
 bin/**
+rbfx.wasm.apps.server/web/CasCadEditor.html
+rbfx.wasm.apps.server/web/CasCadEditor.wasm
+rbfx.wasm.apps.server/web/CasCadEditor.worker.js
+rbfx.wasm.apps.server/web/CasCadEditor.js

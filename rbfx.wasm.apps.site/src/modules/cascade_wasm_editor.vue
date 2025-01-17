@@ -2,7 +2,7 @@
 <template>
     <div class="main_container_content_max blur_div_95">
         <!--  -->
-        <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+        <canvas id="cascad_canvas" oncontextmenu="event.preventDefault()"></canvas>
         <!--  -->
     </div>
 </template>
@@ -17,7 +17,7 @@ import { fm_addScript, fm_addScript_for_dtwin, fm_delScript, open_rbfx_code_file
 onMounted(() => {
     var log_span = document.getElementById("rbfx-output");
     //
-    if (!is_load_rbfx_wasm) {
+    if (!is_load_cascade_wasm) {
         //
         Module = {
             preRun: [],
@@ -38,16 +38,16 @@ onMounted(() => {
                     FM_GLOBAL.LOG.scrollTop = FM_GLOBAL.LOG.scrollHeight - 16;
                 };
             })(),
-            canvas: document.getElementById("canvas"),
+            canvas: document.getElementById("cascad_canvas"),
         };
         //
-        fm_addScript("./common.data.js", true, false);
-        fm_addScript_for_dtwin("./common.js", true, false, FM_GLOBAL.DTWIN_EDITOR);
+        fm_addScript("./CasCadEditor.data.js", true, false);
+        fm_addScript_for_dtwin("./CasCadEditor.js", true, false, FM_GLOBAL.DTWIN_CASCADE_EDITOR);
         //
-        is_load_rbfx_wasm = true;
+        is_load_cascade_wasm = true;
     }
     //
-    var elem = document.getElementById("canvas");
+    var elem = document.getElementById("cascad_canvas");
     elem.addEventListener(
         "click",
         function () {
@@ -58,8 +58,7 @@ onMounted(() => {
 });
 
 function get_variables() {
-    FM_GLOBAL.DTWIN_EDITOR = Module;
-    fm_addScript("./runtime/basic/digital_twin_wrap.js", true, false);
+    FM_GLOBAL.DTWIN_CASCADE_EDITOR = Module;
 }
 </script>
 <!--  style  -->

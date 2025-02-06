@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const _ = require("lodash");
 const project = require("./project.js");
+const axios = require("axios");
 var os = require("os");
 var pty = require("node-pty");
 var ServerConfig = JSON.parse(fs.readFileSync(path.join(__dirname, `../config.json`), "utf8"));
@@ -526,6 +527,41 @@ function pbfTogeojson(req, res) {
     );
 }
 //
+function make_graph_for_node(req, res) {
+    //
+    var json_data = req.body;
+
+    //
+    axios({
+        method: "post",
+        url: "http://" + ServerConfig.config.WasmBackstageServer.ip + ":" + ServerConfig.config.WasmBackstageServer.port + "/" + "make_graph_for_node",
+        data: json_data,
+    }).then(function (response) {
+        var uuid_str = uuid();
+        var stl_file = "./tmp/" + uuid_str + ".stl";
+        //
+        fs.writeFileSync(stl_file, response.data);
+
+        // //
+        // var wrcs_ = wasm_rcs();
+        // // ----------------------------------------------
+        // wrcs_.then((asset) => {
+        //     var rcs_ = asset;
+        //     //
+        //     var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [2, "stl2mdl" + "|" + uuid_str]);
+        //     if (ret != 0) {
+        //         console.log("ResourceToMdlSevice run error.");
+        //         res.send("ResourceToMdlSevice error.");
+        //     }
+        //     //
+        //     var mdl_name = uuid_str + ".mdl";
+        //     var mdl_file = "./tmp/" + mdl_name;
+        //     const data = fs.readFileSync(mdl_file);
+        //     res.send(data);
+        // });
+    });
+}
+//
 function pbfTogeojsonForSevice(req, res) {
     //
     var base_url = ServerConfig.config.CustomMapServer.ip + ":" + ServerConfig.config.CustomMapServer.port + "/data/";
@@ -613,4 +649,5 @@ module.exports = {
     pbfTogeojson,
     pbfTogeojsonForSevice,
     ResourceToMdlSevice,
+    make_graph_for_node,
 };

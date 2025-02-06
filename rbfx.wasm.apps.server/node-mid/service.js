@@ -8,6 +8,7 @@ var pty = require("node-pty");
 var ServerConfig = JSON.parse(fs.readFileSync(path.join(__dirname, `../config.json`), "utf8"));
 const wasm_rcs = require("../web/ResourceConversionSevice/ResourceConversionSevice.js");
 //
+const uuid = require("uuid-v4");
 var vt2geojson = require("@mapbox/vt2geojson");
 // var pbf_ = require("pbf");
 // import Pbf from 'pbf';
@@ -541,24 +542,25 @@ function make_graph_for_node(req, res) {
         var stl_file = "./tmp/" + uuid_str + ".stl";
         //
         fs.writeFileSync(stl_file, response.data);
-
-        // //
-        // var wrcs_ = wasm_rcs();
-        // // ----------------------------------------------
-        // wrcs_.then((asset) => {
-        //     var rcs_ = asset;
-        //     //
-        //     var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [2, "stl2mdl" + "|" + uuid_str]);
-        //     if (ret != 0) {
-        //         console.log("ResourceToMdlSevice run error.");
-        //         res.send("ResourceToMdlSevice error.");
-        //     }
-        //     //
-        //     var mdl_name = uuid_str + ".mdl";
-        //     var mdl_file = "./tmp/" + mdl_name;
-        //     const data = fs.readFileSync(mdl_file);
-        //     res.send(data);
-        // });
+        //
+        var wrcs_ = wasm_rcs();
+        // ----------------------------------------------
+        wrcs_.then((asset) => {
+            var rcs_ = asset;
+            //
+            var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [2, "stl2mdl" + "|" + uuid_str]);
+            if (ret != 0) {
+                console.log("ResourceToMdlSevice run error.");
+                res.send("ResourceToMdlSevice error.");
+            }
+            //
+            var mdl_name = uuid_str + ".mdl";
+            var mdl_file = "./tmp/" + mdl_name;
+            const data = fs.readFileSync(mdl_file);
+            res.send(data);
+            // 
+            fs.rmSync(mdl_file, { recursive: true, force: true });
+        });
     });
 }
 //

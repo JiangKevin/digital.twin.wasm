@@ -540,6 +540,7 @@ function make_graph_for_node(req, res) {
     }).then(function (response) {
         var uuid_str = uuid();
         var stl_file = "./tmp/" + uuid_str + ".stl";
+        var txt_file = "./tmp/" + uuid_str + ".txt";
         //
         fs.writeFileSync(stl_file, response.data);
         //
@@ -558,8 +559,10 @@ function make_graph_for_node(req, res) {
             var mdl_file = "./tmp/" + mdl_name;
             const data = fs.readFileSync(mdl_file);
             res.send(data);
-            // 
+            //
             fs.rmSync(mdl_file, { recursive: true, force: true });
+            fs.rmSync(stl_file, { recursive: true, force: true });
+            fs.rmSync(txt_file, { recursive: true, force: true });
         });
     });
 }

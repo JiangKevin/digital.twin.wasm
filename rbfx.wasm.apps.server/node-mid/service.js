@@ -531,7 +531,6 @@ function pbfTogeojson(req, res) {
 function make_graph_for_node(req, res) {
     //
     var json_data = req.body;
-
     //
     axios({
         method: "post",
@@ -542,29 +541,35 @@ function make_graph_for_node(req, res) {
         var stl_file = "./tmp/" + uuid_str + ".stl";
         var txt_file = "./tmp/" + uuid_str + ".txt";
         //
-        fs.writeFileSync(stl_file, response.data);
-        //
-        var wrcs_ = wasm_rcs();
-        // ----------------------------------------------
-        wrcs_.then((asset) => {
-            var rcs_ = asset;
+        if (response.data.length >= 0) {
+            fs.writeFileSync(stl_file, response.data);
             //
-            var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [2, "stl2mdl" + "|" + uuid_str]);
-            if (ret != 0) {
-                console.log("ResourceToMdlSevice run error.");
-                res.send("ResourceToMdlSevice error.");
-            }
-            //
-            var mdl_name = uuid_str + ".mdl";
-            var mdl_file = "./tmp/" + mdl_name;
-            const data = fs.readFileSync(mdl_file);
-            res.send(data);
-            //
-            fs.rmSync(mdl_file, { recursive: true, force: true });
-            fs.rmSync(stl_file, { recursive: true, force: true });
-            fs.rmSync(txt_file, { recursive: true, force: true });
-        });
-    });
+            var wrcs_ = wasm_rcs();
+            // ----------------------------------------------
+            wrcs_.then((asset) => {
+                var rcs_ = asset;
+                //
+                var ret = rcs_.ccall("DoRun", "int", ["int", "string"], [2, "stl2mdl" + "|" + uuid_str]);
+                if (ret != 0) {
+                    console.log("ResourceToMdlSevice run error.");
+                    res.send("ResourceToMdlSevice error.");
+                }
+                //
+                var mdl_name = uuid_str + ".mdl";
+                var mdl_file = "./tmp/" + mdl_name;
+                const data = fs.readFileSync(mdl_file);
+                res.send(data);
+                //
+                fs.rmSync(mdl_file, { recursive: true, force: true });
+                fs.rmSync(stl_file, { recursive: true, force: true });
+                fs.rmSync(txt_file, { recursive: true, force: true });
+            });
+        } else {
+            res.send("make_graph_for_node error.");
+        }
+    }).catch(function (error) {
+        res.send("make_graph_for_node error.");
+    }); 
 }
 //
 function pbfTogeojsonForSevice(req, res) {
